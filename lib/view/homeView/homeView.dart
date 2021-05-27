@@ -1,5 +1,5 @@
-import 'package:ecommerce/view/authView/authView.dart';
-import 'package:ecommerce/view/widgets/customText.dart';
+import '../../view/authView/authView.dart';
+import '../../view/widgets/customText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
