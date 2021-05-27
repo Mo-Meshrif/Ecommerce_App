@@ -5,14 +5,16 @@ import 'customText.dart';
 
 class CustomRaisedButton extends StatelessWidget {
   final String signState;
+  final Function onPress;
 
-  CustomRaisedButton({this.signState});
+  CustomRaisedButton({this.signState, this.onPress});
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return RaisedButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       padding: EdgeInsets.all(15),
-      onPressed: () {},
+      onPressed: onPress,
       color: priColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

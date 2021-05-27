@@ -1,19 +1,17 @@
-class User {
-  String id, userName, email, image;
-  User({
+class UserModel {
+  String id, userName, email;
+  UserModel({
     this.id,
     this.userName,
-    this.email,
-    this.image,
+    this.email, 
   });
-  User.fromJson(Map<String, dynamic> map) {
+  UserModel.fromJson(Map<String, dynamic> map) {
     if (map.isEmpty) {
       return;
     }
     id = map['id'];
     userName = map['userName'];
     email = map['email'];
-    image = map['image'];
   }
 
   toJson() {
@@ -21,7 +19,6 @@ class User {
       'id': id,
       'userName': userName,
       'email': email,
-      'image': image,
     };
   }
 }

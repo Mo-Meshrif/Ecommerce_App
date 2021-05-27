@@ -1,4 +1,4 @@
-import '../viewModel/authViewModel.dart';
+import '../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 
 class Bind extends Bindings {

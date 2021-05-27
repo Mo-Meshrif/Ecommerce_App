@@ -1,7 +1,7 @@
 import '../../view/authView/forgetPassView.dart';
 import '../../view/authView/signInView.dart';
 import '../../view/authView/signUpView.dart';
-import '../../viewModel/authViewModel.dart';
+import '../../core/viewModel/authViewModel.dart';
 import '../widgets/customText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
