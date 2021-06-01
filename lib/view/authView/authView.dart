@@ -14,7 +14,7 @@ class AuthView extends StatelessWidget {
         body: Container(
             padding: EdgeInsets.symmetric(vertical: 60, horizontal: 15),
             child: GetBuilder<AuthViewModel>(
-              init: Get.find(),
+              init: AuthViewModel(),
               builder: (controller) => Column(
                 children: <Widget>[
                   Container(
