@@ -1,3 +1,4 @@
+import '../../helper/localStorageData.dart';
 import '../../view/homeView/homeView.dart';
 import '../../core/service/fireStore_user.dart';
 import '../../model/userModel.dart';
@@ -21,17 +22,25 @@ class AuthViewModel extends GetxController {
 
   String userName, email, password;
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final LocalStorageData _localStorageData = Get.find();
+
+  setUser(UserModel user) {
+    _localStorageData.setUserData(user);
+  }
+
   signUp() async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((user) {
+          .then((user) async {
         Get.to(() => HomeView());
-        FireStoreUser().addUserToFireStore(UserModel(
+        UserModel userModel = UserModel(
           id: user.user.uid,
           userName: userName,
           email: email,
-        ));
+        );
+        await FireStoreUser().addUserToFireStore(userModel);
+        setUser(userModel);
       });
     } catch (e) {
       handleAuthErrors(e);
@@ -42,7 +51,12 @@ class AuthViewModel extends GetxController {
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((_) => Get.to(() => HomeView()));
+          .then((user) async {
+        Get.to(() => HomeView());
+        await FireStoreUser()
+            .getUserFromFireStore(user.user.uid)
+            .then((userData) => setUser(UserModel.fromJson(userData.data())));
+      });
     } catch (e) {
       handleAuthErrors(e);
     }
