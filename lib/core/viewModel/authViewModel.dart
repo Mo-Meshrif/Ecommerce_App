@@ -1,5 +1,5 @@
 import '../../helper/localStorageData.dart';
-import '../../view/homeView/homeView.dart';
+import '../../view/homeView.dart';
 import '../../core/service/fireStore_user.dart';
 import '../../model/userModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';

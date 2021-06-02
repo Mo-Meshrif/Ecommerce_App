@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/viewModel/homeViewModel.dart';
 import 'package:ecommerce/helper/localStorageData.dart';
 
 import '../core/viewModel/authViewModel.dart';
@@ -8,5 +9,6 @@ class Bind extends Bindings {
   void dependencies() {
     Get.lazyPut(() => AuthViewModel());
     Get.lazyPut(() => LocalStorageData());
+    Get.lazyPut(() => HomeViewModel());
   }
 }
