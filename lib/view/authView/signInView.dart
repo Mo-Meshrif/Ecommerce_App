@@ -42,6 +42,7 @@ class SignInView extends StatelessWidget {
                 return null;
               },
               onSave: (val) => controller.password = val,
+              isScure: true,
             ),
             SizedBox(
               height: 20,
@@ -64,6 +65,12 @@ class SignInView extends StatelessWidget {
               txt2: 'create a new account.',
               txt2color: priColor,
             ),
+            SizedBox(
+              height: 20,
+            ),
+            controller.isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Padding(padding: EdgeInsets.all(0)),
           ],
         ),
       ),

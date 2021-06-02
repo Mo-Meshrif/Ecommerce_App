@@ -51,6 +51,7 @@ class SignUpView extends StatelessWidget {
               lableTxt: 'PASSWORD',
               hintTxt: '************************',
               onSave: (val) => controller.password = val,
+              isScure: true,
               valid: (val) {
                 if (val.isEmpty) {
                   return 'The Feild is empty';
@@ -83,6 +84,12 @@ class SignUpView extends StatelessWidget {
               txt4: 'Privacy Policy',
               txt4color: priColor,
             ),
+            SizedBox(
+              height: 20,
+            ),
+            controller.isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Padding(padding: EdgeInsets.all(0)),
           ],
         ),
       ),

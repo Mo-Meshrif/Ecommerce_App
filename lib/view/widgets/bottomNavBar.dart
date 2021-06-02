@@ -7,6 +7,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
+      init: HomeViewModel(),
       builder: (controller) => BottomNavigationBar(
           selectedItemColor: priColor,
           unselectedItemColor: swatchColor,

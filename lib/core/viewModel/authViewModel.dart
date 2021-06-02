@@ -1,5 +1,5 @@
 import '../../helper/localStorageData.dart';
-import '../../view/homeView.dart';
+import '../../view/controlView.dart';
 import '../../core/service/fireStore_user.dart';
 import '../../model/userModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +12,7 @@ class AuthViewModel extends GetxController {
     update();
   }
 
+  bool isLoading = false;
   Rxn<User> _user = Rxn<User>();
   String get user => _user.value?.email;
   @override
@@ -30,10 +31,12 @@ class AuthViewModel extends GetxController {
 
   signUp() async {
     try {
+      isLoading = true;
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        Get.to(() => HomeView());
+        isLoading = false;
+        Get.to(() => ControlView());
         UserModel userModel = UserModel(
           id: user.user.uid,
           userName: userName,
@@ -49,10 +52,12 @@ class AuthViewModel extends GetxController {
 
   signIn() async {
     try {
+      isLoading = true;
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        Get.to(() => HomeView());
+        isLoading = false;
+        Get.to(() => ControlView());
         await FireStoreUser()
             .getUserFromFireStore(user.user.uid)
             .then((userData) => setUser(UserModel.fromJson(userData.data())));
