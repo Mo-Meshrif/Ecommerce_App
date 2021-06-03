@@ -24,7 +24,7 @@ class ForgetPassView extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              img: 'assets/icons/Profile.png',
+              img: 'assets/icons/auth/Profile.png',
               lableTxt: 'EMAIL',
               hintTxt: 'janedoe123@email.com',
               valid: (val) {

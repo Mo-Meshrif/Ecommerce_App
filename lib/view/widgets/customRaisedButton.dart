@@ -27,7 +27,7 @@ class CustomRaisedButton extends StatelessWidget {
               ),
             ),
           ),
-          Image.asset("assets/icons/right_arrow.png"),
+          Image.asset("assets/icons/auth/right_arrow.png"),
         ],
       ),
     );

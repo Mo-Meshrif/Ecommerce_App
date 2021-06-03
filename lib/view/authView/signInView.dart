@@ -17,7 +17,7 @@ class SignInView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             CustomTextField(
-              img: 'assets/icons/Profile.png',
+              img: 'assets/icons/auth/Profile.png',
               lableTxt: 'EMAIL',
               hintTxt: 'janedoe123@email.com',
               onSave: (val) => controller.email = val,
@@ -32,7 +32,7 @@ class SignInView extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              img: 'assets/icons/password.png',
+              img: 'assets/icons/auth/password.png',
               lableTxt: 'PASSWORD',
               hintTxt: '************************',
               valid: (val) {
