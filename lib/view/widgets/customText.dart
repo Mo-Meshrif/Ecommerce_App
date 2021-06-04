@@ -4,13 +4,18 @@ class CustomText extends StatelessWidget {
   final String txt;
   final double fSize;
   final Color txtColor;
-  CustomText({this.txt, this.fSize, this.txtColor});
+  final FontWeight fWeight;
+  CustomText({this.txt, this.fSize, this.txtColor, this.fWeight});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Text(
         txt,
-        style: TextStyle(fontSize: fSize, color: txtColor ?? Colors.black),
+        style: TextStyle(
+          fontSize: fSize,
+          color: txtColor ?? Colors.black,
+          fontWeight: fWeight,
+        ),
       ),
     );
   }

@@ -4,10 +4,10 @@ import '../../const.dart';
 import 'customText.dart';
 
 class CustomRaisedButton extends StatelessWidget {
-  final String signState;
+  final String txt;
   final Function onPress;
 
-  CustomRaisedButton({this.signState, this.onPress});
+  CustomRaisedButton({this.txt, this.onPress});
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
@@ -22,12 +22,12 @@ class CustomRaisedButton extends StatelessWidget {
           Expanded(
             child: Center(
               child: CustomText(
-                txt: signState,
+                txt: txt,
                 txtColor: Colors.white,
               ),
             ),
           ),
-          Image.asset("assets/icons/auth/right_arrow.png"),
+          Image.asset("assets/auth/right_arrow.png"),
         ],
       ),
     );
