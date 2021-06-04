@@ -24,7 +24,7 @@ class ForgetPassView extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              img: 'assets/icons/auth/Profile.png',
+              img: 'assets/auth/Profile.png',
               lableTxt: 'EMAIL',
               hintTxt: 'janedoe123@email.com',
               valid: (val) {
@@ -39,7 +39,7 @@ class ForgetPassView extends StatelessWidget {
               height: 20,
             ),
             CustomRaisedButton(
-              signState: 'SEND EMAIL',
+              txt: 'SEND EMAIL',
               onPress: () {
                 _key.currentState.save();
                 if (_key.currentState.validate()) {
