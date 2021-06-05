@@ -2,9 +2,9 @@ import '../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 
 import '../../const.dart';
-import '../../view/widgets/customRichText.dart';
-import '../../view/widgets/customRaisedButton.dart';
-import '../../view/widgets/customTextField.dart';
+import '../widgets/customRichText.dart';
+import '../widgets/customRaisedButton.dart';
+import '../widgets/customTextField.dart';
 import 'package:flutter/material.dart';
 
 class SignUpView extends StatelessWidget {

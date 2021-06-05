@@ -1,11 +1,13 @@
 import 'package:ecommerce/const.dart';
-import '../view/widgets/customText.dart';
+import 'package:ecommerce/view/subViews/categoriesView.dart';
+import 'package:get/get.dart';
+import '../widgets/customText.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'widgets/customColTImage.dart';
-import 'widgets/customColumImgTT.dart';
-import 'widgets/customStackImgTbutton.dart';
-import 'widgets/customStackIcon.dart';
+import '../widgets/customColTImage.dart';
+import '../widgets/customColumImgTT.dart';
+import '../widgets/customStackImgTbutton.dart';
+import '../widgets/customStackIcon.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -18,8 +20,8 @@ class HomeView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              InkWell(
-                onTap: null,
+              GestureDetector(
+                onTap: () => null,
                 child: CustomStackIcon(
                   imageUrl: 'assets/home/Messages.png',
                   txtNum: '5',
@@ -28,8 +30,8 @@ class HomeView extends StatelessWidget {
               SizedBox(
                 width: 20,
               ),
-              InkWell(
-                onTap: null,
+              GestureDetector(
+                onTap: () => null,
                 child: CustomStackIcon(
                   imageUrl: 'assets/home/notifications.png',
                   txtNum: '10',
@@ -52,8 +54,9 @@ class HomeView extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: InkWell(
-                  onTap: null,
+                child: InkResponse(
+                  radius: 25,
+                  onTap: () => null,
                   child: CustomColTImage(
                     imgUrl: 'assets/home/apparel.png',
                     txt: 'Apparel',
@@ -62,8 +65,9 @@ class HomeView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: InkWell(
-                  onTap: null,
+                child: InkResponse(
+                  radius: 25,
+                  onTap: () => null,
                   child: CustomColTImage(
                     imgUrl: 'assets/home/beauty.png',
                     txt: 'Beauty',
@@ -72,8 +76,9 @@ class HomeView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: InkWell(
-                  onTap: null,
+                child: InkResponse(
+                  radius: 25,
+                  onTap: () => null,
                   child: CustomColTImage(
                     imgUrl: 'assets/home/shoes.png',
                     txt: 'Shoes',
@@ -82,8 +87,9 @@ class HomeView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: InkWell(
-                  onTap: null,
+                child: InkResponse(
+                  radius: 25,
+                  onTap: () => Get.to(() => CategoriesView()),
                   child: CustomColTImage(
                     imgUrl: 'assets/auth/right_arrow.png',
                     txt: 'See All',

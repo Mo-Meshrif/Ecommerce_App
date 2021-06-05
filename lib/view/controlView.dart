@@ -1,5 +1,5 @@
 import '../core/viewModel/authViewModel.dart';
-import '../view/authView/authView.dart';
+import 'mainViews/authView.dart';
 import '../core/viewModel/homeViewModel.dart';
 import 'widgets/bottomNavBar.dart';
 import 'package:flutter/material.dart';

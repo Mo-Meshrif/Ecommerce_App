@@ -1,9 +1,9 @@
 import '../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 
-import '../../view/widgets/customRaisedButton.dart';
-import '../../view/widgets/customRichText.dart';
-import '../../view/widgets/customTextField.dart';
+import '../widgets/customRaisedButton.dart';
+import '../widgets/customRichText.dart';
+import '../widgets/customTextField.dart';
 import '../../const.dart';
 import 'package:flutter/material.dart';
 
