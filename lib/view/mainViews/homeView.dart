@@ -1,5 +1,5 @@
-import 'package:ecommerce/const.dart';
-import 'package:ecommerce/view/subViews/categoriesView.dart';
+import '../../const.dart';
+import '../../view/subViews/categoriesView.dart';
 import 'package:get/get.dart';
 import '../widgets/customText.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class HomeView extends StatelessWidget {
                   radius: 25,
                   onTap: () => Get.to(() => CategoriesView()),
                   child: CustomColTImage(
-                    imgUrl: 'assets/auth/right_arrow.png',
+                    imgUrl: 'assets/home/right_arrow_h.png',
                     txt: 'See All',
                     avatarCol: Colors.white,
                   ),
