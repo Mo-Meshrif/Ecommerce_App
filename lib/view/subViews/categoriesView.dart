@@ -67,24 +67,25 @@ class CategoriesView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: SubCategories(
-                              subCat:
-                                  subCats['s'].isEmpty ? '' : subCats['s'][0],
-                              prods: subCats['c1'],
+                    subCats['s'].isEmpty
+                        ? Padding(padding: EdgeInsets.all(0))
+                        : Expanded(
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: SubCategories(
+                                    subCat: subCats['s'][0],
+                                    prods: subCats['c1'],
+                                  ),
+                                ),
+                                Expanded(
+                                    child: SubCategories(
+                                  subCat: subCats['s'][1],
+                                  prods: subCats['c2'],
+                                )),
+                              ],
                             ),
                           ),
-                          Expanded(
-                              child: SubCategories(
-                            subCat: subCats['s'].isEmpty ? '' : subCats['s'][1],
-                            prods: subCats['c2'],
-                          )),
-                        ],
-                      ),
-                    ),
                   ],
                 );
               },
