@@ -71,21 +71,16 @@ class CategoriesView extends StatelessWidget {
                       child: Column(
                         children: [
                           Expanded(
-                            child: Card(
-                              child: SubCategories(
-                                subCat:
-                                    subCats['s'].isEmpty ? '' : subCats['s'][0],
-                                prods: subCats['c1'],
-                              ),
+                            child: SubCategories(
+                              subCat:
+                                  subCats['s'].isEmpty ? '' : subCats['s'][0],
+                              prods: subCats['c1'],
                             ),
                           ),
                           Expanded(
-                              child: Card(
-                            child: SubCategories(
-                              subCat:
-                                  subCats['s'].isEmpty ? '' : subCats['s'][1],
-                              prods: subCats['c2'],
-                            ),
+                              child: SubCategories(
+                            subCat: subCats['s'].isEmpty ? '' : subCats['s'][1],
+                            prods: subCats['c2'],
                           )),
                         ],
                       ),
