@@ -1,6 +1,6 @@
-import '../subViews/forgetPassView.dart';
-import '../subViews/signInView.dart';
-import '../subViews/signUpView.dart';
+import '../subViews/authView/forgetPassView.dart';
+import '../subViews/authView/signInView.dart';
+import '../subViews/authView/signUpView.dart';
 import '../../core/viewModel/authViewModel.dart';
 import '../widgets/customText.dart';
 import 'package:flutter/material.dart';

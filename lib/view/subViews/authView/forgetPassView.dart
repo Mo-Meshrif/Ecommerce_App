@@ -1,9 +1,9 @@
-import '../../core/viewModel/authViewModel.dart';
+import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 
-import '../widgets/customRaisedButton.dart';
-import '../widgets/customRichText.dart';
-import '../widgets/customTextField.dart';
+import '../../widgets/customRaisedButton.dart';
+import '../../widgets/customRichText.dart';
+import '../../widgets/customTextField.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPassView extends StatelessWidget {

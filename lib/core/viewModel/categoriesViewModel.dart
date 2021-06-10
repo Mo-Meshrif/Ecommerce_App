@@ -10,6 +10,11 @@ class CategoriesViewModel extends GetxController {
       'imgUrl': 'assets/home/apparel.png',
       'txt': 'Apparel',
       'avatarCol': priColor,
+      'shop': {
+        'banner': 'assets/shop/cover.png',
+        'txtTitle': 'ELEGANCE\n',
+        'txtDesc': 'All your fashion needs under one roof',
+      },
       'sub-cat': {
         's': [
           'MEN’S APPAREL',
@@ -42,6 +47,11 @@ class CategoriesViewModel extends GetxController {
       'imgUrl': 'assets/home/beauty.png',
       'txt': 'Beauty',
       'avatarCol': HexColor('#76BAFF'),
+      'Shop': {
+        'banner': '',
+        'txtTitle': '',
+        'txtDesc': '',
+      },
       'sub-cat': {
         's': [],
         'c1': [],
@@ -53,6 +63,11 @@ class CategoriesViewModel extends GetxController {
       'imgUrl': 'assets/home/shoes.png',
       'txt': 'Shoes',
       'avatarCol': HexColor('#2FC145'),
+      'Shop': {
+        'banner': '',
+        'txtTitle': '',
+        'txtDesc': '',
+      },
       'sub-cat': {
         's': [],
         'c1': [],

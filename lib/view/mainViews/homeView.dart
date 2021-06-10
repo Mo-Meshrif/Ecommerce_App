@@ -1,3 +1,4 @@
+import '../../view/subViews/shopView/shopView.dart';
 import '../../const.dart';
 import '../../view/subViews/categoriesView.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class HomeView extends StatelessWidget {
               Expanded(
                 child: InkResponse(
                   radius: 25,
-                  onTap: () => null,
+                  onTap: () => Get.to(() => ShopView(gatoTxt: 'Apparel')),
                   child: CustomColTImage(
                     imgUrl: 'assets/home/apparel.png',
                     txt: 'Apparel',
@@ -67,7 +68,7 @@ class HomeView extends StatelessWidget {
               Expanded(
                 child: InkResponse(
                   radius: 25,
-                  onTap: () => null,
+                  onTap: () => Get.to(() => ShopView(gatoTxt: 'Beauty')),
                   child: CustomColTImage(
                     imgUrl: 'assets/home/beauty.png',
                     txt: 'Beauty',
@@ -78,7 +79,7 @@ class HomeView extends StatelessWidget {
               Expanded(
                 child: InkResponse(
                   radius: 25,
-                  onTap: () => null,
+                  onTap: () => Get.to(() => ShopView(gatoTxt: 'Shoes')),
                   child: CustomColTImage(
                     imgUrl: 'assets/home/shoes.png',
                     txt: 'Shoes',

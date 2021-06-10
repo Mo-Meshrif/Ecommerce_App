@@ -1,13 +1,13 @@
-import '../../core/viewModel/authViewModel.dart';
+import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 
-import '../widgets/customRaisedButton.dart';
-import '../widgets/customRichText.dart';
-import '../widgets/customTextField.dart';
-import '../../const.dart';
+import '../../../const.dart';
+import '../../widgets/customRichText.dart';
+import '../../widgets/customRaisedButton.dart';
+import '../../widgets/customTextField.dart';
 import 'package:flutter/material.dart';
 
-class SignInView extends StatelessWidget {
+class SignUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _key = GlobalKey<FormState>();
@@ -32,27 +32,42 @@ class SignInView extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              img: 'assets/auth/password.png',
-              lableTxt: 'PASSWORD',
-              hintTxt: '************************',
+              img: 'assets/auth/mail.png',
+              lableTxt: 'USERNAME',
+              hintTxt: 'janedoe12345',
+              onSave: (val) => controller.userName = val,
               valid: (val) {
                 if (val.isEmpty) {
                   return 'The Feild is empty';
                 }
                 return null;
               },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+              img: 'assets/auth/password.png',
+              lableTxt: 'PASSWORD',
+              hintTxt: '************************',
               onSave: (val) => controller.password = val,
               isScure: true,
+              valid: (val) {
+                if (val.isEmpty) {
+                  return 'The Feild is empty';
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 20,
             ),
             CustomRaisedButton(
-              txt: 'LOG IN',
+              txt: 'SIGN UP',
               onPress: () {
                 _key.currentState.save();
                 if (_key.currentState.validate()) {
-                  controller.signIn();
+                  controller.signUp();
                 }
               },
             ),
@@ -60,10 +75,14 @@ class SignInView extends StatelessWidget {
               height: 20,
             ),
             CustomRichText(
-              txt1: 'Don’t have an account? Swipe Left to ',
+              txt1: 'By creating an account, you agree to our ',
               txt1color: Colors.black,
-              txt2: 'create a new account.',
+              txt2: 'Terms of Service ',
               txt2color: priColor,
+              txt3: 'and ',
+              txt3color: Colors.black,
+              txt4: 'Privacy Policy',
+              txt4color: priColor,
             ),
             SizedBox(
               height: 20,
