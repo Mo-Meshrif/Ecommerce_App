@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../../helper/localStorageData.dart';
 import '../../view/controlView.dart';
 import '../../core/service/fireStore_user.dart';
@@ -12,7 +13,8 @@ class AuthViewModel extends GetxController {
     update();
   }
 
-  bool isLoading = false;
+  ValueNotifier<bool> _loading = ValueNotifier(false);
+  ValueNotifier<bool> get loading => _loading;
   Rxn<User> _user = Rxn<User>();
   String get user => _user.value?.email;
   @override
@@ -31,11 +33,12 @@ class AuthViewModel extends GetxController {
 
   signUp() async {
     try {
-      isLoading = true;
+      _loading.value = true;
+      update();
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        isLoading = false;
+        _loading.value = false;
         Get.to(() => ControlView());
         UserModel userModel = UserModel(
           id: user.user.uid,
@@ -44,6 +47,7 @@ class AuthViewModel extends GetxController {
         );
         await FireStoreUser().addUserToFireStore(userModel);
         setUser(userModel);
+        update();
       });
     } catch (e) {
       handleAuthErrors(e);
@@ -52,15 +56,17 @@ class AuthViewModel extends GetxController {
 
   signIn() async {
     try {
-      isLoading = true;
+      _loading.value = true;
+      update();
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((user) async {
-        isLoading = false;
+        _loading.value = false;
         Get.to(() => ControlView());
         await FireStoreUser()
             .getUserFromFireStore(user.user.uid)
             .then((userData) => setUser(UserModel.fromJson(userData.data())));
+        update();
       });
     } catch (e) {
       handleAuthErrors(e);
@@ -87,5 +93,12 @@ class AuthViewModel extends GetxController {
       snackPosition: SnackPosition.BOTTOM,
       duration: Duration(seconds: 5),
     );
+  }
+
+  logout() {
+    _localStorageData.deleteUserData();
+    _auth.signOut();
+    currentIndex = 1;
+    update();
   }
 }
