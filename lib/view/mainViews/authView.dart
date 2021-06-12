@@ -15,64 +15,68 @@ class AuthView extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 60, horizontal: 15),
             child: GetBuilder<AuthViewModel>(
               init: AuthViewModel(),
-              builder: (controller) => Column(
-                children: <Widget>[
-                  Container(
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+              builder: (controller) => controller.loading.value
+                  ? Center(child: CustomText(txt: 'Loading .......'))
+                  : Column(
                       children: <Widget>[
-                        CustomText(
-                          txt: 'Sign Up',
-                          fSize: 30,
-                          txtColor: controller.currentIndex == 0
-                              ? Colors.black
-                              : Colors.grey,
+                        Container(
+                          height: 50,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              CustomText(
+                                txt: 'Sign Up',
+                                fSize: 30,
+                                txtColor: controller.currentIndex == 0
+                                    ? Colors.black
+                                    : Colors.grey,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              CustomText(
+                                txt: 'Log In',
+                                fSize: 30,
+                                txtColor: controller.currentIndex == 1
+                                    ? Colors.black
+                                    : Colors.grey,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              CustomText(
+                                txt: 'Forgot Password',
+                                txtColor: controller.currentIndex == 2
+                                    ? Colors.black
+                                    : Colors.grey,
+                                fSize: 30,
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
-                          width: 20,
+                          height: 30,
                         ),
-                        CustomText(
-                          txt: 'Log In',
-                          fSize: 30,
-                          txtColor: controller.currentIndex == 1
-                              ? Colors.black
-                              : Colors.grey,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        CustomText(
-                          txt: 'Forgot Password',
-                          txtColor: controller.currentIndex == 2
-                              ? Colors.black
-                              : Colors.grey,
-                          fSize: 30,
-                        ),
+                        Expanded(
+                          child: PageView(
+                              onPageChanged: (value) =>
+                                  controller.getPageIndex(value),
+                              children: [
+                                SignUpView(),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: SignInView(),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: ForgetPassView(),
+                                ),
+                              ],
+                              controller: PageController(
+                                  initialPage: controller.currentIndex)),
+                        )
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Expanded(
-                    child: PageView(
-                      onPageChanged: (value) => controller.getPageIndex(value),
-                      children: [
-                        SignUpView(),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: SignInView(),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: ForgetPassView(),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
             )));
   }
 }

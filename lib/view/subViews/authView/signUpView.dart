@@ -1,6 +1,5 @@
 import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
-
 import '../../../const.dart';
 import '../../widgets/customRichText.dart';
 import '../../widgets/customRaisedButton.dart';
@@ -87,9 +86,6 @@ class SignUpView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            controller.isLoading
-                ? Center(child: CircularProgressIndicator())
-                : Padding(padding: EdgeInsets.all(0)),
           ],
         ),
       ),

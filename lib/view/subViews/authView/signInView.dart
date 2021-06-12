@@ -68,9 +68,6 @@ class SignInView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            controller.isLoading
-                ? Center(child: CircularProgressIndicator())
-                : Padding(padding: EdgeInsets.all(0)),
           ],
         ),
       ),
