@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
-  String id, prodName, imgUrl, price, brand, condition, category, sku, material;
+  String id, prodName, imgUrl, price, brand, condition, sku, material;
+  Map<String, dynamic> classification;
   List<dynamic> color, size;
-  bool trend;
   Timestamp createdAt;
   ProductModel({
     this.id,
@@ -12,13 +12,12 @@ class ProductModel {
     this.color,
     this.size,
     this.price,
-    this.trend,
     this.createdAt,
     this.brand,
     this.condition,
-    this.category,
     this.sku,
     this.material,
+    this.classification,
   });
   ProductModel.fromJson(Map<String, dynamic> map) {
     if (map == null) {
@@ -30,13 +29,12 @@ class ProductModel {
     color = map['color'];
     size = map['size'];
     price = map['price'];
-    trend = map['trend'];
     createdAt = map['createdAt'];
     brand = map['brand'];
     condition = map['condition'];
-    category = map['category'];
     sku = map['sku'];
     material = map['material'];
+    classification = map['classification'];
   }
   toJson() {
     return {
@@ -46,13 +44,12 @@ class ProductModel {
       'color': color,
       'size': size,
       'price': price,
-      'trend': trend,
       'createdAt': createdAt,
       'brand': brand,
       'condition': condition,
-      'category': category,
       'sku': sku,
       'material': material,
+      'classification': classification,
     };
   }
 }

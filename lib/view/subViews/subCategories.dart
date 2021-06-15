@@ -30,7 +30,7 @@ class SubCategories extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 15),
+                padding: EdgeInsets.symmetric(vertical: 5),
                 itemCount: prods.length,
                 itemBuilder: (_, i) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -39,9 +39,11 @@ class SubCategories extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
-                          txt: prods[i],
-                          fSize: 15,
+                        Expanded(
+                          child: CustomText(
+                            txt: prods[i],
+                            fSize: 15,
+                          ),
                         ),
                         Image.asset('assets/home/right_arrow_c.png')
                       ],
@@ -49,10 +51,13 @@ class SubCategories extends StatelessWidget {
                   ),
                 ),
                 separatorBuilder: (_, i) => SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
               )),
         ),
+        SizedBox(
+          height: 5,
+        )
       ],
     );
   }

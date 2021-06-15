@@ -7,7 +7,7 @@ class HomeService {
       FirebaseFirestore.instance.collection('Products');
 
   Future<List<QueryDocumentSnapshot>> getCategoriesFromFireStore() async {
-    var val = await _collectionCategoriesRef.orderBy('id').get();
+    var val = await _collectionCategoriesRef.orderBy('createdAt').get();
     return val.docs;
   }
 
