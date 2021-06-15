@@ -11,8 +11,13 @@ class ControlView extends GetWidget<AuthViewModel> {
     return Obx(() => (controller.user == null)
         ? AuthView()
         : GetBuilder<HomeViewModel>(
+            init: HomeViewModel(),
             builder: (homeController) => Scaffold(
-              body: homeController.views[homeController.currentIndex],
+              body: homeController.loading.value
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : homeController.views[homeController.currentIndex],
               bottomNavigationBar: BottomNavBar(),
             ),
           ));

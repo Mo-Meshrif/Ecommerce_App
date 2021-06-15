@@ -1,5 +1,6 @@
+import '../../core/viewModel/homeViewModel.dart';
+import '../../model/categoryModel.dart';
 import '../../const.dart';
-import '../../core/viewModel/categoriesViewModel.dart';
 import '../../view/subViews/subCategories.dart';
 import '../../view/widgets/customColTImage.dart';
 import '../../view/widgets/customText.dart';
@@ -12,86 +13,82 @@ class CategoriesView extends StatelessWidget {
     return Scaffold(
         body: Container(
       padding: EdgeInsets.symmetric(vertical: 36, horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            alignment: Alignment.bottomRight,
-            child: IconButton(
-              iconSize: 30,
-              icon: Icon(Icons.close),
-              onPressed: () => Get.back(),
-              color: priColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: CustomText(
-              txt: 'All Categories',
-              fSize: 30,
-              fWeight: FontWeight.bold,
-              txtColor: swatchColor,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: GetBuilder<CategoriesViewModel>(
-              init: CategoriesViewModel(),
-              builder: (controller) {
-                List<Map<String, dynamic>> categories = controller.categories;
-                int currentCategory = controller.currentCategory;
-                Map<String, dynamic> subCats =
-                    categories[currentCategory]['sub-cat'];
-                return Row(
-                  children: [
-                    Container(
-                      width: 84,
-                      child: ListView.separated(
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        separatorBuilder: (_, i) => SizedBox(
-                          height: 10,
-                        ),
-                        itemCount: categories.length,
-                        itemBuilder: (_, i) => GestureDetector(
-                          onTap: () => controller.changeCategories(i),
-                          child: CustomColTImage(
-                            imgUrl: categories[i]['imgUrl'],
-                            avatarCol: categories[i]['avatarCol'],
-                            txt: categories[i]['txt'],
-                            txtCol: categories[i]['id'] == currentCategory
-                                ? priColor
-                                : null,
-                          ),
+      child: GetBuilder<HomeViewModel>(
+        builder: (controller) {
+          List<CategoryModel> categories = controller.categories;
+          Map<String, dynamic> subCategories =
+              categories[controller.currentCategory].subCat;
+          List<Widget> children = <Widget>[];
+          for (var i = 0; i < subCategories.length - 1; i++) {
+            children.add(
+              new Expanded(
+                child: SubCategories(
+                  subCat: subCategories['s'][i],
+                  prods: subCategories['s' + i.toString()],
+                ),
+              ),
+            );
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.bottomRight,
+                child: IconButton(
+                  iconSize: 30,
+                  icon: Icon(Icons.close),
+                  onPressed: () => Get.back(),
+                  color: priColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: CustomText(
+                  txt: 'All Categories',
+                  fSize: 30,
+                  fWeight: FontWeight.bold,
+                  txtColor: swatchColor,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                  child: Row(
+                children: [
+                  Container(
+                    width: 84,
+                    child: ListView.separated(
+                      padding: EdgeInsets.all(0),
+                      separatorBuilder: (_, i) => SizedBox(
+                        height: 10,
+                      ),
+                      itemCount: categories.length,
+                      itemBuilder: (_, i) => GestureDetector(
+                        onTap: () => controller.changeCategories(i),
+                        child: CustomColTImage(
+                          imgUrl: categories[i].imgUrl,
+                          avatarCol: categories[i].avatarCol,
+                          txt: categories[i].txt,
+                          txtCol: categories[i].txt ==
+                                  categories[controller.currentCategory].txt
+                              ? priColor
+                              : null,
                         ),
                       ),
                     ),
-                    subCats['s'].isEmpty
-                        ? Padding(padding: EdgeInsets.all(0))
-                        : Expanded(
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: SubCategories(
-                                    subCat: subCats['s'][0],
-                                    prods: subCats['c1'],
-                                  ),
-                                ),
-                                Expanded(
-                                    child: SubCategories(
-                                  subCat: subCats['s'][1],
-                                  prods: subCats['c2'],
-                                )),
-                              ],
-                            ),
-                          ),
-                  ],
-                );
-              },
-            ),
-          )
-        ],
+                  ),
+                  subCategories['s'][0].isEmpty
+                      ? Padding(padding: EdgeInsets.all(0))
+                      : Expanded(
+                          child: Column(
+                          children: children,
+                        )),
+                ],
+              ))
+            ],
+          );
+        },
       ),
     ));
   }
