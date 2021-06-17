@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'customRaisedButton.dart';
+import 'customElevatedButton.dart';
 import 'customText.dart';
 
 class CustomStackImgTbutton extends StatelessWidget {
@@ -11,7 +10,7 @@ class CustomStackImgTbutton extends StatelessWidget {
   CustomStackImgTbutton({
     this.imgUrl,
     this.txt,
-    this.imgH = 190,
+    this.imgH = 192,
     this.imgW,
   });
   @override
@@ -30,6 +29,7 @@ class CustomStackImgTbutton extends StatelessWidget {
             txt: txt,
             fSize: 18,
             txtColor: Colors.white,
+            maxLine: 3,
           ),
         ),
         Positioned(
@@ -37,8 +37,9 @@ class CustomStackImgTbutton extends StatelessWidget {
           left: 25,
           child: Container(
             width: 150,
-            child: CustomRaisedButton(
+            child: CustomElevatedButton(
               txt: 'SEE MORE',
+              imgUrl: 'assets/auth/right_arrow.png',
             ),
           ),
         )

@@ -13,19 +13,25 @@ class CustomColumImgTT extends StatelessWidget {
     this.imgUrl,
     this.txt1,
     this.txt2,
-    this.imgH = 70,
-    this.imgW = 70,
+    this.imgH = 77,
+    this.imgW = 77,
   });
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(
-          imgUrl,
-          width: imgW,
-          height: imgH,
-        ),
+        imgUrl.startsWith('a')
+            ? Image.asset(
+                imgUrl,
+                width: imgW,
+                height: imgH,
+              )
+            : Image.network(
+                imgUrl,
+                width: imgW,
+                height: imgH,
+              ),
         CustomText(
           txt: txt1,
           txtColor: swatchColor,

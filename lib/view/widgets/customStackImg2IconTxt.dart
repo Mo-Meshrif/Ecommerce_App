@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'customRichText.dart';
 
 class CustomStackImg2IconTxt extends StatelessWidget {
@@ -12,8 +11,9 @@ class CustomStackImg2IconTxt extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Image.asset(
-          banner,
+        FadeInImage.assetNetwork(
+          placeholder: 'assets/shop/place_holder.jpg',
+          image: banner,
           width: double.infinity,
           fit: BoxFit.cover,
         ),
@@ -39,7 +39,7 @@ class CustomStackImg2IconTxt extends StatelessWidget {
           ),
         ),
         CustomRichText(
-            txt1: txtTitle,
+            txt1: txtTitle + '\n',
             txt1color: Colors.white,
             txt1Size: 30,
             txt2: txtDesc,

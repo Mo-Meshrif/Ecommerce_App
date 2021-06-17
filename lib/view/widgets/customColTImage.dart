@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'customText.dart';
 
 class CustomColTImage extends StatelessWidget {
   final String imgUrl;
   final String txt;
   final Color txtCol;
-  final Color avatarCol;
+  final String avatarCol;
   CustomColTImage({
     this.imgUrl,
     this.txt,
@@ -18,12 +19,14 @@ class CustomColTImage extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 35,
-          backgroundColor: avatarCol,
+          backgroundColor: HexColor(avatarCol),
           child: Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Image.asset(
-              imgUrl,
-            ),
+            child: imgUrl.startsWith('a')
+                ? Image.asset(imgUrl)
+                : Image.network(
+                    imgUrl,
+                  ),
           ),
         ),
         SizedBox(
