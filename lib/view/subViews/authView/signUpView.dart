@@ -2,7 +2,7 @@ import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 import '../../../const.dart';
 import '../../widgets/customRichText.dart';
-import '../../widgets/customRaisedButton.dart';
+import '../../widgets/customElevatedButton.dart';
 import '../../widgets/customTextField.dart';
 import 'package:flutter/material.dart';
 

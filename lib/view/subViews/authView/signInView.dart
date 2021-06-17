@@ -1,6 +1,6 @@
 import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
-import '../../widgets/customRaisedButton.dart';
+import '../../widgets/customElevatedButton.dart';
 import '../../widgets/customRichText.dart';
 import '../../widgets/customTextField.dart';
 import '../../../const.dart';
