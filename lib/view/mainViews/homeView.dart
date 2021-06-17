@@ -1,3 +1,4 @@
+import '../../view/subViews/productDetails/productDetails.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../model/categoryModel.dart';
 import '../../model/productModel.dart';
@@ -22,15 +23,17 @@ class HomeView extends StatelessWidget {
           List<CategoryModel> categories = controller.categories;
           List<ProductModel> products = controller.products;
           List<Widget> lastHomeProducts = <Widget>[];
-          for (var i = 0; i < 3; i++) {
-            lastHomeProducts.add(new GestureDetector(
-              onTap: null,
-              child: CustomColumImgTT(
-                imgUrl: products[i].imgUrl,
-                txt1: products[i].prodName,
-                txt2: '\$' + products[i].price,
-              ),
-            ));
+          if (products.length > 3) {
+            for (var i = 0; i < 3; i++) {
+              lastHomeProducts.add(new GestureDetector(
+                onTap: () => Get.to(() => ProductDetails(prod: products[i])),
+                child: CustomColumImgTT(
+                  imgUrl: products[i].imgUrl,
+                  txt1: products[i].prodName,
+                  txt2: '\$' + products[i].price,
+                ),
+              ));
+            }
           }
           return categories.length < 3
               ? Center(
