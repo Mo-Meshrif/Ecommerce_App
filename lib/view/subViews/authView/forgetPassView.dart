@@ -38,7 +38,8 @@ class ForgetPassView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomRaisedButton(
+            CustomElevatedButton(
+              imgUrl: 'assets/auth/right_arrow.png',
               txt: 'SEND EMAIL',
               onPress: () {
                 _key.currentState.save();

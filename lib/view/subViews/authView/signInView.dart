@@ -46,7 +46,8 @@ class SignInView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomRaisedButton(
+            CustomElevatedButton(
+              imgUrl: 'assets/auth/right_arrow.png',
               txt: 'LOG IN',
               onPress: () {
                 _key.currentState.save();
