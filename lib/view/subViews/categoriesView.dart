@@ -16,19 +16,8 @@ class CategoriesView extends StatelessWidget {
       child: GetBuilder<HomeViewModel>(
         builder: (controller) {
           List<CategoryModel> categories = controller.categories;
-          Map<String, dynamic> subCategories =
+          List<dynamic> subCategories =
               categories[controller.currentCategory].subCat;
-          List<Widget> children = <Widget>[];
-          for (var i = 0; i < subCategories.length - 1; i++) {
-            children.add(
-              new Expanded(
-                child: SubCategories(
-                  subCat: subCategories['s'][i],
-                  prods: subCategories['s' + i.toString()],
-                ),
-              ),
-            );
-          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -78,12 +67,13 @@ class CategoriesView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  subCategories['s'][0].isEmpty
+                  subCategories.isEmpty
                       ? Padding(padding: EdgeInsets.all(0))
                       : Expanded(
-                          child: Column(
-                          children: children,
-                        )),
+                          child: SubCategories(
+                            prods: subCategories,
+                          ),
+                        ),
                 ],
               ))
             ],

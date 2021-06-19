@@ -5,11 +5,8 @@ import 'productsView.dart';
 
 class SubCategories extends StatelessWidget {
   SubCategories({
-    this.subCat,
     this.prods,
   });
-
-  final String subCat;
   final List prods;
 
   @override
@@ -20,7 +17,7 @@ class SubCategories extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 5),
           child: CustomText(
-            txt: subCat,
+            txt: 'Featured Categories',
             fSize: 12,
             fWeight: FontWeight.w300,
           ),
@@ -30,7 +27,7 @@ class SubCategories extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 5),
+                padding: EdgeInsets.symmetric(vertical: 15),
                 itemCount: prods.length,
                 itemBuilder: (_, i) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
