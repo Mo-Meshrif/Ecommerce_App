@@ -4,7 +4,7 @@ class CategoryModel {
   String id, imgUrl, txt, avatarCol;
   Timestamp createdAt;
   Map<String, dynamic> shop;
-  List<dynamic> subCat;
+  Map<String, dynamic> subCat;
   CategoryModel({
     this.id,
     this.imgUrl,

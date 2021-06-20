@@ -5,10 +5,11 @@ import 'productsView.dart';
 
 class SubCategories extends StatelessWidget {
   SubCategories({
+    this.subCat,
     this.prods,
   });
+  final String subCat;
   final List prods;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,7 +18,7 @@ class SubCategories extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 5),
           child: CustomText(
-            txt: 'Featured Categories',
+            txt: subCat.toUpperCase(),
             fSize: 12,
             fWeight: FontWeight.w300,
           ),
@@ -27,12 +28,15 @@ class SubCategories extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 15),
+                padding: EdgeInsets.symmetric(vertical: 5),
                 itemCount: prods.length,
                 itemBuilder: (_, i) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: GestureDetector(
-                    onTap: () => Get.to(() => ProductsView(prodsTxt: prods[i])),
+                    onTap: () => Get.to(() => ProductsView(
+                          prodsTxt: prods[i],
+                          catTxt: subCat,
+                        )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
