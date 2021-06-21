@@ -68,4 +68,45 @@ class HomeViewModel extends GetxController {
       print(e);
     }
   }
+
+  bool isFltered = false;
+  String filterCatTxt,
+      filterConditionTxt,
+      filterMaterialTxt,
+      filterBrandTxt,
+      filterPriceTxt;
+  changeCatTxt(String val) {
+    filterCatTxt = val;
+    update();
+  }
+
+  changeConditionTxt(String val) {
+    filterConditionTxt = val;
+    update();
+  }
+
+  changeMaterialTxt(String val) {
+    filterMaterialTxt = val;
+    update();
+  }
+
+  changeBrandTxt(String val) {
+    filterBrandTxt = val;
+    update();
+  }
+
+  changePriceTxt(String val) {
+    filterPriceTxt = val;
+    update();
+  }
+
+  changeFilterState(bool val) {
+    isFltered = val;
+    update();
+  }
+
+  clearFilters() {
+    isFltered = false;
+    update();
+  }
 }

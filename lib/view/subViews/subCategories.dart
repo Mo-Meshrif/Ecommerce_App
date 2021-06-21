@@ -36,6 +36,7 @@ class SubCategories extends StatelessWidget {
                     onTap: () => Get.to(() => ProductsView(
                           prodsTxt: prods[i],
                           catTxt: subCat,
+                          fromCategoriesView: true,
                         )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
