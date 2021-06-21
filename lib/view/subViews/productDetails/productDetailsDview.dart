@@ -1,6 +1,6 @@
-import 'package:ecommerce/const.dart';
-import 'package:ecommerce/model/productModel.dart';
-import 'package:ecommerce/view/widgets/customText.dart';
+import '../../../const.dart';
+import '../../../model/productModel.dart';
+import '../../../view/widgets/customText.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsDview extends StatelessWidget {
