@@ -38,20 +38,27 @@ class CustomFilter extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      txt: 'REFINE RESULTS',
+                      txt: controller.filterCatTxt == null ||
+                              controller.filterConditionTxt == null ||
+                              controller.filterMaterialTxt == null ||
+                              controller.filterBrandTxt == null
+                          ? 'Choose your filters Please .........'
+                          : 'REFINE RESULTS',
                       txtColor: swatchColor,
                       fWeight: FontWeight.w300,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        controller.clearFilters();
-                        Get.back();
-                      },
-                      child: CustomText(
-                        txt: 'CLEAR',
-                        txtColor: priColor,
-                      ),
-                    ),
+                    !controller.isFltered
+                        ? Padding(padding: EdgeInsets.zero)
+                        : GestureDetector(
+                            onTap: () {
+                              controller.clearFilters();
+                              Get.back();
+                            },
+                            child: CustomText(
+                              txt: 'CLEAR',
+                              txtColor: priColor,
+                            ),
+                          ),
                   ],
                 ),
                 SizedBox(
@@ -94,17 +101,26 @@ class CustomFilter extends StatelessWidget {
                   popMenuItems: avBrands,
                   onSelected: (val) => controller.changeBrandTxt(val),
                 ),
-                SizedBox(
-                  height: 50,
-                ),
-                Container(
-                  width: 200,
-                  child: CustomElevatedButton(
-                    txt: 'APPLY FILTERS',
-                    imgUrl: 'assets/auth/right_arrow.png',
-                    onPress: () => controller.changeFilterState(true),
-                  ),
-                )
+                controller.filterCatTxt == null ||
+                        controller.filterConditionTxt == null ||
+                        controller.filterMaterialTxt == null ||
+                        controller.filterBrandTxt == null
+                    ? Padding(padding: EdgeInsets.zero)
+                    : Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Container(
+                            width: 200,
+                            child: CustomElevatedButton(
+                              txt: 'APPLY FILTERS',
+                              imgUrl: 'assets/auth/right_arrow.png',
+                              onPress: () => controller.changeFilterState(true),
+                            ),
+                          ),
+                        ],
+                      )
               ],
             ),
           ),

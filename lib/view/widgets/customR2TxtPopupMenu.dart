@@ -20,7 +20,7 @@ class CustomR2TxtPopupMenu extends StatelessWidget {
         Row(
           children: [
             CustomText(
-              txt: txt2 ?? popMenuItems[0],
+              txt: txt2 ?? '',
               txtColor: swatchColor,
               fWeight: FontWeight.w300,
             ),

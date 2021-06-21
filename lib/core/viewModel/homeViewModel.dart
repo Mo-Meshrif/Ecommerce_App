@@ -70,11 +70,8 @@ class HomeViewModel extends GetxController {
   }
 
   bool isFltered = false;
-  String filterCatTxt,
-      filterConditionTxt,
-      filterMaterialTxt,
-      filterBrandTxt,
-      filterPriceTxt;
+  String filterCatTxt, filterConditionTxt, filterMaterialTxt, filterBrandTxt;
+
   changeCatTxt(String val) {
     filterCatTxt = val;
     update();
@@ -95,17 +92,16 @@ class HomeViewModel extends GetxController {
     update();
   }
 
-  changePriceTxt(String val) {
-    filterPriceTxt = val;
-    update();
-  }
-
   changeFilterState(bool val) {
     isFltered = val;
     update();
   }
 
   clearFilters() {
+    filterCatTxt = null;
+    filterConditionTxt = null;
+    filterMaterialTxt = null;
+    filterBrandTxt = null;
     isFltered = false;
     update();
   }
