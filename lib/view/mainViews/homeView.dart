@@ -1,3 +1,4 @@
+import '../../view/widgets/messagesNotBar.dart';
 import '../../view/subViews/productDetails/productDetails.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../model/categoryModel.dart';
@@ -11,7 +12,6 @@ import 'package:hexcolor/hexcolor.dart';
 import '../widgets/customColTImage.dart';
 import '../widgets/customColumImgTT.dart';
 import '../widgets/customStackImgTbutton.dart';
-import '../widgets/customStackIcon.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -44,28 +44,7 @@ class HomeView extends StatelessWidget {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () => null,
-                          child: CustomStackIcon(
-                            imageUrl: 'assets/home/Messages.png',
-                            txtNum: '5',
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        GestureDetector(
-                          onTap: () => null,
-                          child: CustomStackIcon(
-                            imageUrl: 'assets/home/notifications.png',
-                            txtNum: '10',
-                          ),
-                        ),
-                      ],
-                    ),
+                    MessagesNotBar(),
                     SizedBox(
                       height: 10,
                     ),
