@@ -64,19 +64,18 @@ class CustomFilter extends StatelessWidget {
                 SizedBox(
                   height: 25,
                 ),
-                !fromCategoriesView
-                    ? CustomR2TxtPopupMenu(
-                        txt1: 'Category',
-                        txt2: controller.filterCatTxt,
-                        popMenuItems: avCategories,
-                        onSelected: (val) => controller.changeCatTxt(val),
-                      )
-                    : Padding(padding: EdgeInsets.zero),
-                !fromCategoriesView
-                    ? SizedBox(
-                        height: 30,
-                      )
-                    : Padding(padding: EdgeInsets.zero),
+                CustomR2TxtPopupMenu(
+                  txt1: 'Category',
+                  txt2: fromCategoriesView
+                      ? avCategories[0]
+                      : controller.filterCatTxt,
+                  popMenuItems: avCategories,
+                  onSelected: (val) => controller.changeCatTxt(val),
+                  enableState: fromCategoriesView ? false : true,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
                 CustomR2TxtPopupMenu(
                   txt1: 'Condition',
                   txt2: controller.filterConditionTxt,
@@ -101,7 +100,9 @@ class CustomFilter extends StatelessWidget {
                   popMenuItems: avBrands,
                   onSelected: (val) => controller.changeBrandTxt(val),
                 ),
-                controller.filterCatTxt == null ||
+                (fromCategoriesView
+                            ? avCategories.length == 0
+                            : controller.filterCatTxt == null) ||
                         controller.filterConditionTxt == null ||
                         controller.filterMaterialTxt == null ||
                         controller.filterBrandTxt == null
