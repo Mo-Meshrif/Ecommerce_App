@@ -55,6 +55,7 @@ class ShopPview extends StatelessWidget {
                                   onTap: () => Get.to(() => ProductsView(
                                         prodsTxt: subCatWithoutRepeated[i],
                                         fromCategoriesView: false,
+                                        fromSearchView: false,
                                       )),
                                   child: CustomText(
                                     txt: 'SEE ALL',

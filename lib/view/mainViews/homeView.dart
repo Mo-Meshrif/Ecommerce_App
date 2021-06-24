@@ -140,6 +140,7 @@ class HomeView extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
+                      height: 120,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: lastHomeProducts,

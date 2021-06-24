@@ -1,4 +1,5 @@
-import 'package:ecommerce/const.dart';
+import '../../const.dart';
+import '../../core/viewModel/searchViewModel.dart';
 import '../../view/widgets/customFilter.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../model/productModel.dart';
@@ -10,8 +11,12 @@ import 'package:get/get.dart';
 
 class ProductsView extends StatelessWidget {
   final String prodsTxt, catTxt;
-  final bool fromCategoriesView;
-  ProductsView({this.prodsTxt, this.catTxt, this.fromCategoriesView});
+  final bool fromCategoriesView, fromSearchView;
+  ProductsView(
+      {@required this.prodsTxt,
+      this.catTxt,
+      @required this.fromCategoriesView,
+      @required this.fromSearchView});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
@@ -111,12 +116,22 @@ class ProductsView extends StatelessWidget {
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 3),
-                                  itemBuilder: (context, x) => GestureDetector(
-                                    onTap: () => Get.to(() => ProductDetails(
-                                        prod: !controller.isFltered
-                                            ? filteredProducts[x]
-                                            : customProducts[x])),
-                                    child: GridTile(
+                                  itemBuilder: (context, x) =>
+                                      GetBuilder<SearchViewModel>(
+                                    builder: (searchController) =>
+                                        GestureDetector(
+                                      onTap: () => Get.to(
+                                        () => ProductDetails(
+                                            prod: !controller.isFltered
+                                                ? filteredProducts[x]
+                                                : customProducts[x]),
+                                      ).then((_) => fromSearchView
+                                          ? searchController
+                                              .getRecentlyViewedProducts(
+                                                  !controller.isFltered
+                                                      ? filteredProducts[x]
+                                                      : customProducts[x])
+                                          : null),
                                       child: Card(
                                         child: Center(
                                           child: CustomColumImgTT(

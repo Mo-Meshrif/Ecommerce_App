@@ -37,6 +37,7 @@ class SubCategories extends StatelessWidget {
                           prodsTxt: prods[i],
                           catTxt: subCat,
                           fromCategoriesView: true,
+                          fromSearchView: false,
                         )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -4,7 +4,9 @@ import '../../model/productModel.dart';
 import 'package:get/get.dart';
 
 class SearchViewModel extends GetxController {
+  int currentIndex = 0;
   List<ProductModel> searchProducts = [];
+  List<ProductModel> recentlyViewedProducts = [];
   List<String> allCats = [];
   List<String> recommendedCats = [];
   final HomeViewModel _homeViewModel = Get.find();
@@ -13,6 +15,11 @@ class SearchViewModel extends GetxController {
   SearchViewModel() {
     getRecommendedCats();
   }
+  void changeIndex(index) {
+    currentIndex = index;
+    update();
+  }
+
   changeSearchState(bool state) {
     _isSearchResultsView.value = state;
     update();
@@ -26,16 +33,29 @@ class SearchViewModel extends GetxController {
         searchProducts = [];
         update();
       } else {
+        if (searchEntry == '') {
+          return;
+        }
         searchProducts = _homeViewModel.products
             .where((prod) => prod.classification['sub-cat']
                 .toString()
-                .contains(searchEntry.capitalizeFirst))
+                .startsWith(searchEntry.capitalizeFirst))
             .toList();
         update();
       }
     } catch (e) {
       Get.snackbar('Alert', e);
     }
+  }
+
+  getRecentlyViewedProducts(ProductModel prod) {
+    recentlyViewedProducts.add(prod);
+    update();
+  }
+
+  clearRecentlyViewedProducts() {
+    recentlyViewedProducts = [];
+    update();
   }
 
   getRecommendedCats() {
