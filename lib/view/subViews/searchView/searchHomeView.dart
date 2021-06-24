@@ -1,3 +1,5 @@
+import 'package:ecommerce/model/productModel.dart';
+
 import '../../../view/subViews/productsView.dart';
 import '../../../view/widgets/customSearchBar.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,8 @@ class SearchHomeView extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
       child: GetBuilder<SearchViewModel>(
         builder: (controller) {
+          List<ProductModel> recentlyViewedProducts =
+              controller.recentlyViewedProducts.toSet().toList();
           List<String> recommendedCats = controller.recommendedCats;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,49 +37,58 @@ class SearchHomeView extends StatelessWidget {
                 onChanged: (val) => controller.getSearchedProducts(val),
                 onTap: () => controller.changeSearchState(true),
               ),
-              SizedBox(height: 20),
-              CustomRTxtGTxt(
-                txt1: 'RECENTLY VIEWED',
-                txt2: 'CLEAR',
-                onT: () => null,
-              ),
-              SizedBox(height: 15),
-              Container(
-                height: 80,
-                child: ListView.builder(
-                  padding: EdgeInsets.all(0),
-                  itemCount: 5,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, i) => Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/home/backpack.png',
-                            height: 40,
-                            width: 40,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomText(
-                                txt: 'Bottle Green Backpack',
-                              ),
-                              CustomText(
-                                txt: '\$20.58',
-                              ),
-                            ],
-                          )
-                        ],
+              recentlyViewedProducts.length > 0
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: CustomRTxtGTxt(
+                        txt1: 'RECENTLY VIEWED',
+                        txt2: 'CLEAR',
+                        onT: () => controller.clearRecentlyViewedProducts(),
                       ),
-                    ),
-                  ),
-                ),
-              ),
+                    )
+                  : Padding(padding: EdgeInsets.zero),
+              recentlyViewedProducts.length > 0
+                  ? Container(
+                      height: 80,
+                      child: ListView.builder(
+                        padding: EdgeInsets.all(0),
+                        itemCount: recentlyViewedProducts.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, i) => Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Image.network(
+                                  recentlyViewedProducts[i].imgUrl,
+                                  height: 40,
+                                  width: 40,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      txt: recentlyViewedProducts[i].prodName,
+                                    ),
+                                    CustomText(
+                                      txt: '\$' +
+                                          recentlyViewedProducts[i].price,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Padding(padding: EdgeInsets.zero),
               SizedBox(height: 20),
               CustomRTxtGTxt(
                 txt1: 'RECOMMENDED',
@@ -97,6 +110,7 @@ class SearchHomeView extends StatelessWidget {
                           onTap: () => Get.to(() => ProductsView(
                                 prodsTxt: recommendedCats[x],
                                 fromCategoriesView: false,
+                                fromSearchView: true,
                               )),
                           child: Card(
                             child: Center(
