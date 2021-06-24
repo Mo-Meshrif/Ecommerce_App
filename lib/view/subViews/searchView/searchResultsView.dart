@@ -26,7 +26,10 @@ class SearchResultsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => controller.changeSearchState(false),
+                    onTap: () {
+                      controller.changeSearchState(false);
+                      controller.clearSearchedProducts();
+                    },
                     child: Image.asset('assets/shop/back.png'),
                   ),
                   SizedBox(

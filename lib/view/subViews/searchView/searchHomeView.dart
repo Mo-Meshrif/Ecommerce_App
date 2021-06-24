@@ -1,4 +1,5 @@
 import 'package:ecommerce/model/productModel.dart';
+import 'package:ecommerce/view/subViews/productDetails/productDetails.dart';
 
 import '../../../view/subViews/productsView.dart';
 import '../../../view/widgets/customSearchBar.dart';
@@ -59,30 +60,36 @@ class SearchHomeView extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10)),
                           child: Padding(
                             padding: const EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  recentlyViewedProducts[i].imgUrl,
-                                  height: 40,
-                                  width: 40,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomText(
-                                      txt: recentlyViewedProducts[i].prodName,
-                                    ),
-                                    CustomText(
-                                      txt: '\$' +
-                                          recentlyViewedProducts[i].price,
-                                    ),
-                                  ],
-                                )
-                              ],
+                            child: GestureDetector(
+                              onTap: () => Get.to(() => ProductDetails(
+                                    prod: recentlyViewedProducts[i],
+                                  )),
+                              child: Row(
+                                children: [
+                                  Image.network(
+                                    recentlyViewedProducts[i].imgUrl,
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(
+                                        txt: recentlyViewedProducts[i].prodName,
+                                      ),
+                                      CustomText(
+                                        txt: '\$' +
+                                            recentlyViewedProducts[i].price,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

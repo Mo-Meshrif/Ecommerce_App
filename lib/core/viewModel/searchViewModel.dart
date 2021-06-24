@@ -48,6 +48,11 @@ class SearchViewModel extends GetxController {
     }
   }
 
+  clearSearchedProducts() {
+    searchProducts = [];
+    update();
+  }
+
   getRecentlyViewedProducts(ProductModel prod) {
     recentlyViewedProducts.add(prod);
     update();
