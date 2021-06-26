@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
@@ -29,27 +30,40 @@ class ProductModel {
     color = map['color'];
     size = map['size'];
     price = map['price'];
-    createdAt = map['createdAt'];
+    createdAt = map['createdAt'] is String
+        ? Timestamp.fromDate(DateTime.parse(map['createdAt']))
+        : map['createdAt'];
     brand = map['brand'];
     condition = map['condition'];
     sku = map['sku'];
     material = map['material'];
     classification = map['classification'];
   }
-  toJson() {
+  static toJson(ProductModel prod) {
     return {
-      'id': id,
-      'prodName': prodName,
-      'imgUrl': imgUrl,
-      'color': color,
-      'size': size,
-      'price': price,
-      'createdAt': createdAt,
-      'brand': brand,
-      'condition': condition,
-      'sku': sku,
-      'material': material,
-      'classification': classification,
+      'id': prod.id,
+      'prodName': prod.prodName,
+      'imgUrl': prod.imgUrl,
+      'color': prod.color,
+      'size': prod.size,
+      'price': prod.price,
+      'createdAt': prod.createdAt.toDate()?.toIso8601String(),
+      'brand': prod.brand,
+      'condition': prod.condition,
+      'sku': prod.sku,
+      'material': prod.material,
+      'classification': prod.classification,
     };
   }
+
+  static String encode(List<ProductModel> prods) => jsonEncode(
+        prods
+            .map<Map<String, dynamic>>((item) => ProductModel.toJson(item))
+            .toList(),
+      );
+
+  static List<ProductModel> decode(String prod) =>
+      (jsonDecode(prod) as List<dynamic>)
+          .map<ProductModel>((item) => ProductModel.fromJson(item))
+          .toList();
 }

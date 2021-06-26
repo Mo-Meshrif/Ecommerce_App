@@ -1,3 +1,5 @@
+import 'package:ecommerce/core/viewModel/searchViewModel.dart';
+
 import '../../../view/widgets/customElevatedButton.dart';
 import '../../../model/productModel.dart';
 import '../../../view/subViews/productDetails/productDetailsDview.dart';
@@ -11,8 +13,8 @@ import '../../../const.dart';
 
 class ProductDetails extends StatelessWidget {
   final ProductModel prod;
-
-  ProductDetails({this.prod});
+  final bool fromSearchView;
+  ProductDetails({@required this.prod, @required this.fromSearchView});
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -28,9 +30,16 @@ class ProductDetails extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                      onTap: () => Get.back(),
-                      child: Image.asset('assets/shop/back.png')),
+                  GetBuilder<SearchViewModel>(
+                    builder: (searchController) => GestureDetector(
+                        onTap: () {
+                          if (fromSearchView) {
+                            searchController.getRecentlyViewedProducts(prod);
+                          }
+                          Get.back();
+                        },
+                        child: Image.asset('assets/shop/back.png')),
+                  ),
                   Expanded(
                     child: Center(
                       child: CustomText(

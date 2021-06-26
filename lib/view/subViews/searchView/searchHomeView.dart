@@ -63,6 +63,7 @@ class SearchHomeView extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () => Get.to(() => ProductDetails(
                                     prod: recentlyViewedProducts[i],
+                                    fromSearchView: true,
                                   )),
                               child: Row(
                                 children: [
@@ -115,6 +116,7 @@ class SearchHomeView extends StatelessWidget {
                     ),
                     itemBuilder: (context, x) => GestureDetector(
                           onTap: () => Get.to(() => ProductsView(
+                                catTxt: null,
                                 prodsTxt: recommendedCats[x],
                                 fromCategoriesView: false,
                                 fromSearchView: true,

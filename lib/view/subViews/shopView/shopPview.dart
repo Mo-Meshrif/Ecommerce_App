@@ -80,8 +80,10 @@ class ShopPview extends StatelessWidget {
                                         crossAxisCount: 3),
                                 itemBuilder: (context, x) {
                                   return GestureDetector(
-                                    onTap: () => Get.to(() =>
-                                        ProductDetails(prod: shopProducts[x])),
+                                    onTap: () => Get.to(() => ProductDetails(
+                                          prod: shopProducts[x],
+                                          fromSearchView: false,
+                                        )),
                                     child: Card(
                                       child: Center(
                                         child: CustomColumImgTT(

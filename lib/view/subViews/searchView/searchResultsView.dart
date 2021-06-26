@@ -1,6 +1,7 @@
 import 'package:ecommerce/const.dart';
 import 'package:ecommerce/model/productModel.dart';
 import 'package:ecommerce/view/subViews/searchView/searchRSortView.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import '../../../core/viewModel/searchViewModel.dart';
 import '../../../view/widgets/customSearchBar.dart';
 import '../../../view/widgets/customText.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchResultsView extends StatelessWidget {
+  final GlobalKey<SliderMenuContainerState> searchRkey;
+
+  SearchResultsView({@required this.searchRkey});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,7 +50,7 @@ class SearchResultsView extends StatelessWidget {
                     width: 15,
                   ),
                   GestureDetector(
-                    onTap: () => null,
+                    onTap: () => searchRkey.currentState.openDrawer(),
                     child: Image.asset(
                       'assets/shop/filter.png',
                       color: null,

@@ -20,8 +20,10 @@ class SearchRSortView extends StatelessWidget {
         itemCount: products.length,
         itemBuilder: (context, x) => GetBuilder<SearchViewModel>(
           builder: (controller) => GestureDetector(
-            onTap: () => Get.to(() => ProductDetails(prod: products[x]))
-                .then((_) => controller.getRecentlyViewedProducts(products[x])),
+            onTap: () => Get.to(() => ProductDetails(
+                  prod: products[x],
+                  fromSearchView: true,
+                )),
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),

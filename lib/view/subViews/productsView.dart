@@ -1,6 +1,3 @@
-import '../../const.dart';
-import '../../core/viewModel/searchViewModel.dart';
-import '../../view/widgets/customFilter.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../model/productModel.dart';
 import '../../view/subViews/productDetails/productDetails.dart';
@@ -21,7 +18,6 @@ class ProductsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
       builder: (controller) {
-        GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
         List<ProductModel> products = controller.products;
         List<ProductModel> filteredProducts = products.where((prod) {
           if (fromCategoriesView) {
@@ -30,39 +26,8 @@ class ProductsView extends StatelessWidget {
           }
           return prod.classification['sub-cat'] == prodsTxt;
         }).toList();
-        List<String> availableCategories = [];
-        List<String> availableConditions = [];
-        List<String> availableMaterials = [];
-        List<String> availableBrands = [];
-        filteredProducts.forEach((prods) {
-          availableCategories.add(prods.classification['category']);
-          availableConditions.add(prods.condition);
-          availableMaterials.add(prods.material);
-          availableBrands.add(prods.brand);
-        });
-        List<ProductModel> customProducts = products.where((prod) {
-          if (!fromCategoriesView) {
-            return prod.classification['sub-cat'] == prodsTxt &&
-                prod.classification['category'] == controller.filterCatTxt &&
-                prod.condition == controller.filterConditionTxt &&
-                prod.material == controller.filterMaterialTxt &&
-                prod.brand == controller.filterBrandTxt;
-          }
-          return prod.classification['sub-cat'] == prodsTxt &&
-              prod.condition == controller.filterConditionTxt &&
-              prod.material == controller.filterMaterialTxt &&
-              prod.brand == controller.filterBrandTxt;
-        }).toList();
         return Scaffold(
-          key: _key,
-          endDrawer: CustomFilter(
-            fromCategoriesView: fromCategoriesView,
-            avCategories: availableCategories.toSet().toList(),
-            avConditions: availableConditions.toSet().toList(),
-            avMaterials: availableMaterials.toSet().toList(),
-            avBrands: availableBrands.toSet().toList(),
-          ),
-          body: filteredProducts.isEmpty && !controller.isFltered
+          body: filteredProducts.isEmpty
               ? Center(
                   child: CustomText(
                     txt: 'Comming Sooooooooon !',
@@ -90,70 +55,40 @@ class ProductsView extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                              onTap: () => _key.currentState.openEndDrawer(),
+                              onTap: () => null,
                               child: Image.asset(
                                 'assets/shop/filter.png',
-                                color: controller.isFltered ? priColor : null,
+                                color: null,
                               )),
                         ],
                       ),
-                      customProducts.isEmpty && controller.isFltered
-                          ? Expanded(
-                              child: Center(
-                                child: CustomText(
-                                  txt: 'No Products !',
-                                ),
-                              ),
-                            )
-                          : Expanded(
-                              child: Container(
-                                height: 120,
-                                child: GridView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: !controller.isFltered
-                                      ? filteredProducts.length
-                                      : customProducts.length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3),
-                                  itemBuilder: (context, x) =>
-                                      GetBuilder<SearchViewModel>(
-                                    builder: (searchController) =>
-                                        GestureDetector(
-                                      onTap: () => Get.to(
-                                        () => ProductDetails(
-                                            prod: !controller.isFltered
-                                                ? filteredProducts[x]
-                                                : customProducts[x]),
-                                      ).then((_) => fromSearchView
-                                          ? searchController
-                                              .getRecentlyViewedProducts(
-                                                  !controller.isFltered
-                                                      ? filteredProducts[x]
-                                                      : customProducts[x])
-                                          : null),
-                                      child: Card(
-                                        child: Center(
-                                          child: CustomColumImgTT(
-                                            imgUrl: !controller.isFltered
-                                                ? filteredProducts[x].imgUrl
-                                                : customProducts[x].imgUrl,
-                                            txt1: !controller.isFltered
-                                                ? filteredProducts[x].prodName
-                                                : customProducts[x].prodName,
-                                            txt2: !controller.isFltered
-                                                ? '\$' +
-                                                    filteredProducts[x].price
-                                                : '\$' +
-                                                    customProducts[x].price,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                      Expanded(
+                        child: Container(
+                          height: 120,
+                          child: GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: filteredProducts.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3),
+                            itemBuilder: (context, x) => GestureDetector(
+                              onTap: () => Get.to(() => ProductDetails(
+                                    prod: filteredProducts[x],
+                                    fromSearchView: fromSearchView,
+                                  )),
+                              child: Card(
+                                child: Center(
+                                  child: CustomColumImgTT(
+                                    imgUrl: filteredProducts[x].imgUrl,
+                                    txt1: filteredProducts[x].prodName,
+                                    txt2: '\$' + filteredProducts[x].price,
                                   ),
                                 ),
                               ),
                             ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

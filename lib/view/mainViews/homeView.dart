@@ -26,7 +26,10 @@ class HomeView extends StatelessWidget {
           if (products.length > 3) {
             for (var i = 0; i < 3; i++) {
               lastHomeProducts.add(new GestureDetector(
-                onTap: () => Get.to(() => ProductDetails(prod: products[i])),
+                onTap: () => Get.to(() => ProductDetails(
+                      prod: products[i],
+                      fromSearchView: false,
+                    )),
                 child: CustomColumImgTT(
                   imgUrl: products[i].imgUrl,
                   txt1: products[i].prodName,
