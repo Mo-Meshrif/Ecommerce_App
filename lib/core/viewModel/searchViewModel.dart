@@ -18,12 +18,6 @@ class SearchViewModel extends GetxController {
     getRecommendedCats();
     getRecentlyViewedProductsFormLocal();
   }
-  @override
-  void onClose() {
-    _localStorageData
-        .setrecentlyViewedProductsData(recentlyViewedProducts.toSet().toList());
-    super.onClose();
-  }
 
   void changeIndex(index) {
     currentIndex = index;
@@ -66,6 +60,8 @@ class SearchViewModel extends GetxController {
   getRecentlyViewedProducts(ProductModel prod) {
     recentlyViewedProducts.add(prod);
     update();
+    _localStorageData
+        .setrecentlyViewedProductsData(recentlyViewedProducts.toSet().toList());
   }
 
   getRecentlyViewedProductsFormLocal() async {
