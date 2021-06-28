@@ -1,5 +1,4 @@
-import 'package:ecommerce/core/viewModel/searchViewModel.dart';
-
+import '../../../core/viewModel/searchViewModel.dart';
 import '../../../view/widgets/customElevatedButton.dart';
 import '../../../model/productModel.dart';
 import '../../../view/subViews/productDetails/productDetailsDview.dart';
@@ -31,6 +30,7 @@ class ProductDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GetBuilder<SearchViewModel>(
+                    init: SearchViewModel(),
                     builder: (searchController) => GestureDetector(
                         onTap: () {
                           if (fromSearchView) {
