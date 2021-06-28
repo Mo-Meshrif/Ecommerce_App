@@ -1,3 +1,4 @@
+import '../core/viewModel/filterViewModel.dart';
 import '../core/viewModel/searchViewModel.dart';
 import '../core/viewModel/homeViewModel.dart';
 import '../helper/localStorageData.dart';
@@ -11,5 +12,6 @@ class Bind extends Bindings {
     Get.lazyPut(() => LocalStorageData());
     Get.lazyPut(() => HomeViewModel());
     Get.lazyPut(() => SearchViewModel());
+    Get.lazyPut(() => FilterViewModel());
   }
 }

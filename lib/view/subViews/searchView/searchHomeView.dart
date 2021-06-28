@@ -1,6 +1,5 @@
-import 'package:ecommerce/model/productModel.dart';
-import 'package:ecommerce/view/subViews/productDetails/productDetails.dart';
-
+import '../../../model/productModel.dart';
+import '../../../view/subViews/productDetails/productDetails.dart';
 import '../../../view/subViews/productsView.dart';
 import '../../../view/widgets/customSearchBar.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class SearchHomeView extends StatelessWidget {
       child: GetBuilder<SearchViewModel>(
         builder: (controller) {
           List<ProductModel> recentlyViewedProducts =
-              controller.recentlyViewedProducts.toSet().toList();
+              controller.recentlyViewedProducts;
           List<String> recommendedCats = controller.recommendedCats;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

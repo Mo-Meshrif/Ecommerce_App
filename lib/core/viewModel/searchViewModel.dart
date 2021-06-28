@@ -1,4 +1,5 @@
-import 'package:ecommerce/helper/localStorageData.dart';
+import '../../core/viewModel/filterViewModel.dart';
+import '../../helper/localStorageData.dart';
 import 'package:flutter/material.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../model/productModel.dart';
@@ -14,6 +15,7 @@ class SearchViewModel extends GetxController {
   ValueNotifier<bool> _isSearchResultsView = ValueNotifier<bool>(false);
   ValueNotifier<bool> get isSearchResultsView => _isSearchResultsView;
   final LocalStorageData _localStorageData = Get.find();
+  final FilterViewModel _filterViewModel = Get.find();
   SearchViewModel() {
     getRecommendedCats();
     getRecentlyViewedProductsFormLocal();
@@ -33,6 +35,7 @@ class SearchViewModel extends GetxController {
     try {
       _isSearchResultsView.value = true;
       update();
+      _filterViewModel.clearFilters();
       if (searchProducts.length > 0) {
         searchProducts = [];
         update();
@@ -58,10 +61,16 @@ class SearchViewModel extends GetxController {
   }
 
   getRecentlyViewedProducts(ProductModel prod) {
-    recentlyViewedProducts.add(prod);
+    var index =
+        recentlyViewedProducts.indexWhere((element) => element.id == prod.id);
+    if (index < 0) {
+      recentlyViewedProducts.add(prod);
+    } else {
+      recentlyViewedProducts.remove(prod);
+      recentlyViewedProducts.add(prod);
+    }
     update();
-    _localStorageData
-        .setrecentlyViewedProductsData(recentlyViewedProducts.toSet().toList());
+    _localStorageData.setrecentlyViewedProductsData(recentlyViewedProducts);
   }
 
   getRecentlyViewedProductsFormLocal() async {
