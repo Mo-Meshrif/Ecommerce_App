@@ -1,3 +1,4 @@
+import '../../../view/widgets/cutomDrawer.dart';
 import '../../../const.dart';
 import '../../../core/viewModel/filterViewModel.dart';
 import '../../../model/productModel.dart';
@@ -12,99 +13,106 @@ class SearchResultsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SearchViewModel>(
-      builder: (controller) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 21, vertical: 45),
-        child: GetBuilder<FilterViewModel>(
-          builder: (filteredController) {
-            List<ProductModel> searchedProducts = filteredController.isFiltered
-                ? filteredController.filteredProducts
-                : controller.searchProducts;
-            List<ProductModel> searchedLhProducts = []
-              ..addAll(searchedProducts);
-            searchedLhProducts.sort((a, b) => a.price.compareTo(b.price));
-            List<ProductModel> searchedHlProducts =
-                searchedLhProducts.reversed.toList();
-            int currentIndex = controller.currentIndex;
-            return Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        controller.changeSearchState(false);
-                        controller.clearSearchedProducts();
-                        filteredController.clearFilters();
-                      },
-                      child: Image.asset('assets/shop/back.png'),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: CustomSearchBar(
-                        autoFocus: true,
-                        onChanged: (val) => controller.getSearchedProducts(val),
-                        onTap: null,
+      builder: (controller) => GetBuilder<FilterViewModel>(
+        init: FilterViewModel(),
+        builder: (filteredController) {
+          List<ProductModel> searchedProducts = filteredController.isFiltered
+              ? filteredController.filteredProducts
+              : controller.searchProducts;
+          List<ProductModel> searchedLhProducts = []..addAll(searchedProducts);
+          searchedLhProducts.sort((a, b) => a.price.compareTo(b.price));
+          List<ProductModel> searchedHlProducts =
+              searchedLhProducts.reversed.toList();
+          int currentIndex = controller.currentIndex;
+          return Scaffold(
+            key: filteredController.searchFilterKey,
+            endDrawer: CustomDrawer(),
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 21, vertical: 45),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                          controller.clearSearchedProducts();
+                        },
+                        child: Image.asset('assets/shop/back.png'),
                       ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () => searchedProducts.isEmpty &&
-                              !filteredController.isFiltered
-                          ? null
-                          : filteredController.openFilterDrawer(
-                              searchFilter: true, products: searchedProducts),
-                      child: Image.asset(
-                        'assets/shop/filter.png',
-                        color: filteredController.isFiltered ? priColor : null,
+                      SizedBox(
+                        width: 15,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () => controller.changeIndex(0),
-                      child: CustomText(
-                        txt: 'BEST MATCH',
-                        txtColor: currentIndex == 0 ? priColor : swatchColor,
+                      Expanded(
+                        child: CustomSearchBar(
+                          autoFocus: true,
+                          onChanged: (val) {
+                            filteredController.clearFilters();
+                            controller.getSearchedProducts(val);
+                          },
+                          onTap: null,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () => controller.changeIndex(1),
-                      child: CustomText(
-                        txt: 'PRICE LOW-HIGH',
-                        txtColor: currentIndex == 1 ? priColor : swatchColor,
+                      SizedBox(
+                        width: 15,
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () => controller.changeIndex(2),
-                      child: CustomText(
-                        txt: 'PRICE HIGH-LOW',
-                        txtColor: currentIndex == 2 ? priColor : swatchColor,
+                      GestureDetector(
+                        onTap: () => searchedProducts.isEmpty &&
+                                !filteredController.isFiltered
+                            ? null
+                            : filteredController.openFilterDrawer(
+                                searchFilter: true, products: searchedProducts),
+                        child: Image.asset(
+                          'assets/shop/filter.png',
+                          color:
+                              filteredController.isFiltered ? priColor : null,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                currentIndex == 0
-                    ? SearchRSortView(products: searchedProducts)
-                    : currentIndex == 1
-                        ? SearchRSortView(products: searchedLhProducts)
-                        : SearchRSortView(products: searchedHlProducts)
-              ],
-            );
-          },
-        ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () => controller.changeIndex(0),
+                        child: CustomText(
+                          txt: 'BEST MATCH',
+                          txtColor: currentIndex == 0 ? priColor : swatchColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => controller.changeIndex(1),
+                        child: CustomText(
+                          txt: 'PRICE LOW-HIGH',
+                          txtColor: currentIndex == 1 ? priColor : swatchColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => controller.changeIndex(2),
+                        child: CustomText(
+                          txt: 'PRICE HIGH-LOW',
+                          txtColor: currentIndex == 2 ? priColor : swatchColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  currentIndex == 0
+                      ? SearchRSortView(products: searchedProducts)
+                      : currentIndex == 1
+                          ? SearchRSortView(products: searchedLhProducts)
+                          : SearchRSortView(products: searchedHlProducts)
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

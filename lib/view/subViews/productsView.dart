@@ -1,5 +1,4 @@
-import 'package:ecommerce/const.dart';
-
+import '../../const.dart';
 import '../../core/viewModel/filterViewModel.dart';
 import '../../view/widgets/cutomDrawer.dart';
 import '../../core/viewModel/homeViewModel.dart';
@@ -24,6 +23,7 @@ class ProductsView extends StatelessWidget {
       builder: (controller) {
         List<ProductModel> products = controller.products;
         return GetBuilder<FilterViewModel>(
+          init: FilterViewModel(),
           builder: (filterController) {
             List<ProductModel> filteredProducts = filterController.isFiltered
                 ? filterController.filteredProducts
@@ -49,7 +49,6 @@ class ProductsView extends StatelessWidget {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              filterController.clearFilters();
                               Get.back();
                             },
                             child: Image.asset('assets/shop/back.png')),

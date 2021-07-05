@@ -1,4 +1,3 @@
-import '../../core/viewModel/filterViewModel.dart';
 import '../../helper/localStorageData.dart';
 import 'package:flutter/material.dart';
 import '../../core/viewModel/homeViewModel.dart';
@@ -15,7 +14,6 @@ class SearchViewModel extends GetxController {
   ValueNotifier<bool> _isSearchResultsView = ValueNotifier<bool>(false);
   ValueNotifier<bool> get isSearchResultsView => _isSearchResultsView;
   final LocalStorageData _localStorageData = Get.find();
-  final FilterViewModel _filterViewModel = Get.find();
   SearchViewModel() {
     getRecommendedCats();
     getRecentlyViewedProductsFormLocal();
@@ -26,16 +24,10 @@ class SearchViewModel extends GetxController {
     update();
   }
 
-  changeSearchState(bool state) {
-    _isSearchResultsView.value = state;
-    update();
-  }
-
   getSearchedProducts(String searchEntry) {
     try {
       _isSearchResultsView.value = true;
       update();
-      _filterViewModel.clearFilters();
       if (searchProducts.length > 0) {
         searchProducts = [];
         update();
