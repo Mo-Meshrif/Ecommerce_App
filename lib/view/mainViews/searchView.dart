@@ -17,7 +17,7 @@ class SearchView extends StatelessWidget {
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
       child: GetBuilder<SearchViewModel>(
-        init: SearchViewModel(),
+        init: Get.find(),
         builder: (controller) {
           List<ProductModel> recentlyViewedProducts =
               controller.recentlyViewedProducts;

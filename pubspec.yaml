@@ -29,6 +29,9 @@ dependencies:
   cloud_firestore: ^2.2.0
   shared_preferences: ^2.0.6
   hexcolor: ^2.0.3
+  sqflite: ^2.0.0+3
+  path: ^1.8.0
+  flutter_svg: ^0.22.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,6 +53,7 @@ flutter:
    - assets/auth/
    - assets/home/
    - assets/shop/
+   - assets/cart/
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

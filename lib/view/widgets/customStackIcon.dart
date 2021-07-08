@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../const.dart';
 import 'customText.dart';
 
@@ -17,18 +16,20 @@ class CustomStackIcon extends StatelessWidget {
           width: 42,
           height: 33,
         ),
-        Positioned(
-          top: 14,
-          right: 22,
-          child: CircleAvatar(
-            radius: 10,
-            backgroundColor: priColor,
-            child: CustomText(
-              txt: txtNum,
-              txtColor: Colors.white,
-            ),
-          ),
-        )
+        txtNum == '0'
+            ? Padding(padding: EdgeInsets.zero)
+            : Positioned(
+                top: 14,
+                right: 22,
+                child: CircleAvatar(
+                  radius: 10,
+                  backgroundColor: priColor,
+                  child: CustomText(
+                    txt: txtNum,
+                    txtColor: Colors.white,
+                  ),
+                ),
+              )
       ],
     );
   }

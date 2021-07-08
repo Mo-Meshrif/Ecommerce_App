@@ -90,6 +90,7 @@ class SearchViewModel extends GetxController {
   }
 
   shuffleRecommendedCats() {
+    print(recommendedCats.length);
     recommendedCats.shuffle();
     update();
   }

@@ -1,3 +1,4 @@
+import '../../core/viewModel/searchViewModel.dart';
 import '../../view/widgets/messagesNotBar.dart';
 import '../../view/subViews/productDetails/productDetails.dart';
 import '../../core/viewModel/homeViewModel.dart';
@@ -38,6 +39,8 @@ class HomeView extends StatelessWidget {
               ));
             }
           }
+          //initialize searchViewModel
+          Get.put(SearchViewModel());
           return categories.length < 3
               ? Center(
                   child: CustomText(

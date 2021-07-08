@@ -1,3 +1,7 @@
+import '../../../view/widgets/quantityChanger.dart';
+import '../../../core/viewModel/cartViewModel.dart';
+import '../../../model/cartProductModel.dart';
+import '../../../view/mainViews/cartView.dart';
 import '../../../core/viewModel/searchViewModel.dart';
 import '../../../view/widgets/customElevatedButton.dart';
 import '../../../model/productModel.dart';
@@ -16,104 +20,141 @@ class ProductDetails extends StatelessWidget {
   ProductDetails({@required this.prod, @required this.fromSearchView});
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 33),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<CartViewModel>(
+      init: Get.find(),
+      builder: (cartController) {
+        List<CartProductModel> cartProds = cartController.cartProds;
+
+        int cartProdIndex = cartController.getCartProdIndex(prod.id);
+        return DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 33),
+              child: Column(
                 children: [
-                  GetBuilder<SearchViewModel>(
-                    init: SearchViewModel(),
-                    builder: (searchController) => GestureDetector(
-                        onTap: () {
-                          if (fromSearchView) {
-                            searchController.getRecentlyViewedProducts(prod);
-                          }
-                          Get.back();
-                        },
-                        child: Image.asset('assets/shop/back.png')),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GetBuilder<SearchViewModel>(
+                        init: Get.find(),
+                        builder: (searchController) => GestureDetector(
+                            onTap: () {
+                              if (fromSearchView) {
+                                searchController
+                                    .getRecentlyViewedProducts(prod);
+                              }
+                              Get.back();
+                            },
+                            child: Image.asset('assets/shop/back.png')),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: CustomText(
+                              txt: prod.prodName,
+                              fSize: 20,
+                              fWeight: FontWeight.w300),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Get.to(() => CartView()),
+                        child: CustomStackIcon(
+                          imageUrl: 'assets/shop/Cart.png',
+                          txtNum: cartProds.length.toString(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Expanded(
-                    child: Center(
-                      child: CustomText(
-                          txt: prod.prodName,
-                          fSize: 20,
-                          fWeight: FontWeight.w300),
+                      child: Image.network(
+                    prod.imgUrl,
+                    fit: BoxFit.contain,
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 55),
+                    child: TabBar(
+                      unselectedLabelColor: swatchColor,
+                      labelColor: priColor,
+                      indicatorColor: Colors.white10,
+                      tabs: [
+                        Tab(text: 'Product'),
+                        Tab(text: 'Details'),
+                        Tab(text: 'Reviews'),
+                      ],
                     ),
                   ),
-                  GestureDetector(
-                      onTap: null,
-                      child: CustomStackIcon(
-                        imageUrl: 'assets/shop/Cart.png',
-                        txtNum: '7',
-                      )),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                  child: Image.network(
-                prod.imgUrl,
-                fit: BoxFit.contain,
-              )),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 55),
-                child: TabBar(
-                  unselectedLabelColor: swatchColor,
-                  labelColor: priColor,
-                  indicatorColor: Colors.white10,
-                  tabs: [
-                    Tab(text: 'Product'),
-                    Tab(text: 'Details'),
-                    Tab(text: 'Reviews'),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    ProductDetailsPview(prod: prod),
-                    ProductDetailsDview(prod: prod),
-                    ProductDetailsRview()
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
                   Expanded(
-                      child: CustomElevatedButton(
-                    buttonColor: Colors.white,
-                    txt: 'SHARE THIS',
-                    imgUrl: 'assets/shop/share_arrow.png',
-                    txtColor: swatchColor,
-                    onPress: () {},
-                  )),
-                  SizedBox(
-                    width: 10,
+                    child: TabBarView(
+                      children: [
+                        ProductDetailsPview(prod: prod),
+                        ProductDetailsDview(prod: prod),
+                        ProductDetailsRview()
+                      ],
+                    ),
                   ),
-                  Expanded(
-                      child: CustomElevatedButton(
-                    txt: 'ADD TO CART',
-                    imgUrl: 'assets/auth/right_arrow.png',
-                    onPress: () {},
-                  )),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: CustomElevatedButton(
+                        buttonColor: Colors.white,
+                        txt: 'SHARE THIS',
+                        imgUrl: 'assets/shop/share_arrow.png',
+                        txtColor: swatchColor,
+                        onPress: () {},
+                      )),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      cartProdIndex == -1
+                          ? Expanded(
+                              child: CustomElevatedButton(
+                                txt: 'ADD TO CART',
+                                imgUrl: 'assets/auth/right_arrow.png',
+                                onPress: () => cartController.addProduct(
+                                  cartProd: CartProductModel(
+                                    id: prod.id,
+                                    name: prod.prodName,
+                                    imgUrl: prod.imgUrl,
+                                    size: '4.5',
+                                    color: 'red',
+                                    price: prod.price,
+                                    quantity: 1,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Expanded(
+                              child: Container(
+                              padding: EdgeInsets.all(18),
+                              decoration: BoxDecoration(
+                                  color: priColor,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: QuantityChanger(
+                                add: () => cartController
+                                    .increaseQuantity(cartProdIndex),
+                                quantityVal: cartProds[cartProdIndex].quantity,
+                                minimize: () => cartController
+                                    .decreaseQuantity(cartProdIndex),
+                                fromProdDetails: true,
+                              ),
+                            ))
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
