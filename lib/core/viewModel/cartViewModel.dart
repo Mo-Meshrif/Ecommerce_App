@@ -35,10 +35,6 @@ class CartViewModel extends GetxController {
     update();
   }
 
-  int getProductsLength() {
-    return cartProds.length;
-  }
-
   getTotalPrice() {
     totalPrice = 0;
     update();

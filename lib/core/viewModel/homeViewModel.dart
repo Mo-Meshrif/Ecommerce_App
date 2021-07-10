@@ -68,4 +68,29 @@ class HomeViewModel extends GetxController {
       print(e);
     }
   }
+
+//productDetailsView logic
+
+  int selectedColorIndex = 0;
+  String selectedColor;
+  void changeSelectedColor(index, color) {
+    selectedColorIndex = index;
+    selectedColor = color;
+    update();
+  }
+
+  int selectedSizeIndex = 0;
+  String selectedSize;
+  void changeSelectedSize(index, size) {
+    selectedSizeIndex = index;
+    selectedSize = size;
+    update();
+  }
+
+  clearSelectedIndex() {
+    selectedColorIndex = selectedSizeIndex = 0;
+    selectedColor = null;
+    selectedSize = null;
+    update();
+  }
 }

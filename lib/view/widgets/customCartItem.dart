@@ -54,20 +54,41 @@ class CustomCartItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 7,
+                ),
                 CustomText(
                   txt: cartProd.name,
                   fSize: 15,
                   txtColor: HexColor('#515C6F'),
                   fWeight: FontWeight.w500,
                 ),
-                CustomText(
-                  txt: cartProd.size + ',' + cartProd.color,
-                  fSize: 15,
-                  txtColor: HexColor('#515C6F'),
-                  fWeight: FontWeight.normal,
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    CustomText(
+                      txt: cartProd.size + ' ,',
+                      fSize: 15,
+                      txtColor: HexColor('#515C6F'),
+                      fWeight: FontWeight.normal,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        color: HexColor(cartProd.color),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 CustomText(
                   txt: '\$' + cartProd.price,
@@ -76,7 +97,7 @@ class CustomCartItem extends StatelessWidget {
                   fWeight: FontWeight.normal,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 QuantityChanger(
                   add: increase,
