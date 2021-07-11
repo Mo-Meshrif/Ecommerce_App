@@ -99,11 +99,13 @@ class SearchView extends StatelessWidget {
                     )
                   : Padding(padding: EdgeInsets.zero),
               SizedBox(height: 20),
-              CustomRTxtGTxt(
-                txt1: 'RECOMMENDED',
-                txt2: 'REFRESH',
-                onT: () => controller.shuffleRecommendedCats(),
-              ),
+              recommendedCats.length == 0
+                  ? Padding(padding: EdgeInsets.zero)
+                  : CustomRTxtGTxt(
+                      txt1: 'RECOMMENDED',
+                      txt2: 'REFRESH',
+                      onT: () => controller.shuffleRecommendedCats(),
+                    ),
               SizedBox(height: 15),
               LimitedBox(
                 maxHeight: 100,
