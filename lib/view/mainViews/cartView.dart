@@ -20,8 +20,7 @@ class CartView extends StatelessWidget {
           List<CartProductModel> cartProds = cartController.cartProds;
           double totalPrice = cartController.totalPrice;
           return cartProds.length == 0
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+              ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
