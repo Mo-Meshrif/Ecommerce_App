@@ -66,4 +66,9 @@ class CartDataBaseHelper {
       whereArgs: [cartProduct.id],
     );
   }
+
+  deleteAll() async {
+    var dbClient = await database;
+    await dbClient.delete('cartProduct');
+  }
 }

@@ -1,14 +1,14 @@
+import '../../view/subViews/cartView/checkoutView.dart';
+import '../../const.dart';
+import '../../view/widgets/bottomCartBar.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../model/cartProductModel.dart';
-import '../../view/subViews/cartView/checkoutView.dart';
 import '../../view/widgets/customCartItem.dart';
-import '../../view/widgets/customElevatedButton.dart';
 import '../../view/widgets/customText.dart';
 import '../../view/widgets/messagesNotBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class CartView extends StatelessWidget {
   @override
@@ -51,7 +51,7 @@ class CartView extends StatelessWidget {
                       CustomText(
                         txt: 'Cart',
                         fSize: 30,
-                        txtColor: HexColor('#515C6F'),
+                        txtColor: swatchColor,
                         fWeight: FontWeight.bold,
                       ),
                       SizedBox(
@@ -64,8 +64,10 @@ class CartView extends StatelessWidget {
                           itemBuilder: (context, i) => CustomCartItem(
                             cartProd: cartProds[i],
                             increase: () => cartController.increaseQuantity(i),
-                            decrease: () => cartController.decreaseQuantity(i),
+                            decrease: () =>
+                                cartController.decreaseQuantity(i, false),
                             onDismiss: (_) => cartController.deleteProduct(i),
+                            fromCheckoutView: false,
                           ),
                           separatorBuilder: (context, i) => Padding(
                             padding: const EdgeInsets.only(bottom: 10),
@@ -78,42 +80,10 @@ class CartView extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomText(
-                                txt: 'TOTAL',
-                                fSize: 15,
-                                txtColor: HexColor('#515C6F'),
-                                fWeight: FontWeight.normal,
-                              ),
-                              CustomText(
-                                txt: '\$' + totalPrice.toStringAsFixed(2),
-                                fSize: 20,
-                                txtColor: HexColor('#515C6F'),
-                                fWeight: FontWeight.bold,
-                              ),
-                              CustomText(
-                                txt: 'Free Domestic Shipping',
-                                fSize: 15,
-                                txtColor: HexColor('#515C6F'),
-                                fWeight: FontWeight.normal,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 30,
-                          ),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              txt: 'CHECKOUT',
-                              imgUrl: 'assets/auth/right_arrow.png',
-                              onPress: () => Get.to(() => CheckoutView()),
-                            ),
-                          )
-                        ],
+                      BottomCartBar(
+                        totalPrice: totalPrice,
+                        buttonTxt: 'CHECKOUT',
+                        onPress: () => Get.to(() => CheckoutView()),
                       )
                     ],
                   ),

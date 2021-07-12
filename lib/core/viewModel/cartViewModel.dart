@@ -53,12 +53,12 @@ class CartViewModel extends GetxController {
     update();
   }
 
-  decreaseQuantity(index) async {
+  decreaseQuantity(index, fromProdDetails) async {
     if (cartProds[index].quantity > 1) {
       cartProds[index].quantity--;
       totalPrice -= double.parse(cartProds[index].price);
       await db.updateProduct(cartProds[index]);
-    } else if (cartProds[index].quantity == 1) {
+    } else if (cartProds[index].quantity == 1 && fromProdDetails == true) {
       deleteProduct(index);
     }
     update();
@@ -73,5 +73,12 @@ class CartViewModel extends GetxController {
 
   int getCartProdIndex(id) {
     return cartProds.indexWhere((cartProd) => cartProd.id == id);
+  }
+
+  deleteAll() async {
+    await db.deleteAll();
+    cartProds = [];
+    totalPrice = 0;
+    update();
   }
 }

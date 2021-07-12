@@ -21,6 +21,7 @@ class ProfileView extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 60,
+                backgroundColor: Colors.grey,
                 backgroundImage:
                     AssetImage('assets/profile-more/place_holder.jpg'),
               ),

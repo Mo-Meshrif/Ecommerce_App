@@ -148,8 +148,9 @@ class ProductDetails extends StatelessWidget {
                                           .increaseQuantity(cartProdIndex),
                                       quantityVal:
                                           cartProds[cartProdIndex].quantity,
-                                      minimize: () => cartController
-                                          .decreaseQuantity(cartProdIndex),
+                                      minimize: () =>
+                                          cartController.decreaseQuantity(
+                                              cartProdIndex, true),
                                       fromProdDetails: true,
                                     ),
                                   ))
