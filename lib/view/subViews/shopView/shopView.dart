@@ -6,7 +6,6 @@ import '../../widgets/customStackImg2IconTxt.dart';
 import 'package:flutter/material.dart';
 import 'shopPview.dart';
 import 'shopRview.dart';
-import 'shopHview.dart';
 
 class ShopView extends StatelessWidget {
   final String cateTxt;
@@ -14,7 +13,7 @@ class ShopView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(body: SafeArea(
         child: GetBuilder<HomeViewModel>(
           builder: (controller) {
@@ -36,7 +35,6 @@ class ShopView extends StatelessWidget {
                         labelColor: priColor,
                         indicatorColor: priColor,
                         tabs: [
-                          Tab(text: 'Home'),
                           Tab(text: 'Products'),
                           Tab(text: 'Reviews'),
                         ],
@@ -44,7 +42,6 @@ class ShopView extends StatelessWidget {
                       Expanded(
                         child: TabBarView(
                           children: [
-                            ShopHview(),
                             ShopPview(cat: category),
                             ShopRview(),
                           ],
