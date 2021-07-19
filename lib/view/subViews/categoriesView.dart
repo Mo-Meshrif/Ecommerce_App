@@ -79,7 +79,12 @@ class CategoriesView extends StatelessWidget {
                     ),
                   ),
                   subCategories['s'][0].isEmpty
-                      ? Padding(padding: EdgeInsets.all(0))
+                      ? Expanded(
+                          child: Center(
+                          child: CustomText(
+                            txt: 'Comming Soon !',
+                          ),
+                        ))
                       : Expanded(
                           child: Column(
                           children: children,
