@@ -96,12 +96,12 @@ class ProductDetails extends StatelessWidget {
                             children: [
                               ProductDetailsPview(prod: prod),
                               ProductDetailsDview(prod: prod),
-                              ProductDetailsRview()
+                              ProductDetailsRview(prod: prod)
                             ],
                           ),
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         Row(
                           children: [
