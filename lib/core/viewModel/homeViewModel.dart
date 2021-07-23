@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../core/service/fireStore_review.dart';
+import '../../model/rewiewModel.dart';
+import '../../helper/localStorageData.dart';
 import '../../core/service/home_service.dart';
 import '../../model/categoryModel.dart';
 import '../../model/productModel.dart';
@@ -31,8 +35,10 @@ class HomeViewModel extends GetxController {
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
   HomeViewModel() {
+    getUserDate();
     getCategories();
     getProducts();
+    getAllReviews();
   }
   changeCategories(index) {
     currentCategory = index;
@@ -92,5 +98,49 @@ class HomeViewModel extends GetxController {
     selectedColor = null;
     selectedSize = null;
     update();
+  }
+
+//getUserData
+  final LocalStorageData _localStorageData = Get.find();
+  String userId, userName;
+  getUserDate() async {
+    await _localStorageData.getUser.then((user) {
+      userId = user.id;
+      userName = user.userName;
+      update();
+    });
+  }
+
+//review logic
+  double rateValue = 0;
+  String reviewText;
+  ValueNotifier<bool> _reviewLoading = ValueNotifier(false);
+  ValueNotifier<bool> get reviewloading => _reviewLoading;
+  List<ReviewModel> reviews = [];
+
+  addReview(id, imgurl) async {
+    _reviewLoading.value = true;
+    reviews = [];
+    update();
+    await FireStoreReview()
+        .addReviewToFireStore(
+            ReviewModel(
+                prodId: id,
+                userName: userName,
+                reviewTxt: reviewText,
+                createdAt: Timestamp.now(),
+                rateValue: rateValue),
+            userId)
+        .then((_) => getAllReviews());
+  }
+
+  getAllReviews() async {
+    await FireStoreReview().getAllReviewsFromFireStore().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        reviews.add(ReviewModel.fromJson(value[i].data()));
+      }
+      _reviewLoading.value = false;
+      update();
+    });
   }
 }

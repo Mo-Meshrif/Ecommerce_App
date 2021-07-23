@@ -3,15 +3,13 @@ import '../../const.dart';
 import 'customText.dart';
 
 class Reviews extends StatelessWidget {
-  final String name, date, reviewDetails, imgurl;
-  final bool fromProductDetails;
-
+  final String name, date, reviewDetails;
+  final double rateValue;
   Reviews(
-      {@required this.fromProductDetails,
-      @required this.name,
+      {@required this.name,
       @required this.date,
       @required this.reviewDetails,
-      @required this.imgurl});
+      @required this.rateValue});
   @override
   Widget build(BuildContext context) {
     String getInitials(String name) => name.isNotEmpty
@@ -47,7 +45,7 @@ class Reviews extends StatelessWidget {
                       itemBuilder: (context, x) => Icon(
                         Icons.star,
                         size: 20,
-                        color: x == 0 ? priColor : Colors.grey[300],
+                        color: x + 1 <= rateValue ? priColor : Colors.grey[300],
                       ),
                     ),
                   ),
@@ -67,27 +65,6 @@ class Reviews extends StatelessWidget {
                 txtColor: swatchColor,
                 maxLine: 3,
               ),
-              !fromProductDetails
-                  ? Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      height: 60,
-                      child: ListView.separated(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, x) => Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: x == 0
-                                            ? Colors.red
-                                            : Colors.white)),
-                                child: Image.network(imgurl),
-                              ),
-                          separatorBuilder: (context, x) => SizedBox(
-                                width: 5,
-                              )),
-                    )
-                  : Padding(padding: EdgeInsets.zero),
             ],
           ),
         )
