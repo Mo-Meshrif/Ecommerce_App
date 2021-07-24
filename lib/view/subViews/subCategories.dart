@@ -23,12 +23,15 @@ class SubCategories extends StatelessWidget {
             fWeight: FontWeight.w300,
           ),
         ),
+        SizedBox(
+          height: 5,
+        ),
         Expanded(
           child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 5),
+                padding: EdgeInsets.symmetric(vertical: 10),
                 itemCount: prods.length,
                 itemBuilder: (_, i) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),

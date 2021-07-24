@@ -1,11 +1,11 @@
+import '../../view/subViews/categoriesView/bottomCategoriesView.dart';
+import '../../view/subViews/categoriesView/moreCategoriesView.dart';
 import '../../core/viewModel/searchViewModel.dart';
 import '../../view/widgets/messagesNotBar.dart';
 import '../../view/subViews/productDetails/productDetails.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../model/categoryModel.dart';
 import '../../model/productModel.dart';
-import '../../view/subViews/shopView/shopView.dart';
-import '../../view/subViews/categoriesView.dart';
 import 'package:get/get.dart';
 import '../widgets/customText.dart';
 import 'package:flutter/material.dart';
@@ -70,8 +70,16 @@ class HomeView extends StatelessWidget {
                               Expanded(
                                 child: InkResponse(
                                   radius: 25,
-                                  onTap: () => Get.to(() =>
-                                      ShopView(cateTxt: categories[0].txt)),
+                                  onTap: () => Get.bottomSheet(
+                                    BottomCategoriesView(currentIndex: 0),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                  ),
                                   child: CustomColTImage(
                                     imgUrl: categories[0].imgUrl,
                                     txt: categories[0].txt,
@@ -82,8 +90,16 @@ class HomeView extends StatelessWidget {
                               Expanded(
                                 child: InkResponse(
                                   radius: 25,
-                                  onTap: () => Get.to(() =>
-                                      ShopView(cateTxt: categories[1].txt)),
+                                  onTap: () => Get.bottomSheet(
+                                    BottomCategoriesView(currentIndex: 1),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                  ),
                                   child: CustomColTImage(
                                     imgUrl: categories[1].imgUrl,
                                     txt: categories[1].txt,
@@ -94,8 +110,16 @@ class HomeView extends StatelessWidget {
                               Expanded(
                                 child: InkResponse(
                                   radius: 25,
-                                  onTap: () => Get.to(() =>
-                                      ShopView(cateTxt: categories[2].txt)),
+                                  onTap: () => Get.bottomSheet(
+                                    BottomCategoriesView(currentIndex: 2),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                  ),
                                   child: CustomColTImage(
                                     imgUrl: categories[2].imgUrl,
                                     txt: categories[2].txt,
@@ -106,7 +130,8 @@ class HomeView extends StatelessWidget {
                               Expanded(
                                 child: InkResponse(
                                   radius: 25,
-                                  onTap: () => Get.to(() => CategoriesView()),
+                                  onTap: () =>
+                                      Get.to(() => MoreCategoriesView()),
                                   child: CustomColTImage(
                                     imgUrl: 'assets/home/right_arrow_h.png',
                                     txt: 'See All',
