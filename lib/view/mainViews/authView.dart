@@ -1,4 +1,4 @@
-import 'package:ecommerce/core/viewModel/authViewModel.dart';
+import '../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 import '../../const.dart';
 import '../subViews/authView/forgetPassView.dart';
@@ -21,10 +21,13 @@ class AuthView extends StatelessWidget {
                 children: [
                   TabBar(
                     isScrollable: true,
-                    labelColor: priColor,
-                    labelStyle: TextStyle(fontSize: 20),
+                    labelColor: swatchColor,
+                    labelStyle: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    unselectedLabelColor: Colors.grey[350],
                     indicatorColor: Colors.white10,
-                    unselectedLabelColor: swatchColor,
                     tabs: [
                       Tab(text: 'Sign Up'),
                       Tab(text: 'Log In'),

@@ -34,9 +34,9 @@ class CustomTextField extends StatelessWidget {
                 onSaved: onSave,
                 validator: valid,
                 decoration: InputDecoration(
-                  labelText: lableTxt,
-                  hintText: hintTxt,
-                ),
+                    labelText: lableTxt,
+                    hintText: hintTxt,
+                    border: InputBorder.none),
               ),
             ),
           ),
