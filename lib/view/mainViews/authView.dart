@@ -1,82 +1,50 @@
+import 'package:ecommerce/core/viewModel/authViewModel.dart';
+import 'package:get/get.dart';
+import '../../const.dart';
 import '../subViews/authView/forgetPassView.dart';
 import '../subViews/authView/signInView.dart';
 import '../subViews/authView/signUpView.dart';
-import '../../core/viewModel/authViewModel.dart';
-import '../widgets/customText.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AuthView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-            padding: EdgeInsets.symmetric(vertical: 60, horizontal: 15),
-            child: GetBuilder<AuthViewModel>(
-              init: AuthViewModel(),
-              builder: (controller) => controller.loading.value
-                  ? Center(child: CustomText(txt: 'Loading .......'))
-                  : Column(
-                      children: <Widget>[
-                        Container(
-                          height: 50,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              CustomText(
-                                txt: 'Sign Up',
-                                fSize: 30,
-                                txtColor: controller.currentIndex == 0
-                                    ? Colors.black
-                                    : Colors.grey,
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              CustomText(
-                                txt: 'Log In',
-                                fSize: 30,
-                                txtColor: controller.currentIndex == 1
-                                    ? Colors.black
-                                    : Colors.grey,
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              CustomText(
-                                txt: 'Forgot Password',
-                                txtColor: controller.currentIndex == 2
-                                    ? Colors.black
-                                    : Colors.grey,
-                                fSize: 30,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Expanded(
-                          child: PageView(
-                              onPageChanged: (value) =>
-                                  controller.getPageIndex(value),
-                              children: [
-                                SignUpView(),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 5),
-                                  child: SignInView(),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: ForgetPassView(),
-                                ),
-                              ],
-                              controller: PageController(
-                                  initialPage: controller.currentIndex)),
-                        )
+        body: GetBuilder<AuthViewModel>(
+          builder: (controller) => DefaultTabController(
+            initialIndex: controller.currentIndex,
+            length: 3,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 15),
+              child: Column(
+                children: [
+                  TabBar(
+                    isScrollable: true,
+                    labelColor: priColor,
+                    labelStyle: TextStyle(fontSize: 20),
+                    indicatorColor: Colors.white10,
+                    unselectedLabelColor: swatchColor,
+                    tabs: [
+                      Tab(text: 'Sign Up'),
+                      Tab(text: 'Log In'),
+                      Tab(text: 'Forgot Password'),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        SignUpView(),
+                        SignInView(),
+                        ForgetPassView(),
                       ],
                     ),
-            )));
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }

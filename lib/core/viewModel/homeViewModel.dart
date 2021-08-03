@@ -105,9 +105,11 @@ class HomeViewModel extends GetxController {
   String userId, userName;
   getUserDate() async {
     await _localStorageData.getUser.then((user) {
-      userId = user.id;
-      userName = user.userName;
-      update();
+      if (user != null) {
+        userId = user.id;
+        userName = user.userName;
+        update();
+      }
     });
   }
 

@@ -8,11 +8,6 @@ import 'package:get/get.dart';
 
 class AuthViewModel extends GetxController {
   int currentIndex = 0;
-  getPageIndex(int selectedIndex) {
-    currentIndex = selectedIndex;
-    update();
-  }
-
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
   Rxn<User> _user = Rxn<User>();
@@ -39,49 +34,65 @@ class AuthViewModel extends GetxController {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) async {
         _loading.value = false;
-        Get.to(() => ControlView());
-        UserModel userModel = UserModel(
-          id: user.user.uid,
-          userName: userName,
-          email: email,
-        );
-        await FireStoreUser().addUserToFireStore(userModel);
-        setUser(userModel);
+        if (user != null) {
+          UserModel userModel = UserModel(
+            id: user.user.uid,
+            userName: userName,
+            email: email,
+          );
+          await FireStoreUser().addUserToFireStore(userModel);
+          setUser(userModel);
+          Get.to(() => ControlView());
+        }
         update();
       });
     } catch (e) {
+      _loading.value = false;
+      update();
       handleAuthErrors(e);
     }
   }
 
   signIn() async {
-    try {
-      _loading.value = true;
+    _loading.value = true;
+    update();
+    await _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .onError((error, stackTrace) {
+      _loading.value = false;
       update();
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((user) async {
-        _loading.value = false;
-        Get.to(() => ControlView());
+      return handleAuthErrors(error);
+    }).then((user) async {
+      _loading.value = false;
+      if (user != null) {
         await FireStoreUser()
             .getUserFromFireStore(user.user.uid)
-            .then((userData) => setUser(UserModel.fromJson(userData.data())));
-        update();
-      });
-    } catch (e) {
-      handleAuthErrors(e);
-    }
+            .then((userData) {
+          setUser(UserModel.fromJson(userData.data()));
+          Get.to(() => ControlView());
+        });
+      }
+      update();
+    });
   }
 
   forgetPassword() async {
     try {
-      await _auth.sendPasswordResetEmail(email: email).then((_) => Get.snackbar(
-            'Congratulations',
-            'Check you email !',
-            snackPosition: SnackPosition.BOTTOM,
-            duration: Duration(seconds: 5),
-          ));
+      _loading.value = true;
+      update();
+      await _auth.sendPasswordResetEmail(email: email).then((_) {
+        _loading.value = false;
+        update();
+        Get.snackbar(
+          'Congratulations',
+          'Check you email !',
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 5),
+        );
+      });
     } catch (e) {
+      _loading.value = false;
+      update();
       handleAuthErrors(e);
     }
   }

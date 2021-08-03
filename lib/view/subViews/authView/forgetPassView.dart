@@ -1,3 +1,5 @@
+import '../../../view/widgets/customText.dart';
+import '../../../const.dart';
 import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 import '../../widgets/customElevatedButton.dart';
@@ -26,6 +28,7 @@ class ForgetPassView extends StatelessWidget {
               img: 'assets/auth/Profile.png',
               lableTxt: 'EMAIL',
               hintTxt: 'janedoe123@email.com',
+              controller: TextEditingController(text: controller.email),
               valid: (val) {
                 if (val.isEmpty) {
                   return 'The Feild is empty';
@@ -37,16 +40,22 @@ class ForgetPassView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomElevatedButton(
-              imgUrl: 'assets/auth/right_arrow.png',
-              txt: 'SEND EMAIL',
-              onPress: () {
-                _key.currentState.save();
-                if (_key.currentState.validate()) {
-                  controller.forgetPassword();
-                }
-              },
-            ),
+            controller.loading.value
+                ? CustomText(
+                    txt: 'Loading',
+                    fSize: 18,
+                    txtColor: priColor,
+                  )
+                : CustomElevatedButton(
+                    imgUrl: 'assets/auth/right_arrow.png',
+                    txt: 'SEND EMAIL',
+                    onPress: () {
+                      _key.currentState.save();
+                      if (_key.currentState.validate()) {
+                        controller.forgetPassword();
+                      }
+                    },
+                  ),
           ],
         ),
       ),

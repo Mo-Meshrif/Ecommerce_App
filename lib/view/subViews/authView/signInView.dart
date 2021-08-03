@@ -1,3 +1,4 @@
+import '../../../view/widgets/customText.dart';
 import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 import '../../widgets/customElevatedButton.dart';
@@ -19,6 +20,7 @@ class SignInView extends StatelessWidget {
               img: 'assets/auth/Profile.png',
               lableTxt: 'EMAIL',
               hintTxt: 'janedoe123@email.com',
+              controller: TextEditingController(text: controller.email),
               onSave: (val) => controller.email = val,
               valid: (val) {
                 if (val.isEmpty) {
@@ -40,22 +42,29 @@ class SignInView extends StatelessWidget {
                 }
                 return null;
               },
+              controller: TextEditingController(text: controller.password),
               onSave: (val) => controller.password = val,
               isScure: true,
             ),
             SizedBox(
               height: 20,
             ),
-            CustomElevatedButton(
-              imgUrl: 'assets/auth/right_arrow.png',
-              txt: 'LOG IN',
-              onPress: () {
-                _key.currentState.save();
-                if (_key.currentState.validate()) {
-                  controller.signIn();
-                }
-              },
-            ),
+            controller.loading.value
+                ? CustomText(
+                    txt: 'Loading',
+                    fSize: 18,
+                    txtColor: priColor,
+                  )
+                : CustomElevatedButton(
+                    imgUrl: 'assets/auth/right_arrow.png',
+                    txt: 'LOG IN',
+                    onPress: () {
+                      _key.currentState.save();
+                      if (_key.currentState.validate()) {
+                        controller.signIn();
+                      }
+                    },
+                  ),
             SizedBox(
               height: 20,
             ),

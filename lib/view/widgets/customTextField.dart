@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String lableTxt;
   final String hintTxt;
+  final TextEditingController controller;
   final String img;
   final void Function(String) onSave;
   final String Function(String) valid;
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
     this.onSave,
     this.valid,
     this.isScure = false,
+    this.controller,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class CustomTextField extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                controller: controller,
                 obscureText: isScure,
                 onSaved: onSave,
                 validator: valid,

@@ -1,3 +1,4 @@
+import '../../../view/widgets/customText.dart';
 import '../../../core/viewModel/authViewModel.dart';
 import 'package:get/get.dart';
 import '../../../const.dart';
@@ -19,6 +20,7 @@ class SignUpView extends StatelessWidget {
               img: 'assets/auth/Profile.png',
               lableTxt: 'EMAIL',
               hintTxt: 'janedoe123@email.com',
+              controller: TextEditingController(text: controller.email),
               onSave: (val) => controller.email = val,
               valid: (val) {
                 if (val.isEmpty) {
@@ -34,6 +36,7 @@ class SignUpView extends StatelessWidget {
               img: 'assets/auth/mail.png',
               lableTxt: 'USERNAME',
               hintTxt: 'janedoe12345',
+              controller: TextEditingController(text: controller.userName),
               onSave: (val) => controller.userName = val,
               valid: (val) {
                 if (val.isEmpty) {
@@ -49,6 +52,7 @@ class SignUpView extends StatelessWidget {
               img: 'assets/auth/password.png',
               lableTxt: 'PASSWORD',
               hintTxt: '************************',
+              controller: TextEditingController(text: controller.password),
               onSave: (val) => controller.password = val,
               isScure: true,
               valid: (val) {
@@ -61,16 +65,22 @@ class SignUpView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomElevatedButton(
-              imgUrl: 'assets/auth/right_arrow.png',
-              txt: 'SIGN UP',
-              onPress: () {
-                _key.currentState.save();
-                if (_key.currentState.validate()) {
-                  controller.signUp();
-                }
-              },
-            ),
+            controller.loading.value
+                ? CustomText(
+                    txt: 'Loading',
+                    fSize: 18,
+                    txtColor: priColor,
+                  )
+                : CustomElevatedButton(
+                    imgUrl: 'assets/auth/right_arrow.png',
+                    txt: 'SIGN UP',
+                    onPress: () {
+                      _key.currentState.save();
+                      if (_key.currentState.validate()) {
+                        controller.signUp();
+                      }
+                    },
+                  ),
             SizedBox(
               height: 20,
             ),
