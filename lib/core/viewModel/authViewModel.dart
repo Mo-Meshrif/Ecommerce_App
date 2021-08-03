@@ -89,12 +89,18 @@ class AuthViewModel extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(seconds: 5),
         );
+        clearAuthData();
       });
     } catch (e) {
       _loading.value = false;
       update();
       handleAuthErrors(e);
     }
+  }
+
+  clearAuthData() {
+    userName = email = password = null;
+    update();
   }
 
   handleAuthErrors(error) {
@@ -110,6 +116,7 @@ class AuthViewModel extends GetxController {
     _localStorageData.deleteUserData();
     _auth.signOut();
     currentIndex = 1;
+    clearAuthData();
     update();
   }
 }
