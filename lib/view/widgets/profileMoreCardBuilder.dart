@@ -3,7 +3,7 @@ import 'customText.dart';
 
 class ProfileMoreCardBuilder extends StatelessWidget {
   final int initialIndex;
-  final List<Map<String, String>> components;
+  final List<Map<String, dynamic>> components;
 
   ProfileMoreCardBuilder(
       {@required this.initialIndex, @required this.components});
@@ -20,12 +20,15 @@ class ProfileMoreCardBuilder extends StatelessWidget {
         ),
         padding: EdgeInsets.zero,
         itemCount: 4,
-        itemBuilder: (context, i) => ListTile(
-          leading: Image.asset(components[i + initialIndex]['icon']),
-          title: CustomText(
-            txt: components[i + initialIndex]['txt'],
+        itemBuilder: (context, i) => GestureDetector(
+          onTap: components[i + initialIndex]['onTap'],
+          child: ListTile(
+            leading: Image.asset(components[i + initialIndex]['icon']),
+            title: CustomText(
+              txt: components[i + initialIndex]['txt'],
+            ),
+            trailing: Image.asset('assets/home/right_arrow_c.png'),
           ),
-          trailing: Image.asset('assets/home/right_arrow_c.png'),
         ),
       ),
     );
