@@ -1,3 +1,4 @@
+import '../core/viewModel/moreViewModel.dart';
 import '../core/viewModel/cartViewModel.dart';
 import '../core/viewModel/filterViewModel.dart';
 import '../core/viewModel/searchViewModel.dart';
@@ -15,5 +16,6 @@ class Bind extends Bindings {
     Get.lazyPut(() => SearchViewModel());
     Get.lazyPut(() => FilterViewModel());
     Get.lazyPut(() => CartViewModel());
+    Get.lazyPut(() => MoreViewModel());
   }
 }

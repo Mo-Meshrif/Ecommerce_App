@@ -81,12 +81,4 @@ class CartViewModel extends GetxController {
     totalPrice = 0;
     update();
   }
-
-  //Order:ShippingAddress
-  ValueNotifier<bool> _isAdd = ValueNotifier(false);
-  ValueNotifier<bool> get isAdd => _isAdd;
-  changeShippingState(val) {
-    _isAdd.value = val;
-    update();
-  }
 }

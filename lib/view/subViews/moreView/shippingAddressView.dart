@@ -1,4 +1,4 @@
-import '../../../core/viewModel/cartViewModel.dart';
+import '../../../core/viewModel/moreViewModel.dart';
 import 'package:get/get.dart';
 import '../../../const.dart';
 import '../../../view/widgets/customPopMenuButton.dart';
@@ -11,16 +11,16 @@ class ShippingView extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List shippingList = [1];
-    return GetBuilder<CartViewModel>(
-      builder: (cartController) => Scaffold(
+    return GetBuilder<MoreViewModel>(
+      builder: (moreController) => Scaffold(
         appBar: CustomAppBar(
           title:
-              !cartController.isAdd.value ? 'Shipping Address' : 'Add Address',
-          backFun: () => cartController.isAdd.value
-              ? cartController.changeShippingState(false)
+              !moreController.isAdd.value ? 'Shipping Address' : 'Add Address',
+          backFun: () => moreController.isAdd.value
+              ? moreController.changeShippingState(false)
               : Get.back(),
         ),
-        body: !cartController.isAdd.value
+        body: !moreController.isAdd.value
             ? Column(
                 children: [
                   SingleChildScrollView(
@@ -86,7 +86,7 @@ class ShippingView extends StatelessWidget {
                     height: 170,
                     width: size.width,
                     child: GestureDetector(
-                      onTap: () => cartController.changeShippingState(true),
+                      onTap: () => moreController.changeShippingState(true),
                       child: Card(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -163,6 +163,7 @@ class ShippingView extends StatelessWidget {
                       ),
                     ),
                     Divider(),
+                    SizedBox(height: 10),
                     CustomText(
                       txt: 'Street',
                       fSize: 20,
