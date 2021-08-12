@@ -1,3 +1,4 @@
+import '../../core/viewModel/moreViewModel.dart';
 import '../../model/cartProductModel.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../core/viewModel/homeViewModel.dart';
@@ -11,8 +12,9 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
       builder: (controller) {
-        //initialize cartViewModel
+        //initialize cartViewModel,moreViewModel
         Get.put(CartViewModel());
+        Get.put(MoreViewModel());
         return GetBuilder<CartViewModel>(
           init: Get.find(),
           builder: (cartController) {
