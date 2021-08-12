@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../helper/shippingDatabaseHelper.dart';
 import '../../model/shippingAddressModel.dart';
 import 'package:flutter/foundation.dart';
@@ -11,9 +13,14 @@ class MoreViewModel extends GetxController {
   final ShippingDatabaseHelper dbShippingClient = ShippingDatabaseHelper.db;
   List<ShippingAddressModel> _shippingList;
   List<ShippingAddressModel> get shippingList => _shippingList;
+  GlobalKey<FormState> _shippingKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get shippingKey => _shippingKey;
   ValueNotifier<bool> _isAdd = ValueNotifier(false);
   ValueNotifier<bool> get isAdd => _isAdd;
   changeShippingState(val) {
+    if (!val) {
+      clearShippingData();
+    }
     _isAdd.value = val;
     update();
   }
@@ -43,7 +50,6 @@ class MoreViewModel extends GetxController {
     dbShippingClient.insert(shipping).then((_) {
       getAllShipping();
       changeShippingState(false);
-      clearShippingData();
     });
   }
 
@@ -54,10 +60,6 @@ class MoreViewModel extends GetxController {
 
   deleteOneShipping(id) {
     dbShippingClient.deleteOneShipping(id).then((_) => getAllShipping());
-  }
-
-  updateDefParameter(id) {
-    dbShippingClient.updateDef(id).then((_) => getAllShipping());
   }
 
   updateSelectedParameter(id) {

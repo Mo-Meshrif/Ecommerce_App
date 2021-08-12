@@ -88,3 +88,16 @@ List<Map<String, dynamic>> moreComponents = [
     'onTap': () => null,
   },
 ];
+List<String> states = ['Cairo', 'Dakahlia'];
+Map<String, List<String>> cities = {
+  'Cairo': [
+    'Ain Shams',
+    'Bab al-Louq',
+    'Zamalek',
+  ],
+  'Dakahlia': [
+    'El Mansoura',
+    'Aga',
+    'Mit Ghamr',
+  ],
+};

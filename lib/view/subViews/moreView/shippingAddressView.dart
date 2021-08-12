@@ -78,17 +78,12 @@ class ShippingView extends StatelessWidget {
                                                         fWeight:
                                                             FontWeight.bold,
                                                       ),
-                                                      GestureDetector(
-                                                        onTap: () => moreController
-                                                            .updateDefParameter(
-                                                                e.id),
-                                                        child: CustomText(
-                                                          txt: e.isDef == 0
-                                                              ? 'Default'
-                                                              : '',
-                                                          fSize: 17,
-                                                          txtColor: priColor,
-                                                        ),
+                                                      CustomText(
+                                                        txt: e.isDef == 1
+                                                            ? 'Default'
+                                                            : '',
+                                                        fSize: 17,
+                                                        txtColor: priColor,
                                                       ),
                                                     ],
                                                   ),
@@ -99,7 +94,10 @@ class ShippingView extends StatelessWidget {
                                                       txt: e.mobileNumber,
                                                     ),
                                                     trailing: e.isSelected == 1
-                                                        ? Icon(Icons.check)
+                                                        ? Icon(
+                                                            Icons.check,
+                                                            color: priColor,
+                                                          )
                                                         : null,
                                                     horizontalTitleGap: 2,
                                                     contentPadding:
@@ -160,117 +158,149 @@ class ShippingView extends StatelessWidget {
               : SingleChildScrollView(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomRowWidget(
-                        title: 'Full Name',
-                        widget: Container(
-                          width: 170,
-                          child: TextFormField(
-                            onChanged: (val) => moreController.fullName = val,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 5),
-                              hintText: 'Full Name',
-                              border: InputBorder.none,
+                  child: Form(
+                    key: moreController.shippingKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomRowWidget(
+                          title: 'Full Name',
+                          widget: Container(
+                            width: 170,
+                            child: TextFormField(
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return 'The Value is Empty';
+                                }
+                                return null;
+                              },
+                              onChanged: (val) => moreController.fullName = val,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 5),
+                                hintText: 'Full Name',
+                                border: InputBorder.none,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Divider(),
-                      CustomRowWidget(
-                        title: 'Mobile Number',
-                        widget: Container(
-                          width: 170,
-                          child: TextFormField(
-                            onChanged: (val) =>
-                                moreController.mobileNumber = val,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 5),
-                              hintText: 'Mobile Number',
-                              border: InputBorder.none,
+                        Divider(),
+                        CustomRowWidget(
+                          title: 'Mobile Number',
+                          widget: Container(
+                            width: 170,
+                            child: TextFormField(
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return 'The Value is Empty';
+                                }
+                                return null;
+                              },
+                              onChanged: (val) =>
+                                  moreController.mobileNumber = val,
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 5),
+                                hintText: 'Mobile Number',
+                                border: InputBorder.none,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Divider(),
-                      CustomRowWidget(
-                        title: 'State',
-                        widget: Container(
-                          width: 170,
-                          child: CustomPopUpMenuButton(
-                            title: moreController.state,
-                            popList: ['Cairo', 'Dakh'],
-                            onSelected: (val) => moreController.getState(val),
-                          ),
-                        ),
-                      ),
-                      Divider(),
-                      CustomRowWidget(
-                        title: 'City',
-                        widget: Container(
-                          width: 170,
-                          child: CustomPopUpMenuButton(
-                            title: moreController.city,
-                            popList: ['Cairo', 'Dakh'],
-                            onSelected: (val) => moreController.getCity(val),
-                          ),
-                        ),
-                      ),
-                      Divider(),
-                      SizedBox(height: 10),
-                      CustomText(
-                        txt: 'Street',
-                        fSize: 20,
-                      ),
-                      TextFormField(
-                        onChanged: (val) => moreController.street = val,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 5),
-                          hintText: 'Street',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                      Divider(),
-                      CustomRowWidget(
-                        title: 'Set as default',
-                        widget: Switch.adaptive(
-                          value: moreController.isDef,
-                          onChanged: (val) => moreController.getIsDef(val),
-                          activeColor: priColor,
-                        ),
-                      ),
-                      Divider(),
-                      SizedBox(height: 20),
-                      Align(
-                        alignment: Alignment(0, 0),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 80, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              textStyle: const TextStyle(fontSize: 20),
-                              primary: priColor,
+                        Divider(),
+                        CustomRowWidget(
+                          title: 'State',
+                          widget: Container(
+                            width: 170,
+                            child: CustomPopUpMenuButton(
+                              title: moreController.state,
+                              popList: states,
+                              onSelected: (val) => moreController.getState(val),
+                              enabled: true,
                             ),
-                            onPressed: () => moreController.addAddress(
-                                  ShippingAddressModel(
-                                    fullName: moreController.fullName,
-                                    mobileNumber: moreController.mobileNumber,
-                                    state: moreController.state,
-                                    city: moreController.city,
-                                    street: moreController.street,
-                                    isDef: moreController.isDef == true ? 1 : 0,
-                                    isSelected: 0,
-                                  ),
-                                ),
-                            child: CustomText(
-                              txt: 'Add Address',
-                              txtColor: Colors.white,
-                            )),
-                      )
-                    ],
+                          ),
+                        ),
+                        Divider(),
+                        CustomRowWidget(
+                          title: 'City',
+                          widget: Container(
+                            width: 170,
+                            child: CustomPopUpMenuButton(
+                              title: moreController.city,
+                              popList: cities[moreController.state],
+                              onSelected: (val) => moreController.getCity(val),
+                              enabled: moreController.state == 'Select State'
+                                  ? false
+                                  : true,
+                            ),
+                          ),
+                        ),
+                        Divider(),
+                        SizedBox(height: 10),
+                        CustomText(
+                          txt: 'Street',
+                          fSize: 20,
+                        ),
+                        TextFormField(
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return 'The Value is Empty';
+                            }
+                            return null;
+                          },
+                          onChanged: (val) => moreController.street = val,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(top: 5),
+                            hintText: 'Street',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                        Divider(),
+                        CustomRowWidget(
+                          title: 'Set as default',
+                          widget: Switch.adaptive(
+                            value: moreController.isDef,
+                            onChanged: (val) => moreController.getIsDef(val),
+                            activeColor: priColor,
+                          ),
+                        ),
+                        Divider(),
+                        SizedBox(height: 20),
+                        Align(
+                          alignment: Alignment(0, 0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 80, vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                textStyle: const TextStyle(fontSize: 20),
+                                primary: priColor,
+                              ),
+                              onPressed: () {
+                                moreController.shippingKey.currentState.save();
+                                if (moreController.shippingKey.currentState
+                                    .validate()) {
+                                  moreController.addAddress(
+                                    ShippingAddressModel(
+                                      fullName: moreController.fullName,
+                                      mobileNumber: moreController.mobileNumber,
+                                      state: moreController.state,
+                                      city: moreController.city,
+                                      street: moreController.street,
+                                      isDef:
+                                          moreController.isDef == true ? 1 : 0,
+                                      isSelected: 0,
+                                    ),
+                                  );
+                                }
+                              },
+                              child: CustomText(
+                                txt: 'Add Address',
+                                txtColor: Colors.white,
+                              )),
+                        )
+                      ],
+                    ),
                   ),
                 ),
         );

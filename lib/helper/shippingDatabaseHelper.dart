@@ -60,13 +60,6 @@ class ShippingDatabaseHelper {
     await dbClient.delete('shippingAddress', where: 'id=?', whereArgs: [id]);
   }
 
-  Future<void> updateDef(id) async {
-    var dbClient = await database;
-    await dbClient.update('shippingAddress', {'isDef': 0}).then((_) async =>
-        await dbClient.update('shippingAddress', {'isDef': 1},
-            where: 'id=?', whereArgs: [id]));
-  }
-
   Future<void> updateSelected(id) async {
     var dbClient = await database;
     await dbClient.update('shippingAddress', {'isSelected': 0}).then(
