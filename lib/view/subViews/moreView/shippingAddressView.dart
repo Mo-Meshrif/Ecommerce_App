@@ -255,16 +255,23 @@ class ShippingView extends StatelessWidget {
                           ),
                         ),
                         Divider(),
-                        CustomRowWidget(
-                          title: 'Set as default',
-                          widget: Switch.adaptive(
-                            value: moreController.isDef,
-                            onChanged: (val) => moreController.getIsDef(val),
-                            activeColor: priColor,
-                          ),
-                        ),
-                        Divider(),
-                        SizedBox(height: 20),
+                        shippingList.isNotEmpty
+                            ? Column(
+                                children: [
+                                  CustomRowWidget(
+                                    title: 'Set as default',
+                                    widget: Switch.adaptive(
+                                      value: moreController.isDef,
+                                      onChanged: (val) =>
+                                          moreController.getIsDef(val),
+                                      activeColor: priColor,
+                                    ),
+                                  ),
+                                  Divider(),
+                                  SizedBox(height: 20),
+                                ],
+                              )
+                            : SizedBox(height: 20),
                         Align(
                           alignment: Alignment(0, 0),
                           child: ElevatedButton(
@@ -287,8 +294,10 @@ class ShippingView extends StatelessWidget {
                                       state: moreController.state,
                                       city: moreController.city,
                                       street: moreController.street,
-                                      isDef:
-                                          moreController.isDef == true ? 1 : 0,
+                                      isDef: moreController.isDef == true ||
+                                              shippingList.isEmpty
+                                          ? 1
+                                          : 0,
                                       isSelected: 0,
                                     ),
                                   );
