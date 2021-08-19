@@ -13,6 +13,8 @@ class MoreViewModel extends GetxController {
   final ShippingDatabaseHelper dbShippingClient = ShippingDatabaseHelper.db;
   List<ShippingAddressModel> _shippingList;
   List<ShippingAddressModel> get shippingList => _shippingList;
+  ShippingAddressModel _specificShippingAddress;
+  ShippingAddressModel get specificShippingAddress => _specificShippingAddress;
   GlobalKey<FormState> _shippingKey = GlobalKey<FormState>();
   GlobalKey<FormState> get shippingKey => _shippingKey;
   ValueNotifier<bool> _isAdd = ValueNotifier(false);
@@ -54,8 +56,21 @@ class MoreViewModel extends GetxController {
   }
 
   getAllShipping() async {
-    _shippingList = await dbShippingClient.getAllShipping();
-    update();
+    try {
+      _shippingList = await dbShippingClient.getAllShipping();
+      update();
+      var index =
+          _shippingList.indexWhere((element) => element.isSelected == 1);
+      if (index >= 0) {
+        _specificShippingAddress =
+            _shippingList.firstWhere((element) => element.isSelected == 1);
+        update();
+      } else {
+        _specificShippingAddress =
+            _shippingList.firstWhere((element) => element.isDef == 1);
+        update();
+      }
+    } catch (e) {}
   }
 
   deleteOneShipping(id) {
@@ -71,6 +86,13 @@ class MoreViewModel extends GetxController {
     state = 'Select State';
     city = 'Select City';
     isDef = false;
+    update();
+  }
+
+  //paymentMethod
+  String cardImage;
+  getSelectedCardImg(cardImg) {
+    cardImage = cardImg;
     update();
   }
 }

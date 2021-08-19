@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'view/subViews/moreView/shippingAddressView.dart';
+import 'view/subViews/moreView/shippingAddressView/shippingAddressView.dart';
+import 'view/subViews/moreView/paymentMethodView/paymentMethodView.dart';
 
 const priColor = Color.fromRGBO(255, 105, 105, 1);
 const swatchColor = Color.fromRGBO(81, 92, 111, 1);
@@ -55,7 +56,7 @@ List<Map<String, dynamic>> moreComponents = [
   {
     'icon': 'assets/profile-more/payment.png',
     'txt': 'Payment Method',
-    'onTap': () => null,
+    'onTap': () => Get.to(() => PaymentMethodView()),
   },
   {
     'icon': 'assets/profile-more/currency.png',
@@ -101,3 +102,8 @@ Map<String, List<String>> cities = {
     'Mit Ghamr',
   ],
 };
+List<String> imgCards = [
+  'assets/profile-more/visa.png',
+  'assets/profile-more/mastercard.png',
+  'assets/profile-more/paypal.png',
+];
