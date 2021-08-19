@@ -3,6 +3,8 @@ import '../../model/cartProductModel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+enum paymentMethod { cashOnDelivery, masterCard }
+
 class CartViewModel extends GetxController {
   var db = CartDataBaseHelper.db;
   List<CartProductModel> cartProds = [];
@@ -79,6 +81,13 @@ class CartViewModel extends GetxController {
     await db.deleteAll();
     cartProds = [];
     totalPrice = 0;
+    update();
+  }
+
+  //order
+  paymentMethod pay = paymentMethod.cashOnDelivery;
+  changePay(val) {
+    pay = val;
     update();
   }
 }

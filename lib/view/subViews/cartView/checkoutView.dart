@@ -1,5 +1,6 @@
-import 'package:ecommerce/view/subViews/cartView/orderPlacedView.dart';
-
+import '../../../core/viewModel/moreViewModel.dart';
+import '../../../view/subViews/moreView/shippingAddressView/shippingAddressView.dart';
+import '../../../view/subViews/cartView/orderPlacedView.dart';
 import '../../../view/widgets/bottomCartBar.dart';
 import '../../../core/viewModel/cartViewModel.dart';
 import '../../../model/cartProductModel.dart';
@@ -53,75 +54,89 @@ class CheckoutView extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomText(
-                            txt: 'John Doe',
-                            fSize: 15,
-                            fWeight: FontWeight.bold,
-                            txtColor: swatchColor,
-                          ),
-                          CustomText(
-                            txt: 'No 123, Sub Street,',
-                            fSize: 15,
-                            txtColor: swatchColor,
-                          ),
-                          CustomText(
-                            txt: 'Main Street,',
-                            fSize: 15,
-                            txtColor: swatchColor,
-                          ),
-                          CustomText(
-                            txt: 'City Name, Province,',
-                            fSize: 15,
-                            txtColor: swatchColor,
-                          ),
-                          CustomText(
-                            txt: 'Country',
-                            fSize: 15,
-                            txtColor: swatchColor,
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: null,
-                        child: Image.asset('assets/home/right_arrow_c.png'),
-                      )
-                    ],
+                  GetBuilder<MoreViewModel>(
+                    builder: (moreController) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        moreController.specificShippingAddress != null
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    txt: moreController
+                                        .specificShippingAddress.fullName,
+                                    fSize: 15,
+                                    fWeight: FontWeight.bold,
+                                    txtColor: swatchColor,
+                                  ),
+                                  CustomText(
+                                    txt: moreController
+                                        .specificShippingAddress.mobileNumber,
+                                    fSize: 15,
+                                    txtColor: swatchColor,
+                                  ),
+                                  CustomText(
+                                    txt: moreController
+                                            .specificShippingAddress.street +
+                                        ',' +
+                                        moreController
+                                            .specificShippingAddress.city +
+                                        ',' +
+                                        moreController
+                                            .specificShippingAddress.state,
+                                    fSize: 15,
+                                    txtColor: swatchColor,
+                                  ),
+                                ],
+                              )
+                            : CustomText(
+                                txt: 'Add your address,please..........',
+                                txtColor: priColor,
+                              ),
+                        GestureDetector(
+                          onTap: () => Get.to(() => ShippingView()),
+                          child: Image.asset('assets/home/right_arrow_c.png'),
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Divider(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomText(
-                    txt: 'PAYMENT METHOD',
-                    fSize: 15,
-                    fWeight: FontWeight.w300,
-                    txtColor: swatchColor,
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Image.asset('assets/cart/master.png'),
+                  ExpansionTile(
+                    tilePadding: EdgeInsets.zero,
                     title: CustomText(
-                      txt: 'Master Card ending **00',
+                      txt: 'PAYMENT METHOD',
                       fSize: 15,
-                      fWeight: FontWeight.bold,
+                      fWeight: FontWeight.w300,
                       txtColor: swatchColor,
                     ),
-                    horizontalTitleGap: 0,
-                    trailing: GestureDetector(
-                      onTap: null,
-                      child: Image.asset('assets/home/right_arrow_c.png'),
-                    ),
+                    childrenPadding: EdgeInsets.only(bottom: 10),
+                    children: [
+                      RadioListTile(
+                        title: CustomText(txt: 'Cash On Delivery'),
+                        value: paymentMethod.cashOnDelivery,
+                        groupValue: cartController.pay,
+                        onChanged: (val) => cartController.changePay(val),
+                        secondary: Image.asset(
+                          'assets/cart/cashOnDelivery.png',
+                          height: 50,
+                          width: 50,
+                        ),
+                      ),
+                      RadioListTile(
+                        title: CustomText(txt: 'Credit Card'),
+                        value: paymentMethod.masterCard,
+                        groupValue: cartController.pay,
+                        onChanged: (val) => cartController.changePay(val),
+                        secondary: Image.asset(
+                          'assets/cart/card.png',
+                          height: 50,
+                          width: 50,
+                        ),
+                      ),
+                    ],
                   ),
-                  Divider(),
                   SizedBox(
                     height: 10,
                   ),
