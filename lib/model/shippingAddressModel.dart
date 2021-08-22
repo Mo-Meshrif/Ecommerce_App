@@ -1,13 +1,12 @@
 class ShippingAddressModel {
   String fullName, mobileNumber, state, city, street;
-  int id, isDef, isSelected;
+  int id, isSelected;
   ShippingAddressModel({
     this.fullName,
     this.mobileNumber,
     this.state,
     this.city,
     this.street,
-    this.isDef,
     this.isSelected,
   });
   ShippingAddressModel.fromJson(Map<String, dynamic> map) {
@@ -20,7 +19,6 @@ class ShippingAddressModel {
     state = map['state'];
     city = map['city'];
     street = map['street'];
-    isDef = map['isDef'];
     isSelected = map['isSelected'];
   }
   toJson() {
@@ -30,7 +28,6 @@ class ShippingAddressModel {
       'state': state,
       'city': city,
       'street': street,
-      'isDef': isDef,
       'isSelected': isSelected,
     };
   }

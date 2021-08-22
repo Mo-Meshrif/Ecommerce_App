@@ -26,25 +26,18 @@ class ShippingDatabaseHelper {
               state TEXT NOT NULL,
               city TEXT NOT NULL,
               street TEXT NOT NULL,
-              isDef INTEGER NOT NULL,
               isSelected INTEGER NOT NULL)
             '''));
   }
 
-  Future<void> restAllDefIf(int isDef) async {
-    var dbClient = await database;
-    if (isDef == 1) {
-      await dbClient.update('shippingAddress', {'isDef': 0});
-    }
-  }
-
   Future<void> insert(ShippingAddressModel shipping) async {
     var dbClient = await database;
-    await restAllDefIf(shipping.isDef).then((_) async => await dbClient.insert(
-          'shippingAddress',
-          shipping.toJson(),
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        ));
+    await dbClient.update('shippingAddress', {'isSelected': 0}).then(
+        (_) async => await dbClient.insert(
+              'shippingAddress',
+              shipping.toJson(),
+              conflictAlgorithm: ConflictAlgorithm.replace,
+            ));
   }
 
   Future<List<ShippingAddressModel>> getAllShipping() async {

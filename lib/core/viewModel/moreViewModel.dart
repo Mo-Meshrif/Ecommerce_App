@@ -1,5 +1,6 @@
+import 'package:ecommerce/helper/paymentDatabaseHelper.dart';
+import 'package:ecommerce/model/paymentMethodModel.dart';
 import 'package:flutter/material.dart';
-
 import '../../helper/shippingDatabaseHelper.dart';
 import '../../model/shippingAddressModel.dart';
 import 'package:flutter/foundation.dart';
@@ -8,31 +9,31 @@ import 'package:get/get.dart';
 class MoreViewModel extends GetxController {
   MoreViewModel() {
     getAllShipping();
+    getAllPayments();
   }
-  //ShippingAddress
-  final ShippingDatabaseHelper dbShippingClient = ShippingDatabaseHelper.db;
-  List<ShippingAddressModel> _shippingList;
-  List<ShippingAddressModel> get shippingList => _shippingList;
-  ShippingAddressModel _specificShippingAddress;
-  ShippingAddressModel get specificShippingAddress => _specificShippingAddress;
-  GlobalKey<FormState> _shippingKey = GlobalKey<FormState>();
-  GlobalKey<FormState> get shippingKey => _shippingKey;
   ValueNotifier<bool> _isAdd = ValueNotifier(false);
   ValueNotifier<bool> get isAdd => _isAdd;
-  changeShippingState(val) {
+  changeState(val) {
     if (!val) {
       clearShippingData();
+      clearPaymentData();
     }
     _isAdd.value = val;
     update();
   }
+
+  //ShippingAddress
+  final ShippingDatabaseHelper dbShippingClient = ShippingDatabaseHelper.db;
+  List<ShippingAddressModel> _shippingList;
+  List<ShippingAddressModel> get shippingList => _shippingList;
+  GlobalKey<FormState> _shippingKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get shippingKey => _shippingKey;
 
   String fullName,
       mobileNumber,
       state = 'Select State',
       city = 'Select City',
       street;
-  bool isDef = false;
   getState(val) {
     state = val;
     update();
@@ -43,41 +44,23 @@ class MoreViewModel extends GetxController {
     update();
   }
 
-  getIsDef(val) {
-    isDef = val;
-    update();
-  }
-
   addAddress(ShippingAddressModel shipping) {
     dbShippingClient.insert(shipping).then((_) {
       getAllShipping();
-      changeShippingState(false);
+      changeState(false);
     });
   }
 
   getAllShipping() async {
-    try {
-      _shippingList = await dbShippingClient.getAllShipping();
-      update();
-      var index =
-          _shippingList.indexWhere((element) => element.isSelected == 1);
-      if (index >= 0) {
-        _specificShippingAddress =
-            _shippingList.firstWhere((element) => element.isSelected == 1);
-        update();
-      } else {
-        _specificShippingAddress =
-            _shippingList.firstWhere((element) => element.isDef == 1);
-        update();
-      }
-    } catch (e) {}
+    _shippingList = await dbShippingClient.getAllShipping();
+    update();
   }
 
   deleteOneShipping(id) {
     dbShippingClient.deleteOneShipping(id).then((_) => getAllShipping());
   }
 
-  updateSelectedParameter(id) {
+  updateSelectedShippingParameter(id) {
     dbShippingClient.updateSelected(id).then((_) => getAllShipping());
   }
 
@@ -85,14 +68,65 @@ class MoreViewModel extends GetxController {
     fullName = mobileNumber = street = null;
     state = 'Select State';
     city = 'Select City';
-    isDef = false;
     update();
   }
 
   //paymentMethod
-  String cardImage;
+  String cardImage = 'assets/profile-more/visa.png';
+  final PaymentDatabaseHelper dbPaymentClient = PaymentDatabaseHelper.db;
+  GlobalKey<FormState> _paymentKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get paymentKey => _paymentKey;
+  List<PaymentMehodModel> _paymentsList;
+  List<PaymentMehodModel> get paymentsList => _paymentsList;
   getSelectedCardImg(cardImg) {
     cardImage = cardImg;
+    update();
+  }
+
+  String cardNumber = '', expireDate = '', cvv = '', cardHolderName = '';
+  getCardNumber(val) {
+    cardNumber = val;
+    update();
+  }
+
+  getExpireDate(val) {
+    expireDate = val;
+    update();
+  }
+
+  getCvv(val) {
+    cvv = val;
+    update();
+  }
+
+  getCardHolderName(val) {
+    cardHolderName = val;
+    update();
+  }
+
+  addPayment(PaymentMehodModel payment) {
+    dbPaymentClient.insert(payment).then((_) {
+      getAllPayments();
+      changeState(false);
+    });
+  }
+
+  getAllPayments() async {
+    _paymentsList = await dbPaymentClient.getAllPayments();
+    update();
+  }
+
+  deleteOnePayment(id) {
+    dbPaymentClient.deleteOnePayment(id).then((_) => getAllPayments());
+  }
+
+  updateSelectedPaymentsParameter(id) {
+    dbPaymentClient.updateSelected(id).then((_) => getAllPayments());
+  }
+
+  clearPaymentData() {
+    cardNumber = expireDate = cvv = cardHolderName = '';
+    cardImage = 'assets/profile-more/visa.png';
     update();
   }
 }

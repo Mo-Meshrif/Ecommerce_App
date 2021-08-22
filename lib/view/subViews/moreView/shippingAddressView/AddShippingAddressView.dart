@@ -108,27 +108,13 @@ class AddShippingAddressView extends StatelessWidget {
               ),
             ),
             Divider(),
-            moreController.shippingList.isNotEmpty
-                ? Column(
-                    children: [
-                      CustomRowWidget(
-                        title: 'Set as default',
-                        widget: Switch.adaptive(
-                          value: moreController.isDef,
-                          onChanged: (val) => moreController.getIsDef(val),
-                          activeColor: priColor,
-                        ),
-                      ),
-                      Divider(),
-                      SizedBox(height: 20),
-                    ],
-                  )
-                : SizedBox(height: 20),
+            SizedBox(height: 20),
             Align(
               alignment: Alignment(0, 0),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 125, vertical: 15),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     textStyle: const TextStyle(fontSize: 20),
@@ -139,16 +125,13 @@ class AddShippingAddressView extends StatelessWidget {
                     if (moreController.shippingKey.currentState.validate()) {
                       moreController.addAddress(
                         ShippingAddressModel(
-                          fullName: moreController.fullName,
+                          fullName:
+                              capitalizeFirstofEach(moreController.fullName),
                           mobileNumber: moreController.mobileNumber,
                           state: moreController.state,
                           city: moreController.city,
-                          street: moreController.street,
-                          isDef: moreController.isDef == true ||
-                                  moreController.shippingList.isEmpty
-                              ? 1
-                              : 0,
-                          isSelected: 0,
+                          street: capitalizeFirstofEach(moreController.street),
+                          isSelected: 1,
                         ),
                       );
                     }

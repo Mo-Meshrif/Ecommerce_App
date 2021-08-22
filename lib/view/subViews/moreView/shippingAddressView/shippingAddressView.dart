@@ -2,7 +2,6 @@ import '../../../../view/subViews/moreView/shippingAddressView/AddShippingAddres
 import '../../../../model/shippingAddressModel.dart';
 import '../../../../core/viewModel/moreViewModel.dart';
 import 'package:get/get.dart';
-import '../../../../const.dart';
 import '../../../widgets/customText.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/customAppBar.dart';
@@ -21,7 +20,7 @@ class ShippingView extends StatelessWidget {
                 ? 'Shipping Address'
                 : 'Add Address',
             backFun: () => moreController.isAdd.value
-                ? moreController.changeShippingState(false)
+                ? moreController.changeState(false)
                 : Get.back(),
           ),
           body: !moreController.isAdd.value
@@ -53,76 +52,81 @@ class ShippingView extends StatelessWidget {
                                       ),
                                       onDismissed: (_) => moreController
                                           .deleteOneShipping(e.id),
-                                      child: GestureDetector(
-                                        onTap: () => moreController
-                                            .updateSelectedParameter(e.id),
-                                        child: Container(
-                                          height: 170,
-                                          child: Card(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 18,
-                                                vertical: 20,
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      CustomText(
-                                                        txt: e.fullName,
-                                                        fSize: 17,
-                                                        fWeight:
-                                                            FontWeight.bold,
+                                      child: Container(
+                                        height: 175,
+                                        child: Card(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 18,
+                                              vertical: 20,
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    CustomText(
+                                                      txt: e.fullName,
+                                                      fSize: 17,
+                                                      fWeight: FontWeight.bold,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () => moreController
+                                                          .updateSelectedShippingParameter(
+                                                              e.id),
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                e.isSelected == 1
+                                                                    ? Colors
+                                                                        .blue
+                                                                    : Colors
+                                                                        .white,
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .grey),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                        child: Icon(
+                                                          Icons.check,
+                                                          color: Colors.white,
+                                                        ),
                                                       ),
-                                                      CustomText(
-                                                        txt: e.isDef == 1
-                                                            ? 'Default'
-                                                            : '',
-                                                        fSize: 17,
-                                                        txtColor: priColor,
-                                                      ),
-                                                    ],
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(height: 5),
+                                                ListTile(
+                                                  leading: Icon(Icons.phone),
+                                                  title: CustomText(
+                                                    txt: e.mobileNumber,
                                                   ),
-                                                  SizedBox(height: 5),
-                                                  ListTile(
-                                                    leading: Icon(Icons.phone),
-                                                    title: CustomText(
-                                                      txt: e.mobileNumber,
-                                                    ),
-                                                    trailing: e.isSelected == 1
-                                                        ? Icon(
-                                                            Icons.check,
-                                                            color: priColor,
-                                                          )
-                                                        : null,
-                                                    horizontalTitleGap: 2,
-                                                    contentPadding:
-                                                        EdgeInsets.zero,
+                                                  horizontalTitleGap: 2,
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                ),
+                                                ListTile(
+                                                  leading:
+                                                      Icon(Icons.location_on),
+                                                  title: CustomText(
+                                                    txt: e.street +
+                                                        ',' +
+                                                        e.city +
+                                                        ',' +
+                                                        e.state,
                                                   ),
-                                                  ListTile(
-                                                    leading:
-                                                        Icon(Icons.location_on),
-                                                    title: CustomText(
-                                                      txt: e.street +
-                                                          ',' +
-                                                          e.city +
-                                                          ',' +
-                                                          e.state,
-                                                    ),
-                                                    visualDensity:
-                                                        VisualDensity(
-                                                      vertical: -4,
-                                                    ),
-                                                    horizontalTitleGap: 2,
-                                                    contentPadding:
-                                                        EdgeInsets.zero,
-                                                  )
-                                                ],
-                                              ),
+                                                  visualDensity: VisualDensity(
+                                                    vertical: -4,
+                                                  ),
+                                                  horizontalTitleGap: 2,
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                )
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -135,7 +139,7 @@ class ShippingView extends StatelessWidget {
                         height: 170,
                         width: MediaQuery.of(context).size.width,
                         child: GestureDetector(
-                          onTap: () => moreController.changeShippingState(true),
+                          onTap: () => moreController.changeState(true),
                           child: Card(
                               child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
