@@ -1,3 +1,4 @@
+import '../../../../model/paymentMethodModel.dart';
 import '../../../../core/viewModel/moreViewModel.dart';
 import '../../../../view/widgets/customAppBar.dart';
 import '../../../../view/widgets/customText.dart';
@@ -11,12 +12,13 @@ class PaymentMethodView extends StatelessWidget {
     return GetBuilder<MoreViewModel>(
       init: Get.find(),
       builder: (moreController) {
-        List cardList = [1];
+        List<PaymentMehodModel> cardList =
+            moreController.paymentsList.reversed.toList();
         return Scaffold(
           appBar: CustomAppBar(
             title: !moreController.isAdd.value ? 'Payment Method' : 'Add Card',
             backFun: () => moreController.isAdd.value
-                ? moreController.changeShippingState(false)
+                ? moreController.changeState(false)
                 : Get.back(),
           ),
           body: !moreController.isAdd.value
@@ -29,10 +31,29 @@ class PaymentMethodView extends StatelessWidget {
                               (e) => Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20),
-                                  child: GestureDetector(
-                                    onTap: () => null,
-                                    child: Container(
-                                      height: 175,
+                                  child: Container(
+                                    height: 175,
+                                    child: Dismissible(
+                                      key: Key(e.id.toString()),
+                                      direction: DismissDirection.endToStart,
+                                      background: Container(
+                                        alignment: Alignment.centerRight,
+                                        padding: EdgeInsets.only(right: 20),
+                                        color: Colors.red,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.delete,
+                                                color: Colors.white),
+                                            Text('Delete',
+                                                style: TextStyle(
+                                                    color: Colors.white)),
+                                          ],
+                                        ),
+                                      ),
+                                      onDismissed: (_) =>
+                                          moreController.deleteOnePayment(e.id),
                                       child: Card(
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -49,32 +70,44 @@ class PaymentMethodView extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   Image.asset(
-                                                    'assets/profile-more/mastercard.png',
+                                                    e.cardImage,
                                                     height: 50,
                                                   ),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.blue,
-                                                        border: Border.all(
-                                                            color: Colors.grey),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20)),
-                                                    child: Icon(
-                                                      Icons.check,
-                                                      color: Colors.white,
+                                                  GestureDetector(
+                                                    onTap: () => moreController
+                                                        .updateSelectedPaymentsParameter(
+                                                            e.id),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: e.isSelected ==
+                                                                  1
+                                                              ? Colors.blue
+                                                              : Colors.white,
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.grey),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20)),
+                                                      child: Icon(
+                                                        Icons.check,
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   )
                                                 ],
                                               ),
                                               SizedBox(height: 5),
                                               CustomText(
-                                                txt: '**** **** **** 1234',
+                                                txt: e.cardNumber.replaceAll(
+                                                    RegExp(r'\d(?!\d{0,3}$)'),
+                                                    '* '),
                                                 fSize: 15,
                                               ),
                                               SizedBox(height: 5),
                                               CustomText(
-                                                txt: '582',
+                                                txt: e.cvv,
                                                 fSize: 15,
                                               ),
                                               SizedBox(height: 10),
@@ -84,11 +117,11 @@ class PaymentMethodView extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   CustomText(
-                                                    txt: 'Mohamed Meshrif',
+                                                    txt: e.cardHolderName,
                                                     fSize: 15,
                                                   ),
                                                   CustomText(
-                                                    txt: '12/08',
+                                                    txt: e.expireDate,
                                                     fSize: 15,
                                                   ),
                                                 ],
@@ -107,7 +140,7 @@ class PaymentMethodView extends StatelessWidget {
                         height: 170,
                         width: MediaQuery.of(context).size.width,
                         child: GestureDetector(
-                          onTap: () => moreController.changeShippingState(true),
+                          onTap: () => moreController.changeState(true),
                           child: Card(
                               child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
