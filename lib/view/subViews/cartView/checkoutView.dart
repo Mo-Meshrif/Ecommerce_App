@@ -153,8 +153,7 @@ class CheckoutView extends StatelessWidget {
                                 }
                                 return GestureDetector(
                                   onTap: paymentsList.isEmpty
-                                      ? () => Get.to(() => AddPaymentCardView(
-                                          moreController: moreController))
+                                      ? () => Get.to(() => AddPaymentCardView())
                                       : null,
                                   child: Container(
                                     height: 135,
