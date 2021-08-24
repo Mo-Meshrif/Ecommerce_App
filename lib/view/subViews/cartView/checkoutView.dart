@@ -1,5 +1,8 @@
+import '../../../view/subViews/moreView/paymentMethodView/addPaymentCardView.dart';
+import '../../../view/subViews/moreView/shippingAddressView/AddShippingAddressView.dart';
+import '../../../model/paymentMethodModel.dart';
+import '../../../model/shippingAddressModel.dart';
 import '../../../core/viewModel/moreViewModel.dart';
-import '../../../view/subViews/moreView/shippingAddressView/shippingAddressView.dart';
 import '../../../view/subViews/cartView/orderPlacedView.dart';
 import '../../../view/widgets/bottomCartBar.dart';
 import '../../../core/viewModel/cartViewModel.dart';
@@ -55,50 +58,53 @@ class CheckoutView extends StatelessWidget {
                     height: 10,
                   ),
                   GetBuilder<MoreViewModel>(
-                    builder: (moreController) => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        moreController.specificShippingAddress != null
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    txt: moreController
-                                        .specificShippingAddress.fullName,
-                                    fSize: 15,
-                                    fWeight: FontWeight.bold,
-                                    txtColor: swatchColor,
-                                  ),
-                                  CustomText(
-                                    txt: moreController
-                                        .specificShippingAddress.mobileNumber,
-                                    fSize: 15,
-                                    txtColor: swatchColor,
-                                  ),
-                                  CustomText(
-                                    txt: moreController
-                                            .specificShippingAddress.street +
-                                        ',' +
-                                        moreController
-                                            .specificShippingAddress.city +
-                                        ',' +
-                                        moreController
-                                            .specificShippingAddress.state,
-                                    fSize: 15,
-                                    txtColor: swatchColor,
-                                  ),
-                                ],
-                              )
-                            : CustomText(
-                                txt: 'Add your address,please..........',
-                                txtColor: priColor,
-                              ),
-                        GestureDetector(
-                          onTap: () => Get.to(() => ShippingView()),
-                          child: Image.asset('assets/home/right_arrow_c.png'),
-                        )
-                      ],
-                    ),
+                    builder: (moreController) {
+                      ShippingAddressModel specificShippingAddress;
+                      if (moreController.shippingList.isNotEmpty) {
+                        specificShippingAddress = moreController.shippingList
+                            .firstWhere((element) => element.isSelected == 1);
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          specificShippingAddress != null
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      txt: specificShippingAddress
+                                          .fullName.capitalizeFirst,
+                                      fSize: 15,
+                                      fWeight: FontWeight.bold,
+                                      txtColor: swatchColor,
+                                    ),
+                                    CustomText(
+                                      txt: specificShippingAddress.mobileNumber,
+                                      fSize: 15,
+                                      txtColor: swatchColor,
+                                    ),
+                                    CustomText(
+                                      txt: specificShippingAddress.street +
+                                          ',' +
+                                          specificShippingAddress.city +
+                                          ',' +
+                                          specificShippingAddress.state,
+                                      fSize: 15,
+                                      txtColor: swatchColor,
+                                    ),
+                                  ],
+                                )
+                              : CustomText(
+                                  txt: 'Add your address,please..........',
+                                  txtColor: priColor,
+                                ),
+                          GestureDetector(
+                            onTap: () => Get.to(() => AddShippingAddressView()),
+                            child: Image.asset('assets/home/right_arrow_c.png'),
+                          )
+                        ],
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 10,
@@ -135,6 +141,94 @@ class CheckoutView extends StatelessWidget {
                           width: 50,
                         ),
                       ),
+                      cartController.pay == paymentMethod.masterCard
+                          ? GetBuilder<MoreViewModel>(
+                              builder: (moreController) {
+                                List<PaymentMehodModel> paymentsList =
+                                    moreController.paymentsList;
+                                PaymentMehodModel specificPayment;
+                                if (paymentsList.isNotEmpty) {
+                                  specificPayment = paymentsList.firstWhere(
+                                      (element) => element.isSelected == 1);
+                                }
+                                return GestureDetector(
+                                  onTap: paymentsList.isEmpty
+                                      ? () => Get.to(() => AddPaymentCardView(
+                                          moreController: moreController))
+                                      : null,
+                                  child: Container(
+                                    height: 135,
+                                    width: 350,
+                                    margin:
+                                        EdgeInsets.only(left: 60, right: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: paymentsList.isNotEmpty
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                specificPayment.cardImage,
+                                                height: 50,
+                                              ),
+                                              SizedBox(height: 5),
+                                              CustomText(
+                                                txt: specificPayment.cardNumber
+                                                    .replaceAll(
+                                                        RegExp(
+                                                            r'\d(?!\d{0,3}$)'),
+                                                        '* '),
+                                                fSize: 15,
+                                              ),
+                                              SizedBox(height: 5),
+                                              CustomText(
+                                                txt: specificPayment.cvv,
+                                                fSize: 15,
+                                              ),
+                                              SizedBox(height: 10),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  CustomText(
+                                                    txt: specificPayment
+                                                        .cardHolderName,
+                                                    fSize: 15,
+                                                  ),
+                                                  CustomText(
+                                                    txt: specificPayment
+                                                        .expireDate,
+                                                    fSize: 15,
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        : Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.add,
+                                                size: 40,
+                                              ),
+                                              CustomText(
+                                                txt: 'Add a Card , Please !',
+                                                fSize: 17,
+                                              )
+                                            ],
+                                          ),
+                                  ),
+                                );
+                              },
+                            )
+                          : Padding(padding: EdgeInsets.zero)
                     ],
                   ),
                   SizedBox(
