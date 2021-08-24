@@ -128,8 +128,7 @@ class PaymentMethodView extends StatelessWidget {
                   height: 170,
                   width: MediaQuery.of(context).size.width,
                   child: GestureDetector(
-                    onTap: () => Get.to(() =>
-                        AddPaymentCardView(moreController: moreController)),
+                    onTap: () => Get.to(() => AddPaymentCardView()),
                     child: Card(
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
