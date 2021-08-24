@@ -1,9 +1,8 @@
-import 'package:ecommerce/helper/paymentDatabaseHelper.dart';
-import 'package:ecommerce/model/paymentMethodModel.dart';
+import '../../helper/paymentDatabaseHelper.dart';
+import '../../model/paymentMethodModel.dart';
 import 'package:flutter/material.dart';
 import '../../helper/shippingDatabaseHelper.dart';
 import '../../model/shippingAddressModel.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class MoreViewModel extends GetxController {
@@ -11,17 +10,6 @@ class MoreViewModel extends GetxController {
     getAllShipping();
     getAllPayments();
   }
-  ValueNotifier<bool> _isAdd = ValueNotifier(false);
-  ValueNotifier<bool> get isAdd => _isAdd;
-  changeState(val) {
-    if (!val) {
-      clearShippingData();
-      clearPaymentData();
-    }
-    _isAdd.value = val;
-    update();
-  }
-
   //ShippingAddress
   final ShippingDatabaseHelper dbShippingClient = ShippingDatabaseHelper.db;
   List<ShippingAddressModel> _shippingList;
@@ -47,7 +35,7 @@ class MoreViewModel extends GetxController {
   addAddress(ShippingAddressModel shipping) {
     dbShippingClient.insert(shipping).then((_) {
       getAllShipping();
-      changeState(false);
+      Get.back();
     });
   }
 
@@ -107,7 +95,7 @@ class MoreViewModel extends GetxController {
   addPayment(PaymentMehodModel payment) {
     dbPaymentClient.insert(payment).then((_) {
       getAllPayments();
-      changeState(false);
+      Get.back();
     });
   }
 
