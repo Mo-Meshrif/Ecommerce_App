@@ -74,7 +74,7 @@ Map<String, List<String>> cities = {
   ],
 };
 List<String> imgCards = [
-  'assets/profile-more/visa.png',
-  'assets/profile-more/mastercard.png',
-  'assets/profile-more/paypal.png',
+  'assets/more/visa.png',
+  'assets/more/mastercard.png',
+  'assets/more/paypal.png',
 ];

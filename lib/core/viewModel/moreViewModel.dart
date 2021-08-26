@@ -60,7 +60,7 @@ class MoreViewModel extends GetxController {
   }
 
   //paymentMethod
-  String cardImage = 'assets/profile-more/visa.png';
+  String cardImage = 'assets/more/visa.png';
   final PaymentDatabaseHelper dbPaymentClient = PaymentDatabaseHelper.db;
   GlobalKey<FormState> _paymentKey = GlobalKey<FormState>();
   GlobalKey<FormState> get paymentKey => _paymentKey;
@@ -114,7 +114,7 @@ class MoreViewModel extends GetxController {
 
   clearPaymentData() {
     cardNumber = expireDate = cvv = cardHolderName = '';
-    cardImage = 'assets/profile-more/visa.png';
+    cardImage = 'assets/more/visa.png';
     update();
   }
 }
