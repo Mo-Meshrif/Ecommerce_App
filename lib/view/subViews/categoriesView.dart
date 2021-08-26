@@ -1,13 +1,13 @@
-import '../../../core/viewModel/homeViewModel.dart';
-import '../../../model/categoryModel.dart';
-import '../../../const.dart';
-import '../../../view/subViews/subCategories.dart';
-import '../../../view/widgets/customColTImage.dart';
-import '../../../view/widgets/customText.dart';
+import '../../core/viewModel/homeViewModel.dart';
+import '../../model/categoryModel.dart';
+import '../../const.dart';
+import 'subCategories.dart';
+import '../widgets/customColTImage.dart';
+import '../widgets/customText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MoreCategoriesView extends StatelessWidget {
+class CategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
