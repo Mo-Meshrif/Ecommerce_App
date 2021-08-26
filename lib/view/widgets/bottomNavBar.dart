@@ -59,10 +59,6 @@ class BottomNavBar extends StatelessWidget {
                     label: 'Cart',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.person_outline),
-                    label: 'Profile',
-                  ),
-                  BottomNavigationBarItem(
                     icon: Icon(Icons.menu),
                     label: 'More',
                   ),

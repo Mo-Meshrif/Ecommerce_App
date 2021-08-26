@@ -1,7 +1,7 @@
 import '../../core/viewModel/authViewModel.dart';
 import '../../view/widgets/customText.dart';
 import '../../view/widgets/messagesNotBar.dart';
-import '../../view/widgets/profileMoreCardBuilder.dart';
+import '../widgets/moreCardBuilder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -19,17 +19,59 @@ class MoreView extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          CustomText(
-            txt: 'More',
-            fSize: 30,
-            fWeight: FontWeight.bold,
-            txtColor: HexColor('#515C6F'),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.grey,
+                backgroundImage: AssetImage('assets/more/place_holder.jpg'),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                    txt: 'Mo Meshrif',
+                    fSize: 30,
+                    fWeight: FontWeight.bold,
+                    txtColor: HexColor('#515C6F'),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomText(
+                    txt: 'm.meshrif77@gmail.com',
+                    fSize: 18,
+                    fWeight: FontWeight.w500,
+                    txtColor: HexColor('#515C6F'),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: HexColor('#727C8E')),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: CustomText(
+                      txt: 'EDIT PROFILE',
+                      fSize: 15,
+                      fWeight: FontWeight.bold,
+                      txtColor: HexColor('#515C6F'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Expanded(
-            child: ProfileMoreCardBuilder(
+            child: MoreCardBuilder(
               initialIndex: 0,
               components: moreComponents,
             ),
@@ -38,8 +80,8 @@ class MoreView extends StatelessWidget {
             height: 10,
           ),
           Expanded(
-            child: ProfileMoreCardBuilder(
-              initialIndex: 4,
+            child: MoreCardBuilder(
+              initialIndex: 3,
               components: moreComponents,
             ),
           ),
@@ -48,7 +90,7 @@ class MoreView extends StatelessWidget {
           ),
           GetBuilder<AuthViewModel>(
             builder: (controller) => Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(vertical: 10),
               alignment: Alignment.center,
               child: GestureDetector(
                 onTap: () => controller.logout(),
