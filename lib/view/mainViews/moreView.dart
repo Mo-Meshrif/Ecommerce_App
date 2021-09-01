@@ -1,3 +1,6 @@
+import '../../model/userModel.dart';
+import '../../core/viewModel/homeViewModel.dart';
+import '../../core/viewModel/moreViewModel.dart';
 import '../../core/viewModel/authViewModel.dart';
 import '../../view/widgets/customText.dart';
 import '../../view/widgets/messagesNotBar.dart';
@@ -16,56 +19,88 @@ class MoreView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           MessagesNotBar(),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                radius: 60,
-                backgroundColor: Colors.grey,
-                backgroundImage: AssetImage('assets/more/place_holder.jpg'),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          GetBuilder<HomeViewModel>(
+            builder: (homeController) {
+              String uid = homeController.userId;
+              String userName = homeController.userName;
+              String email = homeController.email;
+              String pic = homeController.pic;
+              homeController.getUserDate();
+              return Row(
                 children: [
-                  CustomText(
-                    txt: 'Mo Meshrif',
-                    fSize: 30,
-                    fWeight: FontWeight.bold,
-                    txtColor: HexColor('#515C6F'),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomText(
-                    txt: 'm.meshrif77@gmail.com',
-                    fSize: 18,
-                    fWeight: FontWeight.w500,
-                    txtColor: HexColor('#515C6F'),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: HexColor('#727C8E')),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: CustomText(
-                      txt: 'EDIT PROFILE',
-                      fSize: 15,
-                      fWeight: FontWeight.bold,
-                      txtColor: HexColor('#515C6F'),
+                  GetBuilder<MoreViewModel>(
+                    builder: (moreController) => Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(60)),
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundColor: Colors.grey,
+                            backgroundImage: pic == null
+                                ? AssetImage('assets/more/place_holder.jpg')
+                                : NetworkImage(pic),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              return moreController.getUserImage(
+                                  user: UserModel(
+                                id: uid,
+                                userName: userName,
+                                email: email,
+                              ));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.grey[100],
+                                child: Icon(
+                                  Icons.edit,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        txt: userName ?? '',
+                        fSize: 30,
+                        fWeight: FontWeight.bold,
+                        txtColor: HexColor('#515C6F'),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomText(
+                        txt: email ?? '',
+                        fSize: 18,
+                        fWeight: FontWeight.w500,
+                        txtColor: HexColor('#515C6F'),
+                      ),
+                    ],
+                  ),
                 ],
-              ),
-            ],
+              );
+            },
           ),
           SizedBox(
             height: 10,

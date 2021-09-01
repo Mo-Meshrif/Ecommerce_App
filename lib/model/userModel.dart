@@ -1,9 +1,10 @@
 class UserModel {
-  String id, userName, email;
+  String id, userName, email, pic;
   UserModel({
     this.id,
     this.userName,
-    this.email, 
+    this.email,
+    this.pic,
   });
   UserModel.fromJson(Map<String, dynamic> map) {
     if (map.isEmpty) {
@@ -12,6 +13,7 @@ class UserModel {
     id = map['id'];
     userName = map['userName'];
     email = map['email'];
+    pic = map['pic'];
   }
 
   toJson() {
@@ -19,6 +21,7 @@ class UserModel {
       'id': id,
       'userName': userName,
       'email': email,
+      'pic': pic,
     };
   }
 }

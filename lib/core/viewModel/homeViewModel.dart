@@ -33,7 +33,6 @@ class HomeViewModel extends GetxController {
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
   HomeViewModel() {
-    getUserDate();
     getCategories();
     getProducts();
     getAllReviews();
@@ -100,12 +99,14 @@ class HomeViewModel extends GetxController {
 
 //getUserData
   final LocalStorageData _localStorageData = Get.find();
-  String userId, userName;
+  String userId, userName, email, pic;
   getUserDate() async {
     await _localStorageData.getUser.then((user) {
       if (user != null) {
         userId = user.id;
         userName = user.userName;
+        email = user.email;
+        pic = user.pic;
         update();
       }
     });

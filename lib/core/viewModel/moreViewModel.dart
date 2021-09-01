@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'package:ecommerce/core/service/fireStore_user.dart';
+import '../../helper/localStorageData.dart';
+import '../../model/userModel.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../helper/paymentDatabaseHelper.dart';
 import '../../model/paymentMethodModel.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +15,27 @@ class MoreViewModel extends GetxController {
     getAllShipping();
     getAllPayments();
   }
+  //userData
+  final LocalStorageData _localStorageData = Get.find();
+  File image;
+  final picker = ImagePicker();
+  Future<void> getUserImage({@required UserModel user}) async {
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      image = File(pickedImage.path);
+      FireStoreUser().uploadProfilePic(image, user).then(
+          (_) => FireStoreUser().getUserFromFireStore(user.id).then((userData) {
+                Map x = userData.data();
+                _localStorageData.setUserData(UserModel(
+                    id: user.id,
+                    userName: user.userName,
+                    email: user.email,
+                    pic: x['pic']));
+              }));
+    }
+    update();
+  }
+
   //ShippingAddress
   final ShippingDatabaseHelper dbShippingClient = ShippingDatabaseHelper.db;
   List<ShippingAddressModel> _shippingList;
