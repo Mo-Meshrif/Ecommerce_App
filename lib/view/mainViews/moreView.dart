@@ -25,7 +25,6 @@ class MoreView extends StatelessWidget {
               String userName = homeController.userName;
               String email = homeController.email;
               String pic = homeController.pic;
-              homeController.getUserDate();
               return Row(
                 children: [
                   GetBuilder<MoreViewModel>(
@@ -49,12 +48,14 @@ class MoreView extends StatelessWidget {
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
-                              return moreController.getUserImage(
-                                  user: UserModel(
-                                id: uid,
-                                userName: userName,
-                                email: email,
-                              ));
+                              return moreController
+                                  .getUserImage(
+                                      user: UserModel(
+                                    id: uid,
+                                    userName: userName,
+                                    email: email,
+                                  ))
+                                  .then((_) => homeController.getUserData());
                             },
                             child: Container(
                               decoration: BoxDecoration(

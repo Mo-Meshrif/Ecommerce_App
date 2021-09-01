@@ -46,7 +46,23 @@ class ProductDetails extends StatelessWidget {
                                   onTap: () {
                                     if (fromSearchView) {
                                       searchController
-                                          .getRecentlyViewedProducts(prod);
+                                          .getRecentlyViewedProducts(
+                                        ProductModel(
+                                          id: prod.id,
+                                          viewerId: homeController.userId,
+                                          prodName: prod.prodName,
+                                          imgUrl: prod.imgUrl,
+                                          color: prod.color,
+                                          size: prod.size,
+                                          price: prod.price,
+                                          createdAt: prod.createdAt,
+                                          brand: prod.brand,
+                                          condition: prod.condition,
+                                          sku: prod.sku,
+                                          material: prod.material,
+                                          classification: prod.classification,
+                                        ),
+                                      );
                                     }
                                     Get.back();
                                     homeController.clearSelectedIndex();
@@ -124,6 +140,7 @@ class ProductDetails extends StatelessWidget {
                                       onPress: () => cartController.addProduct(
                                         cartProd: CartProductModel(
                                           id: prod.id,
+                                          sellerId: homeController.userId,
                                           name: prod.prodName,
                                           imgUrl: prod.imgUrl,
                                           size: homeController.selectedSize ??

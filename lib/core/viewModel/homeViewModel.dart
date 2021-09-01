@@ -100,7 +100,7 @@ class HomeViewModel extends GetxController {
 //getUserData
   final LocalStorageData _localStorageData = Get.find();
   String userId, userName, email, pic;
-  getUserDate() async {
+  getUserData() async {
     await _localStorageData.getUser.then((user) {
       if (user != null) {
         userId = user.id;

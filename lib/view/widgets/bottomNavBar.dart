@@ -18,7 +18,10 @@ class BottomNavBar extends StatelessWidget {
         return GetBuilder<CartViewModel>(
           init: Get.find(),
           builder: (cartController) {
-            List<CartProductModel> cartProds = cartController.cartProds ?? [];
+            List<CartProductModel> cartProds = cartController.cartProds
+                    .where((element) => element.sellerId == controller.userId)
+                    .toList() ??
+                [];
             return BottomNavigationBar(
                 selectedItemColor: priColor,
                 unselectedItemColor: swatchColor,

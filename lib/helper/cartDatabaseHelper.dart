@@ -21,6 +21,7 @@ class CartDataBaseHelper {
       await db.execute('''
             CREATE TABLE cartProduct(
               id TEXT NOT NULL,
+              sellerId TEXT NOT NULL,
               name TEXT NOT NULL,
               imgUrl TEXT NOT NULL,
               size TEXT NOT NULL,

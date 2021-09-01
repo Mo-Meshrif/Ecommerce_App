@@ -21,6 +21,7 @@ class HomeView extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
       child: GetBuilder<HomeViewModel>(
         builder: (controller) {
+          controller.getUserData();
           List<CategoryModel> categories = controller.categories;
           List<ProductModel> products = controller.products;
           List<Widget> lastHomeProducts = <Widget>[];
