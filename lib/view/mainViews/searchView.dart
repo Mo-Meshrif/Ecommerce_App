@@ -23,7 +23,7 @@ class SearchView extends StatelessWidget {
           builder: (controller) {
             List<ProductModel> recentlyViewedProducts = controller
                 .recentlyViewedProducts
-                .where((element) => element.viewerId == homeController.userId)
+                .where((element) => element.customerId == homeController.userId)
                 .toList();
             List<String> recommendedCats = controller.recommendedCats;
             return Column(

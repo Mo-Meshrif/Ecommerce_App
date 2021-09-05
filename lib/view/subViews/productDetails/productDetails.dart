@@ -49,7 +49,7 @@ class ProductDetails extends StatelessWidget {
                                           .getRecentlyViewedProducts(
                                         ProductModel(
                                           id: prod.id,
-                                          viewerId: homeController.userId,
+                                          customerId: homeController.userId,
                                           prodName: prod.prodName,
                                           imgUrl: prod.imgUrl,
                                           color: prod.color,
