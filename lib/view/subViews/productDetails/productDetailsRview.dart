@@ -1,3 +1,4 @@
+import '../../../core/viewModel/moreViewModel.dart';
 import '../../../model/rewiewModel.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../core/viewModel/homeViewModel.dart';
@@ -68,16 +69,22 @@ class ProductDetailsRview extends StatelessWidget {
                                     txt: 'Write a Review',
                                     fSize: 20,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      homeController.addReview(
-                                          prod.id, prod.imgUrl);
-                                      Get.back();
-                                    },
-                                    child: CustomText(
-                                      txt: 'Send',
-                                      fSize: 20,
-                                      txtColor: priColor,
+                                  GetBuilder<MoreViewModel>(
+                                    builder: (moreController) =>
+                                        GestureDetector(
+                                      onTap: () {
+                                        homeController.addReview(
+                                          prod.id,
+                                          prod.imgUrl,
+                                          moreController.savedUser,
+                                        );
+                                        Get.back();
+                                      },
+                                      child: CustomText(
+                                        txt: 'Send',
+                                        fSize: 20,
+                                        txtColor: priColor,
+                                      ),
                                     ),
                                   ),
                                 ],

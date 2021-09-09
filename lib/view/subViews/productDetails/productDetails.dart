@@ -1,3 +1,4 @@
+import '../../../core/viewModel/moreViewModel.dart';
 import '../../../core/viewModel/homeViewModel.dart';
 import '../../../view/widgets/quantityChanger.dart';
 import '../../../core/viewModel/cartViewModel.dart';
@@ -42,32 +43,36 @@ class ProductDetails extends StatelessWidget {
                           children: [
                             GetBuilder<SearchViewModel>(
                               init: Get.find(),
-                              builder: (searchController) => GestureDetector(
-                                  onTap: () {
-                                    if (fromSearchView) {
-                                      searchController
-                                          .getRecentlyViewedProducts(
-                                        ProductModel(
-                                          id: prod.id,
-                                          customerId: homeController.userId,
-                                          prodName: prod.prodName,
-                                          imgUrl: prod.imgUrl,
-                                          color: prod.color,
-                                          size: prod.size,
-                                          price: prod.price,
-                                          createdAt: prod.createdAt,
-                                          brand: prod.brand,
-                                          condition: prod.condition,
-                                          sku: prod.sku,
-                                          material: prod.material,
-                                          classification: prod.classification,
-                                        ),
-                                      );
-                                    }
-                                    Get.back();
-                                    homeController.clearSelectedIndex();
-                                  },
-                                  child: Image.asset('assets/shop/back.png')),
+                              builder: (searchController) =>
+                                  GetBuilder<MoreViewModel>(
+                                builder: (moreController) => GestureDetector(
+                                    onTap: () {
+                                      if (fromSearchView) {
+                                        searchController
+                                            .getRecentlyViewedProducts(
+                                          ProductModel(
+                                            id: prod.id,
+                                            customerId:
+                                                moreController.savedUser.id,
+                                            prodName: prod.prodName,
+                                            imgUrl: prod.imgUrl,
+                                            color: prod.color,
+                                            size: prod.size,
+                                            price: prod.price,
+                                            createdAt: prod.createdAt,
+                                            brand: prod.brand,
+                                            condition: prod.condition,
+                                            sku: prod.sku,
+                                            material: prod.material,
+                                            classification: prod.classification,
+                                          ),
+                                        );
+                                      }
+                                      Get.back();
+                                      homeController.clearSelectedIndex();
+                                    },
+                                    child: Image.asset('assets/shop/back.png')),
+                              ),
                             ),
                             Expanded(
                               child: Center(
@@ -133,22 +138,27 @@ class ProductDetails extends StatelessWidget {
                               width: 10,
                             ),
                             cartProdIndex == -1
-                                ? Expanded(
-                                    child: CustomElevatedButton(
-                                      txt: 'ADD TO CART',
-                                      imgUrl: 'assets/auth/right_arrow.png',
-                                      onPress: () => cartController.addProduct(
-                                        cartProd: CartProductModel(
-                                          id: prod.id,
-                                          sellerId: homeController.userId,
-                                          name: prod.prodName,
-                                          imgUrl: prod.imgUrl,
-                                          size: homeController.selectedSize ??
-                                              prod.size[0],
-                                          color: homeController.selectedColor ??
-                                              prod.color[0],
-                                          price: prod.price,
-                                          quantity: 1,
+                                ? GetBuilder<MoreViewModel>(
+                                    builder: (moreController) => Expanded(
+                                      child: CustomElevatedButton(
+                                        txt: 'ADD TO CART',
+                                        imgUrl: 'assets/auth/right_arrow.png',
+                                        onPress: () =>
+                                            cartController.addProduct(
+                                          cartProd: CartProductModel(
+                                            id: prod.id,
+                                            sellerId:
+                                                moreController.savedUser.id,
+                                            name: prod.prodName,
+                                            imgUrl: prod.imgUrl,
+                                            size: homeController.selectedSize ??
+                                                prod.size[0],
+                                            color:
+                                                homeController.selectedColor ??
+                                                    prod.color[0],
+                                            price: prod.price,
+                                            quantity: 1,
+                                          ),
                                         ),
                                       ),
                                     ),

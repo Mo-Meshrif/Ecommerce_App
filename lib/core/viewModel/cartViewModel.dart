@@ -1,3 +1,4 @@
+import 'moreViewModel.dart';
 import '../../helper/cartDatabaseHelper.dart';
 import '../../model/cartProductModel.dart';
 import 'package:flutter/foundation.dart';
@@ -7,11 +8,10 @@ enum paymentMethod { cashOnDelivery, masterCard }
 
 class CartViewModel extends GetxController {
   var db = CartDataBaseHelper.db;
+  final MoreViewModel _moreViewModel = Get.find();
   List<CartProductModel> cartProds = [];
   double totalPrice = 0;
-  CartViewModel() {
-    getProducts();
-  }
+
   addProduct({
     @required CartProductModel cartProd,
   }) {
@@ -32,7 +32,13 @@ class CartViewModel extends GetxController {
   }
 
   getProducts() async {
-    cartProds = await db.getAllProducts();
+    if (_moreViewModel.savedUser == null) {
+      return;
+    }
+    List<CartProductModel> tempList = await db.getAllProducts();
+    cartProds = tempList
+        .where((element) => element.sellerId == _moreViewModel.savedUser.id)
+        .toList();
     getTotalPrice();
     update();
   }

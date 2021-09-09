@@ -11,12 +11,16 @@ import '../../model/shippingAddressModel.dart';
 import 'package:get/get.dart';
 
 class MoreViewModel extends GetxController {
-  MoreViewModel() {
+  @override
+  void onInit() {
     getAllShipping();
     getAllPayments();
+    super.onInit();
   }
+
   //userData
   final LocalStorageData _localStorageData = Get.find();
+  UserModel savedUser;
   File image;
   final picker = ImagePicker();
   Future<void> getUserImage({@required UserModel user}) async {
@@ -34,6 +38,15 @@ class MoreViewModel extends GetxController {
               }));
     }
     update();
+  }
+
+  Future<void> getUserData() async {
+    await _localStorageData.getUser.then((user) {
+      if (user != null) {
+        savedUser = user;
+        update();
+      }
+    });
   }
 
   //ShippingAddress

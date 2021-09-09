@@ -19,9 +19,7 @@ class CartView extends StatelessWidget {
         body: GetBuilder<CartViewModel>(
           init: Get.find(),
           builder: (cartController) {
-            List<CartProductModel> cartProds = cartController.cartProds
-                .where((element) => element.sellerId == homeController.userId)
-                .toList();
+            List<CartProductModel> cartProds = cartController.cartProds;
             double totalPrice = cartController.totalPrice;
             return cartProds.length == 0
                 ? Center(

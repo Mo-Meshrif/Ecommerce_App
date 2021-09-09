@@ -1,3 +1,5 @@
+import '../../core/viewModel/cartViewModel.dart';
+import '../../core/viewModel/moreViewModel.dart';
 import '../../view/subViews/shopView/shopView.dart';
 import '../subViews/categoriesView.dart';
 import '../../core/viewModel/searchViewModel.dart';
@@ -21,7 +23,13 @@ class HomeView extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
       child: GetBuilder<HomeViewModel>(
         builder: (controller) {
-          controller.getUserData();
+          final MoreViewModel _moreContrroler = Get.find();
+          final CartViewModel _cartViewModel = Get.find();
+          if (_moreContrroler.savedUser == null) {
+            _moreContrroler
+                .getUserData()
+                .then((_) => _cartViewModel.getProducts());
+          }
           List<CategoryModel> categories = controller.categories;
           List<ProductModel> products = controller.products;
           List<Widget> lastHomeProducts = <Widget>[];

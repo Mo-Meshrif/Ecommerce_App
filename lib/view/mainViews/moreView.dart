@@ -1,5 +1,5 @@
+import '../../core/viewModel/searchViewModel.dart';
 import '../../model/userModel.dart';
-import '../../core/viewModel/homeViewModel.dart';
 import '../../core/viewModel/moreViewModel.dart';
 import '../../core/viewModel/authViewModel.dart';
 import '../../view/widgets/customText.dart';
@@ -19,62 +19,63 @@ class MoreView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           MessagesNotBar(),
-          GetBuilder<HomeViewModel>(
-            builder: (homeController) {
-              String uid = homeController.userId;
-              String userName = homeController.userName;
-              String email = homeController.email;
-              String pic = homeController.pic;
+          GetBuilder<MoreViewModel>(
+            builder: (moreController) {
+              String uid, userName, email, pic;
+              if (moreController.savedUser != null) {
+                uid = moreController.savedUser.id;
+                userName = moreController.savedUser.userName;
+                email = moreController.savedUser.email;
+                pic = moreController.savedUser.pic;
+              }
               return Row(
                 children: [
-                  GetBuilder<MoreViewModel>(
-                    builder: (moreController) => Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(60)),
-                          child: CircleAvatar(
-                            radius: 60,
-                            backgroundColor: Colors.grey,
-                            backgroundImage: pic == null
-                                ? AssetImage('assets/more/place_holder.jpg')
-                                : NetworkImage(pic),
-                          ),
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(60)),
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.grey,
+                          backgroundImage: pic == null
+                              ? AssetImage('assets/more/place_holder.jpg')
+                              : NetworkImage(pic),
                         ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: GestureDetector(
-                            onTap: () {
-                              return moreController
-                                  .getUserImage(
-                                      user: UserModel(
-                                    id: uid,
-                                    userName: userName,
-                                    email: email,
-                                  ))
-                                  .then((_) => homeController.getUserData());
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.grey[100],
-                                child: Icon(
-                                  Icons.edit,
-                                  color: Colors.black,
-                                ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            return moreController
+                                .getUserImage(
+                                    user: UserModel(
+                                  id: uid,
+                                  userName: userName,
+                                  email: email,
+                                ))
+                                .then((_) => moreController.getUserData());
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.grey[100],
+                              child: Icon(
+                                Icons.edit,
+                                color: Colors.black,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     width: 20,
@@ -125,15 +126,20 @@ class MoreView extends StatelessWidget {
             height: 10,
           ),
           GetBuilder<AuthViewModel>(
-            builder: (controller) => Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              alignment: Alignment.center,
-              child: GestureDetector(
-                onTap: () => controller.logout(),
-                child: CustomText(
-                  txt: 'LOG OUT',
-                  fWeight: FontWeight.w500,
-                  txtColor: priColor,
+            builder: (controller) => GetBuilder<SearchViewModel>(
+              builder: (searchController) => Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () {
+                    searchController.clearRecentlyViewedProducts();
+                    controller.logout();
+                  },
+                  child: CustomText(
+                    txt: 'LOG OUT',
+                    fWeight: FontWeight.w500,
+                    txtColor: priColor,
+                  ),
                 ),
               ),
             ),

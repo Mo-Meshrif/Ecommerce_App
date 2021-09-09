@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../model/userModel.dart';
 import '../../core/service/fireStore_review.dart';
 import '../../model/rewiewModel.dart';
-import '../../helper/localStorageData.dart';
 import '../../core/service/home_service.dart';
 import '../../model/categoryModel.dart';
 import '../../model/productModel.dart';
@@ -32,11 +32,13 @@ class HomeViewModel extends GetxController {
   List<ProductModel> get products => _products;
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
-  HomeViewModel() {
+  onInit() {
     getCategories();
     getProducts();
     getAllReviews();
+    super.onInit();
   }
+
   changeCategories(index) {
     currentCategory = index;
     update();
@@ -97,21 +99,6 @@ class HomeViewModel extends GetxController {
     update();
   }
 
-//getUserData
-  final LocalStorageData _localStorageData = Get.find();
-  String userId, userName, email, pic;
-  getUserData() async {
-    await _localStorageData.getUser.then((user) {
-      if (user != null) {
-        userId = user.id;
-        userName = user.userName;
-        email = user.email;
-        pic = user.pic;
-        update();
-      }
-    });
-  }
-
 //review logic
   double rateValue = 0;
   String reviewText;
@@ -119,7 +106,7 @@ class HomeViewModel extends GetxController {
   ValueNotifier<bool> get reviewloading => _reviewLoading;
   List<ReviewModel> reviews = [];
 
-  addReview(id, imgurl) async {
+  addReview(id, imgurl, UserModel user) async {
     _reviewLoading.value = true;
     reviews = [];
     update();
@@ -127,11 +114,11 @@ class HomeViewModel extends GetxController {
         .addReviewToFireStore(
             ReviewModel(
                 prodId: id,
-                userName: userName,
+                userName: user.userName,
                 reviewTxt: reviewText,
                 createdAt: Timestamp.now(),
                 rateValue: rateValue),
-            userId)
+            user.id)
         .then((_) => getAllReviews());
   }
 

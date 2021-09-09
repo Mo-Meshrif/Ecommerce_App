@@ -1,3 +1,5 @@
+import 'cartViewModel.dart';
+import 'moreViewModel.dart';
 import 'package:flutter/material.dart';
 import '../../helper/localStorageData.dart';
 import '../../view/controlView.dart';
@@ -117,6 +119,8 @@ class AuthViewModel extends GetxController {
     _auth.signOut();
     currentIndex = 1;
     clearAuthData();
+    Get.delete<CartViewModel>();
+    Get.delete<MoreViewModel>();
     update();
   }
 }
