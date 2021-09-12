@@ -241,7 +241,6 @@ class CheckoutView extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
                         padding: EdgeInsets.zero,
                         itemCount: cartProds.length,
                         itemBuilder: (context, i) => Container(
@@ -266,40 +265,26 @@ class CheckoutView extends StatelessWidget {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.25),
-                                      child: CustomText(
-                                        txt: 'Message to seller (optional)',
-                                        fSize: 15,
-                                        fWeight: FontWeight.w300,
-                                        txtColor: swatchColor,
+                                    GestureDetector(
+                                      onTap: null,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.25),
+                                        child: CustomText(
+                                          txt: 'Message to seller (optional)',
+                                          fSize: 15,
+                                          fWeight: FontWeight.w300,
+                                          txtColor: swatchColor,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Divider(),
-                                    ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      leading:
-                                          Image.asset('assets/cart/promo.png'),
-                                      title: CustomText(
-                                        txt: 'Add Promo Code',
-                                        fSize: 15,
-                                        fWeight: FontWeight.bold,
-                                        txtColor: priColor,
-                                      ),
-                                      horizontalTitleGap: 0,
-                                      trailing: GestureDetector(
-                                        onTap: null,
-                                        child: Image.asset(
-                                            'assets/home/right_arrow_c.png'),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -307,6 +292,21 @@ class CheckoutView extends StatelessWidget {
                         separatorBuilder: (context, i) => SizedBox(
                               width: 25,
                             )),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Image.asset('assets/cart/promo.png'),
+                    title: CustomText(
+                      txt: 'Add Promo Code',
+                      fSize: 15,
+                      fWeight: FontWeight.bold,
+                      txtColor: priColor,
+                    ),
+                    horizontalTitleGap: 0,
+                    trailing: GestureDetector(
+                      onTap: null,
+                      child: Image.asset('assets/home/right_arrow_c.png'),
+                    ),
                   ),
                 ],
               ),
