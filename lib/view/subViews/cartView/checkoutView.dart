@@ -130,104 +130,40 @@ class CheckoutView extends StatelessWidget {
                           width: 50,
                         ),
                       ),
-                      RadioListTile(
-                        title: CustomText(txt: 'Credit Card'),
-                        value: paymentMethod.masterCard,
-                        groupValue: cartController.pay,
-                        onChanged: (val) => cartController.changePay(val),
-                        secondary: Image.asset(
-                          'assets/cart/card.png',
-                          height: 50,
-                          width: 50,
-                        ),
+                      GetBuilder<MoreViewModel>(
+                        builder: (moreController) {
+                          List<PaymentMehodModel> paymentsList =
+                              moreController.paymentsList;
+                          PaymentMehodModel specificPayment;
+                          if (paymentsList.isNotEmpty) {
+                            specificPayment = paymentsList.firstWhere(
+                                (element) => element.isSelected == 1);
+                          }
+                          return RadioListTile(
+                            title: CustomText(
+                                txt: paymentsList.isEmpty
+                                    ? 'Credit Card'
+                                    : specificPayment.cardNumber.replaceAll(
+                                        RegExp(r'\d(?!\d{0,3}$)'), '* ')),
+                            value: paymentMethod.masterCard,
+                            groupValue: cartController.pay,
+                            onChanged: (val) {
+                              if (paymentsList.isEmpty) {
+                                Get.to(() => AddPaymentCardView());
+                              }
+
+                              cartController.changePay(val);
+                            },
+                            secondary: Image.asset(
+                              paymentsList.isEmpty
+                                  ? 'assets/cart/card.png'
+                                  : specificPayment.cardImage,
+                              height: 50,
+                              width: 50,
+                            ),
+                          );
+                        },
                       ),
-                      cartController.pay == paymentMethod.masterCard
-                          ? GetBuilder<MoreViewModel>(
-                              builder: (moreController) {
-                                List<PaymentMehodModel> paymentsList =
-                                    moreController.paymentsList;
-                                PaymentMehodModel specificPayment;
-                                if (paymentsList.isNotEmpty) {
-                                  specificPayment = paymentsList.firstWhere(
-                                      (element) => element.isSelected == 1);
-                                }
-                                return GestureDetector(
-                                  onTap: paymentsList.isEmpty
-                                      ? () => Get.to(() => AddPaymentCardView())
-                                      : null,
-                                  child: Container(
-                                    height: 135,
-                                    width: 350,
-                                    margin:
-                                        EdgeInsets.only(left: 60, right: 15),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: paymentsList.isNotEmpty
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Image.asset(
-                                                specificPayment.cardImage,
-                                                height: 50,
-                                              ),
-                                              SizedBox(height: 5),
-                                              CustomText(
-                                                txt: specificPayment.cardNumber
-                                                    .replaceAll(
-                                                        RegExp(
-                                                            r'\d(?!\d{0,3}$)'),
-                                                        '* '),
-                                                fSize: 15,
-                                              ),
-                                              SizedBox(height: 5),
-                                              CustomText(
-                                                txt: specificPayment.cvv,
-                                                fSize: 15,
-                                              ),
-                                              SizedBox(height: 10),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  CustomText(
-                                                    txt: specificPayment
-                                                        .cardHolderName,
-                                                    fSize: 15,
-                                                  ),
-                                                  CustomText(
-                                                    txt: specificPayment
-                                                        .expireDate,
-                                                    fSize: 15,
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        : Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.add,
-                                                size: 40,
-                                              ),
-                                              CustomText(
-                                                txt: 'Add a Card , Please !',
-                                                fSize: 17,
-                                              )
-                                            ],
-                                          ),
-                                  ),
-                                );
-                              },
-                            )
-                          : Padding(padding: EdgeInsets.zero)
                     ],
                   ),
                   SizedBox(
