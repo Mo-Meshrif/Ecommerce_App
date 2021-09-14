@@ -1,3 +1,6 @@
+import '../../core/service/fireStore_order.dart';
+import '../../view/subViews/cartView/orderPlacedView.dart';
+import '../../model/orderModel.dart';
 import 'moreViewModel.dart';
 import '../../helper/cartDatabaseHelper.dart';
 import '../../model/cartProductModel.dart';
@@ -7,11 +10,17 @@ import 'package:get/get.dart';
 enum paymentMethod { cashOnDelivery, masterCard }
 
 class CartViewModel extends GetxController {
+  @override
+  void onInit() {
+    getOrders();
+    super.onInit();
+  }
+
   var db = CartDataBaseHelper.db;
   final MoreViewModel _moreViewModel = Get.find();
   List<CartProductModel> cartProds = [];
   double totalPrice = 0;
-
+  String promoCode = '';
   addProduct({
     @required CartProductModel cartProd,
   }) {
@@ -90,10 +99,41 @@ class CartViewModel extends GetxController {
     update();
   }
 
+  addPromoCode(val) {
+    promoCode = val;
+    update();
+  }
+
   //order
   paymentMethod pay = paymentMethod.cashOnDelivery;
+  ValueNotifier<bool> _orderLoading = ValueNotifier(false);
+  ValueNotifier<bool> get orderloading => _orderLoading;
+  List<OrderModel> _orders = [];
+  List<OrderModel> get orders => _orders;
   changePay(val) {
     pay = val;
     update();
+  }
+
+  addOrder(OrderModel order) async {
+    _orderLoading.value = true;
+    update();
+    await FireStoreOrder()
+        .addOrderToFireStore(order)
+        .then((_) async => await getOrders().then((_) {
+              _orderLoading.value = false;
+              update();
+              Get.offAll(() => OrderPlacedView());
+            }));
+  }
+
+  Future<void> getOrders() async {
+    _orders = [];
+    await FireStoreOrder().getOrdersFromFireStore().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        _orders.add(OrderModel.fromJson(value[i].data()));
+      }
+      update();
+    });
   }
 }

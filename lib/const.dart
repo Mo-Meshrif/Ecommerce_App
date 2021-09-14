@@ -1,3 +1,6 @@
+import '../view/subViews/orderView/allOrdersView.dart';
+import '../view/subViews/orderView/finishedOrdersView.dart';
+import '../view/subViews/orderView/pendingShipmentsView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'view/subViews/moreView/shippingAddressView/shippingAddressView.dart';
@@ -32,17 +35,17 @@ List<Map<String, dynamic>> moreComponents = [
   {
     'icon': 'assets/more/all-order.png',
     'txt': 'All My Orders',
-    'onTap': () => null,
+    'onTap': () => Get.to(() => AllOrdersView()),
   },
   {
     'icon': 'assets/more/pending-shipments.png',
     'txt': 'Pending Shipments',
-    'onTap': () => null,
+    'onTap': () => Get.to(() => PendingShipmentsView()),
   },
   {
     'icon': 'assets/more/finished.png',
     'txt': 'Finished Orders',
-    'onTap': () => null,
+    'onTap': () => Get.to(() => FinishedOrdersView()),
   },
   {
     'icon': 'assets/more/shipping.png',

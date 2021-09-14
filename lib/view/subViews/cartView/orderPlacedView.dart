@@ -1,6 +1,7 @@
-import 'package:ecommerce/core/viewModel/cartViewModel.dart';
-import 'package:ecommerce/view/widgets/customElevatedButton.dart';
-import 'package:ecommerce/view/widgets/customText.dart';
+import '../../../core/viewModel/cartViewModel.dart';
+import '../../../view/subViews/orderView/allOrdersView.dart';
+import '../../../view/widgets/customElevatedButton.dart';
+import '../../../view/widgets/customText.dart';
 import '../../../core/viewModel/homeViewModel.dart';
 import '../../../view/controlView.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class OrderPlacedView extends StatelessWidget {
                   onPressed: () {
                     cartController.deleteAll();
                     homeController.changeIndex(0);
-                    Get.to(() => ControlView());
+                    Get.offAll(() => ControlView());
                   },
                   color: priColor,
                 ),
@@ -75,7 +76,7 @@ class OrderPlacedView extends StatelessWidget {
                   child: CustomElevatedButton(
                     txt: 'MY ORDERS',
                     imgUrl: 'assets/auth/right_arrow.png',
-                    onPress: () {},
+                    onPress: () => Get.to(() => AllOrdersView()),
                   ),
                 ),
               ],
