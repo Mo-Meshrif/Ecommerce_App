@@ -257,60 +257,61 @@ class CheckoutView extends StatelessWidget {
                                         width: 25,
                                       )),
                             ),
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: Image.asset('assets/cart/promo.png'),
-                              title: CustomText(
-                                txt: cartController.promoCode != ''
-                                    ? cartController.promoCode
-                                    : 'Add Promo Code',
-                                fSize: 15,
-                                fWeight: FontWeight.bold,
-                                txtColor: priColor,
-                              ),
-                              horizontalTitleGap: 0,
-                              trailing: GestureDetector(
-                                onTap: () => Get.bottomSheet(
-                                    Container(
-                                      height: 130,
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 10),
-                                            child: TextFormField(
-                                              initialValue:
-                                                  cartController.promoCode,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder()),
-                                              onChanged: (val) => cartController
-                                                  .addPromoCode(val),
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: priColor,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              padding: EdgeInsets.all(5),
-                                            ),
-                                            onPressed: () => Get.back(),
-                                            child: CustomText(
-                                              txt: 'Apply',
-                                            ),
-                                          ),
-                                        ],
+                            GestureDetector(
+                              onTap: () => Get.bottomSheet(
+                                Container(
+                                  height: 130,
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        child: TextFormField(
+                                          initialValue:
+                                              cartController.promoCode,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder()),
+                                          onChanged: (val) =>
+                                              cartController.addPromoCode(val),
+                                        ),
                                       ),
-                                    ),
-                                    backgroundColor: Colors.white,
-                                    shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    ))),
-                                child: Image.asset(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: priColor,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          padding: EdgeInsets.all(5),
+                                        ),
+                                        onPressed: () => Get.back(),
+                                        child: CustomText(
+                                          txt: 'Apply',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                backgroundColor: Colors.white,
+                                shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  ),
+                                ),
+                              ),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: Image.asset('assets/cart/promo.png'),
+                                title: CustomText(
+                                  txt: cartController.promoCode != ''
+                                      ? cartController.promoCode
+                                      : 'Add Promo Code',
+                                  fSize: 15,
+                                  fWeight: FontWeight.bold,
+                                  txtColor: priColor,
+                                ),
+                                horizontalTitleGap: 0,
+                                trailing: Image.asset(
                                     'assets/home/right_arrow_c.png'),
                               ),
                             ),
@@ -341,7 +342,7 @@ class CheckoutView extends StatelessWidget {
                         totalPrice: totalPrice,
                         buttonTxt: 'PLACE ORDER',
                         onPress: () => cartController.addOrder(OrderModel(
-                              id: moreController.savedUser.id,
+                              customerId: moreController.savedUser.id,
                               status: 'Pending',
                               promoCode: cartController.promoCode,
                               createdAt: Timestamp.now(),

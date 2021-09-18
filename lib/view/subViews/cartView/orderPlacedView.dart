@@ -24,7 +24,6 @@ class OrderPlacedView extends StatelessWidget {
                   iconSize: 30,
                   icon: Icon(Icons.close),
                   onPressed: () {
-                    cartController.deleteAll();
                     homeController.changeIndex(0);
                     Get.offAll(() => ControlView());
                   },
