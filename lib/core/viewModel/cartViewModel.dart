@@ -92,13 +92,6 @@ class CartViewModel extends GetxController {
     return cartProds.indexWhere((cartProd) => cartProd.id == id);
   }
 
-  deleteAll() async {
-    await db.deleteAll();
-    cartProds = [];
-    totalPrice = 0;
-    update();
-  }
-
   addPromoCode(val) {
     promoCode = val;
     update();
@@ -109,7 +102,10 @@ class CartViewModel extends GetxController {
   ValueNotifier<bool> _orderLoading = ValueNotifier(false);
   ValueNotifier<bool> get orderloading => _orderLoading;
   List<OrderModel> _orders = [];
-  List<OrderModel> get orders => _orders;
+  List<OrderModel> get allOrders => _orders;
+  List<OrderModel> get specOrders => _orders
+      .where((order) => order.customerId == _moreViewModel.savedUser.id)
+      .toList();
   changePay(val) {
     pay = val;
     update();
@@ -124,6 +120,7 @@ class CartViewModel extends GetxController {
               _orderLoading.value = false;
               update();
               Get.offAll(() => OrderPlacedView());
+              deleteAll();
             }));
   }
 
@@ -131,9 +128,35 @@ class CartViewModel extends GetxController {
     _orders = [];
     await FireStoreOrder().getOrdersFromFireStore().then((value) {
       for (int i = 0; i < value.length; i++) {
-        _orders.add(OrderModel.fromJson(value[i].data()));
+        Map<String, dynamic> data = value[i].data();
+        _orders.add(OrderModel(
+          orderId: value[i].id,
+          customerId: data['customerId'],
+          status: data['status'],
+          promoCode: data['promoCode'],
+          orderTrack: data['orderTrack'],
+          orderNumber: data['orderNumber'],
+          shippingAdress: data['shippingAdress'],
+          paymentMehod: data['paymentMehod'],
+          items: data['items'],
+          rate: data['rate'],
+        ));
       }
       update();
     });
+  }
+
+  getOrderRate(orderId, rateVal) async {
+    await FireStoreOrder()
+        .changeOrderRateVal(orderId, rateVal)
+        .then((_) async => await getOrders());
+  }
+
+  deleteAll() async {
+    await db.deleteAll();
+    cartProds = [];
+    totalPrice = 0;
+    promoCode = '';
+    update();
   }
 }

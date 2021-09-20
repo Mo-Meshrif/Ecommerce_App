@@ -22,7 +22,7 @@ class CheckoutView extends StatelessWidget {
         body: GetBuilder<CartViewModel>(
           builder: (cartController) {
             List<CartProductModel> cartProds = cartController.cartProds;
-            List<OrderModel> orders = cartController.orders;
+            List<OrderModel> orders = cartController.allOrders;
             double totalPrice = cartController.totalPrice;
             return Column(children: [
               cartController.orderloading.value
@@ -327,13 +327,13 @@ class CheckoutView extends StatelessWidget {
                       moreController.shippingList;
                   ShippingAddressModel specificShipping;
                   PaymentMehodModel specificPayment;
-                  if (shippingList.isNotEmpty && paymentsList.isNotEmpty) {
+                  if (shippingList.isNotEmpty) {
                     specificShipping = shippingList
                         .firstWhere((element) => element.isSelected == 1);
+                  } else if (paymentsList.isNotEmpty) {
                     specificPayment = paymentsList
                         .firstWhere((element) => element.isSelected == 1);
                   }
-
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                     width: double.infinity,
@@ -346,6 +346,36 @@ class CheckoutView extends StatelessWidget {
                               status: 'Pending',
                               promoCode: cartController.promoCode,
                               createdAt: Timestamp.now(),
+                              orderTrack: [
+                                {
+                                  'title': 'Order Placed',
+                                  'subTitle': 'We have received your order on',
+                                  'createdAt': Timestamp.now(),
+                                  'status': true
+                                },
+                                {
+                                  'title': 'Order Confirmed',
+                                  'subTitle': 'We has been confirmed on',
+                                  'createdAt': null,
+                                  'status': false
+                                },
+                                {
+                                  'title': 'Order Processed',
+                                  'subTitle': 'We are preparing your order',
+                                  'status': false
+                                },
+                                {
+                                  'title': 'Ready to Ship',
+                                  'subTitle':
+                                      'Your order is ready for shipping',
+                                  'status': false
+                                },
+                                {
+                                  'title': 'Out for Delivery',
+                                  'subTitle': 'Your order is Out for Delivery',
+                                  'status': false
+                                },
+                              ],
                               orderNumber: orders.isEmpty
                                   ? 1
                                   : orders.last.orderNumber + 1,
@@ -356,13 +386,25 @@ class CheckoutView extends StatelessWidget {
                                 'city': specificShipping.city,
                                 'street': specificShipping.street,
                               },
-                              paymentMehod: {
-                                'cardHolderName':
-                                    specificPayment.cardHolderName,
-                                'cardNumber': specificPayment.cardNumber,
-                                'cvv': specificPayment.cvv,
-                                'expireDate': specificPayment.expireDate,
-                              },
+                              paymentMehod: specificPayment == null
+                                  ? {
+                                      'paymentMehod': 'Cash on Delivery',
+                                    }
+                                  : {
+                                      'paymentMehod': specificPayment.cardImage
+                                          .split('/')
+                                          .last
+                                          .split(".")[0],
+                                      'delails': {
+                                        'cardHolderName':
+                                            specificPayment.cardHolderName,
+                                        'cardNumber':
+                                            specificPayment.cardNumber,
+                                        'cvv': specificPayment.cvv,
+                                        'expireDate':
+                                            specificPayment.expireDate,
+                                      }
+                                    },
                               items: cartProds
                                   .map((e) => {
                                         'name': e.name,

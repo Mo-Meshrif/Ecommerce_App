@@ -8,7 +8,12 @@ class FireStoreOrder {
   }
 
   Future<List<QueryDocumentSnapshot>> getOrdersFromFireStore() async {
-    var val = await collectionOrder.orderBy('createdAt').get();
+    var val =
+        await collectionOrder.orderBy('createdAt', descending: true).get();
     return val.docs;
+  }
+
+  Future<void> changeOrderRateVal(orderId, rateVal) async {
+    return await collectionOrder.doc(orderId).update({'rate': rateVal});
   }
 }
