@@ -1,7 +1,7 @@
-import '../../../view/widgets/ordersDisplay.dart';
-import '../../../model/orderModel.dart';
-import '../../../core/viewModel/cartViewModel.dart';
-import '../../../view/widgets/customAppBar.dart';
+import '../../../../view/widgets/ordersDisplay.dart';
+import '../../../../model/orderModel.dart';
+import '../../../../core/viewModel/cartViewModel.dart';
+import '../../../../view/widgets/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,7 +1,7 @@
-import '../../../const.dart';
-import '../../../model/orderModel.dart';
-import '../../../view/widgets/customText.dart';
-import '../../../view/widgets/customAppBar.dart';
+import '../../../../const.dart';
+import '../../../../model/orderModel.dart';
+import '../../../../view/widgets/customText.dart';
+import '../../../../view/widgets/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

@@ -1,6 +1,7 @@
-import '../view/subViews/orderView/allOrdersView.dart';
-import '../view/subViews/orderView/finishedOrdersView.dart';
-import '../view/subViews/orderView/pendingShipmentsView.dart';
+import '../view/subViews/moreView/rateOurAppView.dart';
+import '../view/subViews/moreView/orderView/allOrdersView.dart';
+import '../view/subViews/moreView/orderView/finishedOrdersView.dart';
+import '../view/subViews/moreView/orderView/pendingShipmentsView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'view/subViews/moreView/shippingAddressView/shippingAddressView.dart';
@@ -58,9 +59,9 @@ List<Map<String, dynamic>> moreComponents = [
     'onTap': () => Get.to(() => PaymentMethodView()),
   },
   {
-    'icon': 'assets/more/language.png',
-    'txt': 'Language',
-    'onTap': () => null,
+    'icon': 'assets/more/rate.png',
+    'txt': 'Rate Our App',
+    'onTap': () => Get.to(() => RateOurAppView()),
   },
 ];
 List<String> states = ['Cairo', 'Dakahlia'];

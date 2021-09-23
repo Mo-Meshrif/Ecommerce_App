@@ -2,7 +2,7 @@ import '../../const.dart';
 import 'customText.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../model/orderModel.dart';
-import '../../view/subViews/orderView/trackOrderView.dart';
+import '../../view/subViews/moreView/orderView/trackOrderView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';

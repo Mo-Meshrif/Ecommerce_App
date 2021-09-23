@@ -1,5 +1,5 @@
 import '../../../core/viewModel/cartViewModel.dart';
-import '../../../view/subViews/orderView/allOrdersView.dart';
+import '../../../view/subViews/moreView/orderView/allOrdersView.dart';
 import '../../../view/widgets/customElevatedButton.dart';
 import '../../../view/widgets/customText.dart';
 import '../../../core/viewModel/homeViewModel.dart';
