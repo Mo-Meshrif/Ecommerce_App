@@ -1,3 +1,4 @@
+import '../../../core/viewModel/moreViewModel.dart';
 import '../../../view/widgets/customText.dart';
 import '../../../const.dart';
 import '../../../view/widgets/customAppBar.dart';
@@ -45,18 +46,21 @@ class RateOurAppView extends StatelessWidget {
                 txtColor: Colors.grey[600],
               ),
               SizedBox(height: 15),
-              RatingBar.builder(
-                initialRating: 0,
-                minRating: 1,
-                direction: Axis.horizontal,
-                itemCount: 5,
-                itemSize: 40,
-                itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: priColor,
+              GetBuilder<MoreViewModel>(
+                builder: (moreController) => RatingBar.builder(
+                  initialRating: moreController.appRateValue,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  itemSize: 40,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: priColor,
+                  ),
+                  onRatingUpdate: (rating) =>
+                      moreController.setAppRateValue(rating),
                 ),
-                onRatingUpdate: (rating) => null,
               ),
               SizedBox(height: 40),
             ],

@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:ecommerce/core/service/fireStore_user.dart';
+import '../../core/service/fireStore_rateApp.dart';
+import '../../core/service/fireStore_user.dart';
 import '../../helper/localStorageData.dart';
 import '../../model/userModel.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,6 +46,7 @@ class MoreViewModel extends GetxController {
       if (user != null) {
         savedUser = user;
         update();
+        getAppRateValue();
       }
     });
   }
@@ -155,5 +157,20 @@ class MoreViewModel extends GetxController {
     cardNumber = expireDate = cvv = cardHolderName = '';
     cardImage = 'assets/more/visa.png';
     update();
+  }
+
+  //rateOurApp
+  double appRateValue = 0;
+  setAppRateValue(rateVal) {
+    appRateValue = rateVal;
+    update();
+    FireStoreRateApp().addAppRateToFireStore(rateVal, savedUser.id);
+  }
+
+  getAppRateValue() {
+    FireStoreRateApp().getAppRateFromFireStore(savedUser.id).then((value) {
+      appRateValue = value['rateValue'];
+      update();
+    });
   }
 }
