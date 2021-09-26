@@ -5,6 +5,8 @@ class HomeService {
       FirebaseFirestore.instance.collection('Categories');
   final CollectionReference _collectionProductsRef =
       FirebaseFirestore.instance.collection('Products');
+  final CollectionReference _collectionLastestCollectionsRef =
+      FirebaseFirestore.instance.collection('LastestCollections');
 
   Future<List<QueryDocumentSnapshot>> getCategoriesFromFireStore() async {
     var val = await _collectionCategoriesRef.orderBy('createdAt').get();
@@ -15,6 +17,12 @@ class HomeService {
     var val = await _collectionProductsRef
         .orderBy('createdAt', descending: true)
         .get();
+    return val.docs;
+  }
+
+  Future<List<QueryDocumentSnapshot>>
+      getLastestCollectionsFromFireStore() async {
+    var val = await _collectionLastestCollectionsRef.get();
     return val.docs;
   }
 }

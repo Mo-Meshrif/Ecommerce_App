@@ -8,6 +8,7 @@ class ProductModel {
       prodName,
       imgUrl,
       price,
+      season,
       brand,
       condition,
       sku,
@@ -21,6 +22,7 @@ class ProductModel {
     this.customerId,
     this.prodName,
     this.imgUrl,
+    this.season,
     this.color,
     this.size,
     this.price,
@@ -40,6 +42,7 @@ class ProductModel {
     customerId = map['customerId'];
     prodName = map['prodName'];
     imgUrl = map['imgUrl'];
+    season = map['season'];
     color = map['color'];
     size = map['size'];
     price = map['price'];
@@ -59,6 +62,7 @@ class ProductModel {
       'customerId': prod.customerId,
       'prodName': prod.prodName,
       'imgUrl': prod.imgUrl,
+      'season': prod.season,
       'color': prod.color,
       'size': prod.size,
       'price': prod.price,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../model/lastestCollectionModel.dart';
 import '../../model/userModel.dart';
 import '../../core/service/fireStore_review.dart';
 import '../../model/rewiewModel.dart';
@@ -30,11 +31,14 @@ class HomeViewModel extends GetxController {
   List<CategoryModel> get categories => _categories;
   List<ProductModel> _products = [];
   List<ProductModel> get products => _products;
+  List<LastestCollectionModel> _lastestCollections = [];
+  List<LastestCollectionModel> get lastestCollections => _lastestCollections;
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
   onInit() {
     getCategories();
     getProducts();
+    getLastestCollections();
     getAllReviews();
     super.onInit();
   }
@@ -65,6 +69,22 @@ class HomeViewModel extends GetxController {
       HomeService().getProductsFromFireStore().then((value) {
         for (int i = 0; i < value.length; i++) {
           _products.add(ProductModel.fromJson(value[i].data()));
+          _loading.value = false;
+        }
+        update();
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getLastestCollections() {
+    try {
+      _loading.value = true;
+      HomeService().getLastestCollectionsFromFireStore().then((value) {
+        for (int i = 0; i < value.length; i++) {
+          _lastestCollections
+              .add(LastestCollectionModel.fromJson(value[i].data()));
           _loading.value = false;
         }
         update();

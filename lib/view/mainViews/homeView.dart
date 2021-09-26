@@ -1,3 +1,5 @@
+import '../../model/lastestCollectionModel.dart';
+import '../../view/subViews/lastestCollectionView.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../core/viewModel/moreViewModel.dart';
 import '../../view/subViews/shopView/shopView.dart';
@@ -32,6 +34,8 @@ class HomeView extends StatelessWidget {
           }
           List<CategoryModel> categories = controller.categories;
           List<ProductModel> products = controller.products;
+          List<LastestCollectionModel> lastestCollections =
+              controller.lastestCollections;
           List<Widget> lastHomeProducts = <Widget>[];
           if (products.length > 3) {
             for (var i = 0; i < 3; i++) {
@@ -141,12 +145,19 @@ class HomeView extends StatelessWidget {
                       height: 190,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 5,
+                        itemCount: lastestCollections.length,
                         itemBuilder: (context, i) => GestureDetector(
-                          onTap: null,
+                          onTap: () => Get.to(
+                            () => LastestCollectionView(
+                              allProducts: products,
+                              season: lastestCollections[i].season,
+                            ),
+                          ),
                           child: CustomStackImgTbutton(
-                            imgUrl: 'assets/home/banner.png',
-                            txt: 'For all your \nsummer clothing \nneeds',
+                            fromlocal: false,
+                            imgW: MediaQuery.of(context).size.width,
+                            imgUrl: lastestCollections[i].imgUrl,
+                            txt: lastestCollections[i].title,
                           ),
                         ),
                       ),
