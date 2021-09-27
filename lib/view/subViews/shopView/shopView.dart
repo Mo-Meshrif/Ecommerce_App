@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../widgets/customStackImg2IconTxt.dart';
 import 'package:flutter/material.dart';
 import 'shopPview.dart';
-import 'shopHview.dart';
+import 'shopTview.dart';
 
 class ShopView extends StatelessWidget {
   final String cateTxt;
@@ -35,15 +35,15 @@ class ShopView extends StatelessWidget {
                         labelColor: priColor,
                         indicatorColor: priColor,
                         tabs: [
-                          Tab(text: 'Home'),
                           Tab(text: 'Products'),
+                          Tab(text: 'Trending'),
                         ],
                       ),
                       Expanded(
                         child: TabBarView(
                           children: [
-                            ShopHview(),
                             ShopPview(cat: category),
+                            ShopTview(cat: category),
                           ],
                         ),
                       ),

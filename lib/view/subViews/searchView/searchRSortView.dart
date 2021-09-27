@@ -1,5 +1,4 @@
-import 'package:ecommerce/core/viewModel/searchViewModel.dart';
-
+import '../../../core/viewModel/searchViewModel.dart';
 import '../../../model/productModel.dart';
 import '../productDetails/productDetails.dart';
 import '../../widgets/customColumImgTT.dart';

@@ -13,6 +13,7 @@ class ProductModel {
       condition,
       sku,
       material;
+  bool trending;
   Map<String, dynamic> classification;
   List<dynamic> color, size;
   Timestamp createdAt;
@@ -32,6 +33,7 @@ class ProductModel {
     this.sku,
     this.material,
     this.classification,
+    this.trending,
   });
   ProductModel.fromJson(Map<String, dynamic> map) {
     if (map == null) {
@@ -54,6 +56,7 @@ class ProductModel {
     sku = map['sku'];
     material = map['material'];
     classification = map['classification'];
+    trending = map['trending'];
   }
   static toJson(ProductModel prod) {
     return {
@@ -72,6 +75,7 @@ class ProductModel {
       'sku': prod.sku,
       'material': prod.material,
       'classification': prod.classification,
+      'trending': prod.trending,
     };
   }
 
