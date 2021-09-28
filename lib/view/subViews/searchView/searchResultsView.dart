@@ -10,20 +10,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchResultsView extends StatelessWidget {
+  final List<ProductModel> allProds;
+  SearchResultsView({@required this.allProds});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SearchViewModel>(
-      builder: (controller) => GetBuilder<FilterViewModel>(
+      builder: (searchController) => GetBuilder<FilterViewModel>(
         init: FilterViewModel(),
         builder: (filteredController) {
           List<ProductModel> searchedProducts = filteredController.isFiltered
               ? filteredController.filteredProducts
-              : controller.searchProducts;
+              : searchController.searchProducts;
           List<ProductModel> searchedLhProducts = []..addAll(searchedProducts);
           searchedLhProducts.sort((a, b) => a.price.compareTo(b.price));
           List<ProductModel> searchedHlProducts =
               searchedLhProducts.reversed.toList();
-          int currentIndex = controller.currentIndex;
+          int currentIndex = searchController.currentIndex;
           return Scaffold(
             key: filteredController.searchFilterKey,
             endDrawer: CustomDrawer(),
@@ -37,7 +40,7 @@ class SearchResultsView extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Get.back();
-                          controller.clearSearchedProducts();
+                          searchController.clearSearchedProducts();
                         },
                         child: Image.asset('assets/shop/back.png'),
                       ),
@@ -49,7 +52,10 @@ class SearchResultsView extends StatelessWidget {
                           autoFocus: true,
                           onChanged: (val) {
                             filteredController.clearFilters();
-                            controller.getSearchedProducts(val);
+                            searchController.getSearchedProducts(
+                              searchEntry: val,
+                              prods: allProds,
+                            );
                           },
                           onTap: null,
                         ),
@@ -78,21 +84,21 @@ class SearchResultsView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () => controller.changeIndex(0),
+                        onTap: () => searchController.changeIndex(0),
                         child: CustomText(
                           txt: 'BEST MATCH',
                           txtColor: currentIndex == 0 ? priColor : swatchColor,
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => controller.changeIndex(1),
+                        onTap: () => searchController.changeIndex(1),
                         child: CustomText(
                           txt: 'PRICE LOW-HIGH',
                           txtColor: currentIndex == 1 ? priColor : swatchColor,
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => controller.changeIndex(2),
+                        onTap: () => searchController.changeIndex(2),
                         child: CustomText(
                           txt: 'PRICE HIGH-LOW',
                           txtColor: currentIndex == 2 ? priColor : swatchColor,

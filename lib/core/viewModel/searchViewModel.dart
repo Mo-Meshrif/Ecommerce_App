@@ -10,7 +10,7 @@ class SearchViewModel extends GetxController {
   List<ProductModel> recentlyViewedProducts = [];
   List<String> allCats = [];
   List<String> recommendedCats = [];
-  final HomeViewModel _homeViewModel = Get.find();
+  final HomeViewModel homeViewModel = Get.find();
   ValueNotifier<bool> _isSearchResultsView = ValueNotifier<bool>(false);
   ValueNotifier<bool> get isSearchResultsView => _isSearchResultsView;
   final LocalStorageData _localStorageData = Get.find();
@@ -24,7 +24,8 @@ class SearchViewModel extends GetxController {
     update();
   }
 
-  getSearchedProducts(String searchEntry) {
+  getSearchedProducts(
+      {@required String searchEntry, @required List<ProductModel> prods}) {
     try {
       _isSearchResultsView.value = true;
       update();
@@ -35,7 +36,7 @@ class SearchViewModel extends GetxController {
         if (searchEntry == '') {
           return;
         }
-        searchProducts = _homeViewModel.products
+        searchProducts = prods
             .where((prod) => prod.classification['sub-cat']
                 .toString()
                 .startsWith(searchEntry.capitalizeFirst))
@@ -82,7 +83,7 @@ class SearchViewModel extends GetxController {
   }
 
   getRecommendedCats() {
-    _homeViewModel.products.forEach((prod) {
+    homeViewModel.products.forEach((prod) {
       allCats.add(prod.classification['sub-cat']);
     });
     recommendedCats = allCats.toSet().toList();

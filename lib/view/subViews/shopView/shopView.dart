@@ -1,3 +1,5 @@
+import '../../../model/productModel.dart';
+import '../../../view/subViews/searchView/searchResultsView.dart';
 import '../../../core/viewModel/homeViewModel.dart';
 import '../../../model/categoryModel.dart';
 import '../../../const.dart';
@@ -19,6 +21,10 @@ class ShopView extends StatelessWidget {
           builder: (controller) {
             CategoryModel category = controller.categories
                 .firstWhere((element) => element.txt == cateTxt);
+            List<ProductModel> prods = controller.products
+                .where((element) =>
+                    element.classification['cat-id'] == category.id)
+                .toList();
             return category.shop['banner'] == ''
                 ? Center(
                     child: Text('Commming Soooooooooooooon !'),
@@ -29,6 +35,11 @@ class ShopView extends StatelessWidget {
                         banner: category.shop['banner'],
                         txtTitle: category.shop['txtTitle'],
                         txtDesc: category.shop['txtDesc'],
+                        searchTap: () => Get.to(
+                          () => SearchResultsView(
+                            allProds: prods,
+                          ),
+                        ),
                       ),
                       TabBar(
                         unselectedLabelColor: Colors.black,
@@ -42,8 +53,14 @@ class ShopView extends StatelessWidget {
                       Expanded(
                         child: TabBarView(
                           children: [
-                            ShopPview(cat: category),
-                            ShopTview(cat: category),
+                            ShopPview(
+                              cat: category,
+                              products: prods,
+                            ),
+                            ShopTview(
+                              cat: category,
+                              products: prods,
+                            ),
                           ],
                         ),
                       ),

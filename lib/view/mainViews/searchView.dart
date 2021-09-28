@@ -35,8 +35,12 @@ class SearchView extends StatelessWidget {
               SizedBox(height: 20),
               CustomSearchBar(
                 autoFocus: false,
-                onChanged: (val) => searchController.getSearchedProducts(val),
-                onTap: () => Get.to(() => SearchResultsView()),
+                onChanged: null,
+                onTap: () => Get.to(
+                  () => SearchResultsView(
+                    allProds: searchController.homeViewModel.products,
+                  ),
+                ),
               ),
               recentlyViewedProducts.length > 0
                   ? Padding(

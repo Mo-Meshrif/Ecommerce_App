@@ -4,8 +4,13 @@ import 'customRichText.dart';
 
 class CustomStackImg2IconTxt extends StatelessWidget {
   final String banner, txtTitle, txtDesc;
-
-  CustomStackImg2IconTxt({this.banner, this.txtTitle, this.txtDesc});
+  final void Function() searchTap;
+  CustomStackImg2IconTxt({
+    @required this.banner,
+    @required this.txtTitle,
+    @required this.txtDesc,
+    @required this.searchTap,
+  });
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -20,10 +25,13 @@ class CustomStackImg2IconTxt extends StatelessWidget {
         Positioned(
           top: 30,
           right: 20,
-          child: Icon(
-            Icons.search,
-            color: Colors.white,
-            size: 27,
+          child: GestureDetector(
+            onTap: searchTap,
+            child: Icon(
+              Icons.search,
+              color: Colors.white,
+              size: 27,
+            ),
           ),
         ),
         Positioned(
