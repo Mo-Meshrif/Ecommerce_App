@@ -4,10 +4,12 @@ class CustomSearchBar extends StatelessWidget {
   final void Function(String) onChanged;
   final void Function() onTap;
   final bool autoFocus;
+  final String hintText;
   CustomSearchBar({
     @required this.onChanged,
     @required this.autoFocus,
     @required this.onTap,
+    @required this.hintText,
   });
 
   @override
@@ -25,7 +27,7 @@ class CustomSearchBar extends StatelessWidget {
             Icons.search,
             color: Colors.grey,
           ),
-          hintText: 'Search Something',
+          hintText: hintText,
         ),
       ),
     );

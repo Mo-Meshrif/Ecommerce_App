@@ -131,13 +131,11 @@ class AddShippingAddressView extends StatelessWidget {
                             .validate()) {
                           moreController.addAddress(
                             ShippingAddressModel(
-                              fullName: capitalizeFirstofEach(
-                                  moreController.fullName),
+                              fullName: moreController.fullName.capitalize,
                               mobileNumber: moreController.mobileNumber,
                               state: moreController.state,
                               city: moreController.city,
-                              street:
-                                  capitalizeFirstofEach(moreController.street),
+                              street: moreController.street.capitalize,
                               isSelected: 1,
                             ),
                           );

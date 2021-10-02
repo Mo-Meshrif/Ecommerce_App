@@ -41,6 +41,7 @@ class SearchView extends StatelessWidget {
                     allProds: searchController.homeViewModel.products,
                   ),
                 ),
+                hintText: 'Search Something',
               ),
               recentlyViewedProducts.length > 0
                   ? Padding(

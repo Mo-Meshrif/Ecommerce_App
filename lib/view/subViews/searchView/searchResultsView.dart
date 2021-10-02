@@ -58,6 +58,7 @@ class SearchResultsView extends StatelessWidget {
                             );
                           },
                           onTap: null,
+                          hintText: 'Search Something',
                         ),
                       ),
                       SizedBox(

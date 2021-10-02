@@ -193,8 +193,8 @@ class AddPaymentCardView extends StatelessWidget {
                               cardNumber: moreController.cardNumber,
                               expireDate: moreController.expireDate,
                               cvv: moreController.cvv,
-                              cardHolderName: capitalizeFirstofEach(
-                                  moreController.cardHolderName),
+                              cardHolderName:
+                                  moreController.cardHolderName.capitalize,
                             ));
                           }
                         },
