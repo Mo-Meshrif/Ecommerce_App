@@ -86,7 +86,10 @@ class CartView extends StatelessWidget {
                         BottomCartBar(
                           totalPrice: totalPrice,
                           buttonTxt: 'CHECKOUT',
-                          onPress: () => Get.to(() => CheckoutView()),
+                          onPress: () {
+                            cartController.setOrderNumber();
+                            Get.to(() => CheckoutView());
+                          },
                         )
                       ],
                     ),

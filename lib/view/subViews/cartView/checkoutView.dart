@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../const.dart';
 import '../../../model/orderModel.dart';
 import '../../../view/subViews/moreView/paymentMethodView/addPaymentCardView.dart';
 import '../../../view/subViews/moreView/shippingAddressView/AddShippingAddressView.dart';
@@ -12,7 +12,7 @@ import '../../../view/widgets/customCartItem.dart';
 import '../../../view/widgets/customText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../const.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CheckoutView extends StatelessWidget {
   @override
@@ -22,7 +22,6 @@ class CheckoutView extends StatelessWidget {
         body: GetBuilder<CartViewModel>(
           builder: (cartController) {
             List<CartProductModel> cartProds = cartController.cartProds;
-            List<OrderModel> orders = cartController.allOrders;
             double totalPrice = cartController.totalPrice;
             return Column(children: [
               cartController.orderloading.value
@@ -43,7 +42,10 @@ class CheckoutView extends StatelessWidget {
                               child: IconButton(
                                 iconSize: 30,
                                 icon: Icon(Icons.close),
-                                onPressed: () => Get.back(),
+                                onPressed: () {
+                                  cartController.deleteSavedOrderNumber();
+                                  Get.back();
+                                },
                                 color: priColor,
                               ),
                             ),
@@ -376,9 +378,7 @@ class CheckoutView extends StatelessWidget {
                                   'status': false
                                 },
                               ],
-                              orderNumber: orders.isEmpty
-                                  ? 1
-                                  : orders.last.orderNumber + 1,
+                              orderNumber: cartController.orderNumber,
                               shippingAdress: {
                                 'fullName': specificShipping.fullName,
                                 'mobileNumber': specificShipping.mobileNumber,

@@ -6,6 +6,9 @@ import '../../helper/cartDatabaseHelper.dart';
 import '../../model/cartProductModel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 enum paymentMethod { cashOnDelivery, masterCard }
 
@@ -99,6 +102,7 @@ class CartViewModel extends GetxController {
 
   //order
   paymentMethod pay = paymentMethod.cashOnDelivery;
+  int orderNumber;
   ValueNotifier<bool> _orderLoading = ValueNotifier(false);
   ValueNotifier<bool> get orderloading => _orderLoading;
   List<OrderModel> _orders = [];
@@ -106,8 +110,16 @@ class CartViewModel extends GetxController {
   List<OrderModel> get specOrders => _orders
       .where((order) => order.customerId == _moreViewModel.savedUser.id)
       .toList();
+
   changePay(val) {
     pay = val;
+    update();
+  }
+
+  setOrderNumber() {
+    orderNumber = int.parse(
+        DateFormat('yyMMdd').format(Timestamp.now().toDate()) +
+            Random().nextInt(1000).toString());
     update();
   }
 
@@ -154,9 +166,15 @@ class CartViewModel extends GetxController {
 
   deleteAll() async {
     await db.deleteAll();
+    deleteSavedOrderNumber();
     cartProds = [];
     totalPrice = 0;
     promoCode = '';
+    update();
+  }
+
+  deleteSavedOrderNumber() {
+    orderNumber = null;
     update();
   }
 }
