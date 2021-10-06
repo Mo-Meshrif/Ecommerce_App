@@ -1,3 +1,4 @@
+import '../core/viewModel/chatViewModel.dart';
 import '../core/viewModel/moreViewModel.dart';
 import '../core/viewModel/cartViewModel.dart';
 import '../core/viewModel/filterViewModel.dart';
@@ -17,5 +18,6 @@ class Bind extends Bindings {
     Get.lazyPut(() => FilterViewModel());
     Get.lazyPut(() => CartViewModel());
     Get.lazyPut(() => MoreViewModel());
+    Get.lazyPut(() => ChatViewModel());
   }
 }

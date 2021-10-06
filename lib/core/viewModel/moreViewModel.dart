@@ -16,6 +16,7 @@ class MoreViewModel extends GetxController {
   void onInit() {
     getAllShipping();
     getAllPayments();
+    getUserData();
     super.onInit();
   }
 
@@ -169,6 +170,9 @@ class MoreViewModel extends GetxController {
 
   getAppRateValue() {
     FireStoreRateApp().getAppRateFromFireStore(savedUser.id).then((value) {
+      if (value == null) {
+        return;
+      }
       appRateValue = value['rateValue'];
       update();
     });

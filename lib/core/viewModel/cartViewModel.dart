@@ -15,6 +15,7 @@ enum paymentMethod { cashOnDelivery, masterCard }
 class CartViewModel extends GetxController {
   @override
   void onInit() {
+    getProducts();
     getOrders();
     super.onInit();
   }

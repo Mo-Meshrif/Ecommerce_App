@@ -1,3 +1,6 @@
+import '../../core/viewModel/chatViewModel.dart';
+import '../../core/viewModel/moreViewModel.dart';
+import '../../model/lastChatModel.dart';
 import '../../view/subViews/chatView/chatView.dart';
 import 'package:flutter/material.dart';
 import 'customStackIcon.dart';
@@ -6,18 +9,27 @@ import 'package:get/get.dart';
 class MessagesNotBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String customerId = Get.find<MoreViewModel>().savedUser.id;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        GestureDetector(
-          onTap: () => Get.to(() => ChatView()),
-          child: CustomStackIcon(
-            imageUrl: 'assets/home/Messages.png',
-            txtNum: '5',
-          ),
+        GetBuilder<ChatViewModel>(
+          builder: (chatController) {
+            List<LastChatModel> unOpenedChats = chatController.lastchats
+                .where((element) =>
+                    element.isOpened == false && element.to.id == customerId)
+                .toList();
+            return GestureDetector(
+              onTap: () => Get.to(() => ChatView()),
+              child: CustomStackIcon(
+                imageUrl: 'assets/home/Messages.png',
+                txtNum: unOpenedChats.length.toString(),
+              ),
+            );
+          },
         ),
         SizedBox(
-          width: 20,
+          width: 8,
         ),
         GestureDetector(
           onTap: () => null,

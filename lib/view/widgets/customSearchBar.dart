@@ -5,11 +5,13 @@ class CustomSearchBar extends StatelessWidget {
   final void Function() onTap;
   final bool autoFocus;
   final String hintText;
+  final TextEditingController searchController;
   CustomSearchBar({
     @required this.onChanged,
     @required this.autoFocus,
     @required this.onTap,
     @required this.hintText,
+    this.searchController,
   });
 
   @override
@@ -18,6 +20,7 @@ class CustomSearchBar extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
       child: TextFormField(
+        controller: searchController,
         onTap: onTap,
         autofocus: autoFocus,
         onChanged: onChanged,

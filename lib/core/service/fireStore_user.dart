@@ -14,6 +14,11 @@ class FireStoreUser {
     return await collectionRef.doc(uid).get();
   }
 
+  Future<List<QueryDocumentSnapshot>> getUsersFromFireStore() async {
+    var val = await collectionRef.get();
+    return val.docs;
+  }
+
   Future<void> uploadProfilePic(File pic, UserModel user) async {
     Reference reference =
         storageRef.ref().child('profileImages/').child('${user.id}+.jpg');
@@ -25,6 +30,12 @@ class FireStoreUser {
         'email': user.email,
         'pic': url,
       });
+    });
+  }
+
+  Future<void> updateOnlineState(uid, bool isOnline) async {
+    return await collectionRef.doc(uid).update({
+      'isOnline': isOnline,
     });
   }
 }

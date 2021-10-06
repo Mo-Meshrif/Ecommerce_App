@@ -12,11 +12,14 @@ class AuthViewModel extends GetxController {
   int currentIndex = 0;
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
+  List<UserModel> _users = [];
+  List<UserModel> get users => _users;
   Rxn<User> _user = Rxn<User>();
   String get user => _user.value?.email;
   @override
   void onInit() {
     _user.bindStream(_auth.authStateChanges());
+    getUsers();
     super.onInit();
   }
 
@@ -38,10 +41,10 @@ class AuthViewModel extends GetxController {
         _loading.value = false;
         if (user != null) {
           UserModel userModel = UserModel(
-            id: user.user.uid,
-            userName: userName,
-            email: email,
-          );
+              id: user.user.uid,
+              userName: userName,
+              email: email,
+              isOnline: true);
           await FireStoreUser().addUserToFireStore(userModel);
           setUser(userModel);
           Get.to(() => ControlView());
@@ -53,6 +56,22 @@ class AuthViewModel extends GetxController {
       update();
       handleAuthErrors(e);
     }
+  }
+
+  Future<void> getUsers() async {
+    FireStoreUser().getUsersFromFireStore().then((usersData) {
+      usersData.forEach((element) {
+        Map data = element.data();
+        var index = _users.indexWhere((element) => element.id == data['id']);
+        if (index >= 0) {
+          _users.removeAt(index);
+          _users.add(UserModel.fromJson(data));
+        } else {
+          _users.add(UserModel.fromJson(data));
+        }
+      });
+      update();
+    });
   }
 
   signIn() async {
@@ -67,12 +86,11 @@ class AuthViewModel extends GetxController {
     }).then((user) async {
       _loading.value = false;
       if (user != null) {
-        await FireStoreUser()
-            .getUserFromFireStore(user.user.uid)
-            .then((userData) {
-          setUser(UserModel.fromJson(userData.data()));
-          Get.to(() => ControlView());
-        });
+        FireStoreUser().updateOnlineState(user.user.uid, true);
+        UserModel userData =
+            _users.firstWhere((element) => element.id == user.user.uid);
+        setUser(userData);
+        Get.to(() => ControlView());
       }
       update();
     });

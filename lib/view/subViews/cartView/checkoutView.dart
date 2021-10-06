@@ -199,66 +199,22 @@ class CheckoutView extends StatelessWidget {
                               txtColor: swatchColor,
                             ),
                             Expanded(
-                              child: ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  itemCount: cartProds.length,
-                                  itemBuilder: (context, i) => Container(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                50,
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              CustomCartItem(
-                                                  cartProd: cartProds[i],
-                                                  increase: () => cartController
-                                                      .increaseQuantity(i),
-                                                  decrease: () => cartController
-                                                      .decreaseQuantity(
-                                                          i, false),
-                                                  onDismiss: null,
-                                                  fromCheckoutView: true),
-                                              Divider(
-                                                indent: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.25,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              GestureDetector(
-                                                onTap: null,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.25),
-                                                  child: CustomText(
-                                                    txt:
-                                                        'Message to seller (optional)',
-                                                    fSize: 15,
-                                                    fWeight: FontWeight.w300,
-                                                    txtColor: swatchColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Divider(),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                  separatorBuilder: (context, i) => SizedBox(
-                                        width: 25,
-                                      )),
-                            ),
+                                child: ListView.separated(
+                              padding: EdgeInsets.zero,
+                              itemCount: cartProds.length,
+                              itemBuilder: (context, i) => CustomCartItem(
+                                  cartProd: cartProds[i],
+                                  increase: () =>
+                                      cartController.increaseQuantity(i),
+                                  decrease: () =>
+                                      cartController.decreaseQuantity(i, false),
+                                  onDismiss: null,
+                                  fromCheckoutView: true),
+                              separatorBuilder: (context, i) => Divider(
+                                indent:
+                                    MediaQuery.of(context).size.width * 0.25,
+                              ),
+                            )),
                             GestureDetector(
                               onTap: () => Get.bottomSheet(
                                 Container(

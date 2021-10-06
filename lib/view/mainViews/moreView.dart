@@ -1,3 +1,4 @@
+import '../../core/service/fireStore_user.dart';
 import '../../core/viewModel/searchViewModel.dart';
 import '../../model/userModel.dart';
 import '../../core/viewModel/moreViewModel.dart';
@@ -132,6 +133,10 @@ class MoreView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () {
+                    FireStoreUser().updateOnlineState(
+                      Get.find<MoreViewModel>().savedUser.id,
+                      false,
+                    );
                     searchController.clearRecentlyViewedProducts();
                     controller.logout();
                   },

@@ -1,7 +1,6 @@
+import '../../core/viewModel/chatViewModel.dart';
 import '../../model/lastestCollectionModel.dart';
 import '../../view/subViews/lastestCollectionView.dart';
-import '../../core/viewModel/cartViewModel.dart';
-import '../../core/viewModel/moreViewModel.dart';
 import '../../view/subViews/shopView/shopView.dart';
 import '../subViews/categoriesView.dart';
 import '../../core/viewModel/searchViewModel.dart';
@@ -25,13 +24,6 @@ class HomeView extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
       child: GetBuilder<HomeViewModel>(
         builder: (controller) {
-          final MoreViewModel _moreContrroler = Get.find();
-          final CartViewModel _cartViewModel = Get.find();
-          if (_moreContrroler.savedUser == null) {
-            _moreContrroler
-                .getUserData()
-                .then((_) => _cartViewModel.getProducts());
-          }
           List<CategoryModel> categories = controller.categories;
           List<ProductModel> products = controller.products;
           List<LastestCollectionModel> lastestCollections =
@@ -52,8 +44,9 @@ class HomeView extends StatelessWidget {
               ));
             }
           }
-          //initialize searchViewModel
+          //initialize searchViewModel,chatViewModel
           Get.put(SearchViewModel());
+          Get.put(ChatViewModel());
           return categories.length < 3
               ? Center(
                   child: CustomText(
