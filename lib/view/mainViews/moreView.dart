@@ -137,7 +137,6 @@ class MoreView extends StatelessWidget {
                       Get.find<MoreViewModel>().savedUser.id,
                       false,
                     );
-                    searchController.clearRecentlyViewedProducts();
                     controller.logout();
                   },
                   child: CustomText(

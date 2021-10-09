@@ -1,10 +1,12 @@
+import 'searchViewModel.dart';
 import 'cartViewModel.dart';
 import 'moreViewModel.dart';
-import 'package:flutter/material.dart';
+import 'chatViewModel.dart';
 import '../../helper/localStorageData.dart';
 import '../../view/controlView.dart';
 import '../../core/service/fireStore_user.dart';
 import '../../model/userModel.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -137,8 +139,10 @@ class AuthViewModel extends GetxController {
     _auth.signOut();
     currentIndex = 1;
     clearAuthData();
+    Get.delete<SearchViewModel>();
     Get.delete<CartViewModel>();
     Get.delete<MoreViewModel>();
+    Get.delete<ChatViewModel>();
     update();
   }
 }

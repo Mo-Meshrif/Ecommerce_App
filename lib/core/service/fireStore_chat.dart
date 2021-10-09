@@ -12,6 +12,7 @@ class FireStoreChat {
   Future<void> addMessageToFireStore(
       {@required Timestamp createdAt,
       @required String vendorId,
+      @required String customerId,
       @required String from,
       @required String to,
       @required String message,
@@ -19,6 +20,7 @@ class FireStoreChat {
     return await collectionChat.add({
       'createdAt': createdAt,
       'vendorId': vendorId,
+      'customerId': customerId,
       'from': from,
       'to': to,
       'message': message,

@@ -5,6 +5,7 @@ class LastChatModel {
   String id;
   Timestamp messageTime;
   String vendorId;
+  String customerId;
   UserModel from;
   UserModel to;
   String lastMessage;
@@ -14,6 +15,7 @@ class LastChatModel {
     this.id,
     this.messageTime,
     this.vendorId,
+    this.customerId,
     this.from,
     this.to,
     this.lastMessage,
@@ -27,6 +29,7 @@ class LastChatModel {
     id = map['id'];
     messageTime = map['messageTime'];
     vendorId = map['vendorId'];
+    customerId = map['customerId'];
     from = map['from'];
     to = map['to'];
     lastMessage = map['lastMessage'];
@@ -38,6 +41,7 @@ class LastChatModel {
       'id': id,
       'messageTime': messageTime,
       'vendorId': vendorId,
+      'customerId': customerId,
       'from': from,
       'to': to,
       'lastMessage': lastMessage,

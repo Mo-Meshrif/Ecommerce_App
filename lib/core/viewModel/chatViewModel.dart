@@ -9,7 +9,11 @@ import 'package:flutter/foundation.dart';
 
 class ChatViewModel extends GetxController {
   List<LastChatModel> _lastchats = [];
-  List<LastChatModel> get lastchats => _lastchats;
+  List<LastChatModel> get lastchats => _lastchats
+      .where((element) =>
+          element.customerId == _moreViewModel.savedUser.id ||
+          element.vendorId == _moreViewModel.savedUser.id)
+      .toList();
   final AuthViewModel authViewModel = Get.find();
   final MoreViewModel _moreViewModel = Get.find();
   List<LastChatModel> searchedCoversations = [];
@@ -29,6 +33,7 @@ class ChatViewModel extends GetxController {
   uploadChat(
       {@required Timestamp createdAt,
       @required String vendorId,
+      @required String customerId,
       @required String from,
       @required String to,
       @required String message,
@@ -37,6 +42,7 @@ class ChatViewModel extends GetxController {
         .addMessageToFireStore(
       createdAt: createdAt,
       vendorId: vendorId,
+      customerId: customerId,
       from: from,
       to: to,
       message: message,
@@ -53,8 +59,9 @@ class ChatViewModel extends GetxController {
     FireStoreChat().getChatsFromFireStore().then((chats) {
       chats.forEach((chat) {
         Map data = chat.data();
-        int index = _lastchats
-            .indexWhere((element) => element.vendorId == data['vendorId']);
+        int index = _lastchats.indexWhere((element) =>
+            element.vendorId == data['vendorId'] &&
+            element.customerId == data['customerId']);
         UserModel sender = authViewModel.users
             .firstWhere((element) => element.id == data['to']);
         UserModel receiver = authViewModel.users
@@ -67,6 +74,7 @@ class ChatViewModel extends GetxController {
                 id: chat.id,
                 messageTime: data['createdAt'],
                 vendorId: data['vendorId'],
+                customerId: data['customerId'],
                 from: receiver,
                 to: sender,
                 lastMessage: data['message'],
@@ -80,6 +88,7 @@ class ChatViewModel extends GetxController {
                 id: chat.id,
                 messageTime: data['createdAt'],
                 vendorId: data['vendorId'],
+                customerId: data['customerId'],
                 from: receiver,
                 to: sender,
                 lastMessage: data['message'],

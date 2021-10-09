@@ -108,7 +108,8 @@ class MessageView extends StatelessWidget {
                                       element.orderNumber == orderNumber);
                               List items = myOrder.items
                                   .where((element) =>
-                                      element['vendorId'] == vendor.id)
+                                      element['vendorId'] == vendor.id ||
+                                      element['vendorId'] == customer.id)
                                   .toList();
                               return ExpansionTile(
                                 tilePadding: EdgeInsets.zero,
@@ -267,6 +268,7 @@ class MessageView extends StatelessWidget {
                                     Get.find<ChatViewModel>().uploadChat(
                                       createdAt: Timestamp.now(),
                                       vendorId: vendor.id,
+                                      customerId: customer.id,
                                       from: customer.id,
                                       to: vendor.id,
                                       message: chatController.message,
