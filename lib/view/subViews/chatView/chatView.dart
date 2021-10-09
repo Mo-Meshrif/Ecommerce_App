@@ -1,3 +1,4 @@
+import '../../../model/userModel.dart';
 import '../../../core/viewModel/moreViewModel.dart';
 import '../../../core/viewModel/chatViewModel.dart';
 import '../../../model/lastChatModel.dart';
@@ -77,119 +78,111 @@ class ChatView extends StatelessWidget {
                                       padding:
                                           EdgeInsets.only(top: 10, bottom: 20),
                                       itemCount: lastchats.length,
-                                      itemBuilder: (context, i) =>
-                                          GestureDetector(
-                                        onTap: () {
-                                          chatController
-                                              .updateChat(lastchats[i].id);
-                                          Get.to(
-                                            () => MessageView(
-                                              customer: customerId ==
-                                                      lastchats[i].to.id
-                                                  ? lastchats[i].to
-                                                  : lastchats[i].from,
-                                              shippingCompany: customerId ==
-                                                      lastchats[i].to.id
-                                                  ? lastchats[i].from
-                                                  : lastchats[i].to,
-                                              orderNumber:
-                                                  lastchats[i].orderNumber,
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                          color: Colors.grey[50],
-                                          child: Row(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 30,
-                                                child: CustomText(
-                                                  txt: joinFirstTwoLetter(
-                                                      customerId ==
-                                                              lastchats[i].to.id
-                                                          ? lastchats[i]
-                                                              .from
-                                                              .userName
-                                                          : lastchats[i]
-                                                              .to
-                                                              .userName),
-                                                ),
+                                      itemBuilder: (context, i) {
+                                        UserModel vendor = chatController
+                                            .authViewModel.users
+                                            .firstWhere(((element) =>
+                                                element.id ==
+                                                lastchats[i].vendorId));
+
+                                        return GestureDetector(
+                                          onTap: () {
+                                            chatController
+                                                .updateChat(lastchats[i].id);
+                                            Get.to(
+                                              () => MessageView(
+                                                customer: customerId ==
+                                                        lastchats[i].to.id
+                                                    ? lastchats[i].to
+                                                    : lastchats[i].from,
+                                                vendor: vendor,
+                                                orderNumber:
+                                                    lastchats[i].orderNumber,
                                               ),
-                                              SizedBox(width: 15),
-                                              Expanded(
-                                                child: ListTile(
-                                                  contentPadding:
-                                                      EdgeInsets.zero,
-                                                  title: CustomText(
-                                                    txt: customerId ==
-                                                            lastchats[i].to.id
-                                                        ? lastchats[i]
-                                                            .from
-                                                            .userName
-                                                            .capitalizeFirst
-                                                        : lastchats[i]
-                                                            .to
-                                                            .userName
-                                                            .capitalizeFirst,
-                                                    fSize: 17,
-                                                    fWeight: FontWeight.w500,
+                                            );
+                                          },
+                                          child: Container(
+                                            color: Colors.grey[50],
+                                            child: Row(
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 30,
+                                                  child: CustomText(
+                                                    txt: joinFirstTwoLetter(
+                                                        vendor.userName),
                                                   ),
-                                                  subtitle: CustomText(
-                                                    txt: lastchats[i]
-                                                        .lastMessage,
-                                                    fSize: 15,
-                                                    fWeight: !lastchats[i]
-                                                                .isOpened &&
-                                                            customerId ==
-                                                                lastchats[i]
-                                                                    .to
-                                                                    .id
-                                                        ? FontWeight.w500
-                                                        : FontWeight.w300,
-                                                    maxLine: 2,
-                                                  ),
-                                                  trailing: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      CustomText(
-                                                        txt: DateFormat(
-                                                                'h:mm a')
-                                                            .format(lastchats[i]
-                                                                .messageTime
-                                                                .toDate()),
-                                                        txtColor: swatchColor,
-                                                        fSize: 17,
-                                                      ),
-                                                      !lastchats[i].isOpened &&
+                                                ),
+                                                SizedBox(width: 15),
+                                                Expanded(
+                                                  child: ListTile(
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                    title: CustomText(
+                                                      txt: vendor.userName
+                                                          .capitalizeFirst,
+                                                      fSize: 17,
+                                                      fWeight: FontWeight.w500,
+                                                    ),
+                                                    subtitle: CustomText(
+                                                      txt: lastchats[i]
+                                                          .lastMessage,
+                                                      fSize: 15,
+                                                      fWeight: !lastchats[i]
+                                                                  .isOpened &&
                                                               customerId ==
                                                                   lastchats[i]
                                                                       .to
                                                                       .id
-                                                          ? Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 5),
-                                                              child:
-                                                                  CircleAvatar(
-                                                                radius: 8,
-                                                                backgroundColor:
-                                                                    priColor,
-                                                              ),
-                                                            )
-                                                          : Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .zero),
-                                                    ],
+                                                          ? FontWeight.w500
+                                                          : FontWeight.w300,
+                                                      maxLine: 2,
+                                                    ),
+                                                    trailing: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        CustomText(
+                                                          txt: DateFormat(
+                                                                  'h:mm a')
+                                                              .format(lastchats[
+                                                                      i]
+                                                                  .messageTime
+                                                                  .toDate()),
+                                                          txtColor: swatchColor,
+                                                          fSize: 17,
+                                                        ),
+                                                        !lastchats[i]
+                                                                    .isOpened &&
+                                                                customerId ==
+                                                                    lastchats[i]
+                                                                        .to
+                                                                        .id
+                                                            ? Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top: 5),
+                                                                child:
+                                                                    CircleAvatar(
+                                                                  radius: 8,
+                                                                  backgroundColor:
+                                                                      priColor,
+                                                                ),
+                                                              )
+                                                            : Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .zero),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ),
+                                        );
+                                      },
                                       separatorBuilder: (context, i) => Divider(
                                         color: Colors.grey,
                                         indent: size.width * 0.18,

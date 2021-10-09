@@ -81,8 +81,8 @@ class OrdersDisplay extends StatelessWidget {
                                       Container(
                                         height: 50,
                                         width: specOrders[i].items.length >= 3
-                                            ? 150
-                                            : (specOrders[i].items.length * 50)
+                                            ? 120
+                                            : (specOrders[i].items.length * 40)
                                                 .toDouble(),
                                         child: GridView.builder(
                                           itemCount: specOrders[i].items.length,

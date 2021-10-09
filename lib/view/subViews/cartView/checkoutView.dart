@@ -299,7 +299,13 @@ class CheckoutView extends StatelessWidget {
                     child: BottomCartBar(
                         totalPrice: totalPrice,
                         buttonTxt: 'PLACE ORDER',
-                        onPress: () => cartController.addOrder(OrderModel(
+                        onPress: () {
+                          if (specificShipping == null) {
+                            Get.snackbar(
+                                'Attention', 'Add your address,please !',
+                                snackPosition: SnackPosition.TOP);
+                          } else {
+                            cartController.addOrder(OrderModel(
                               customerId: moreController.savedUser.id,
                               status: 'Pending',
                               promoCode: cartController.promoCode,
@@ -363,6 +369,7 @@ class CheckoutView extends StatelessWidget {
                                     },
                               items: cartProds
                                   .map((e) => {
+                                        'vendorId': e.vendorId,
                                         'name': e.name,
                                         'imgUrl': e.imgUrl,
                                         'size': e.size,
@@ -371,7 +378,9 @@ class CheckoutView extends StatelessWidget {
                                         'quantity': e.quantity,
                                       })
                                   .toList(),
-                            ))),
+                            ));
+                          }
+                        }),
                   );
                 },
               ),

@@ -1,3 +1,4 @@
+import '../../model/userModel.dart';
 import '../../core/service/fireStore_order.dart';
 import '../../view/subViews/cartView/orderPlacedView.dart';
 import '../../model/orderModel.dart';
@@ -15,7 +16,6 @@ enum paymentMethod { cashOnDelivery, masterCard }
 class CartViewModel extends GetxController {
   @override
   void onInit() {
-    getProducts();
     getOrders();
     super.onInit();
   }
@@ -44,14 +44,13 @@ class CartViewModel extends GetxController {
     getTotalPrice();
   }
 
-  getProducts() async {
-    if (_moreViewModel.savedUser == null) {
+  getProducts(UserModel user) async {
+    if (user == null) {
       return;
     }
     List<CartProductModel> tempList = await db.getAllProducts();
-    cartProds = tempList
-        .where((element) => element.sellerId == _moreViewModel.savedUser.id)
-        .toList();
+    cartProds =
+        tempList.where((element) => element.sellerId == user.id).toList();
     getTotalPrice();
     update();
   }

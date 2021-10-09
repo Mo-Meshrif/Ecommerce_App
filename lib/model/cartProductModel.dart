@@ -1,9 +1,10 @@
 class CartProductModel {
-  String id, sellerId, name, imgUrl, size, color, price;
+  String id, sellerId, vendorId, name, imgUrl, size, color, price;
   int quantity;
   CartProductModel(
       {this.id,
       this.sellerId,
+      this.vendorId,
       this.name,
       this.imgUrl,
       this.size,
@@ -16,6 +17,7 @@ class CartProductModel {
     }
     id = map['id'];
     sellerId = map['sellerId'];
+    vendorId = map['vendorId'];
     name = map['name'];
     imgUrl = map['imgUrl'];
     size = map['size'];
@@ -28,6 +30,7 @@ class CartProductModel {
     return {
       'id': id,
       'sellerId': sellerId,
+      'vendorId': vendorId,
       'name': name,
       'imgUrl': imgUrl,
       'size': size,

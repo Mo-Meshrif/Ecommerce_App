@@ -149,6 +149,7 @@ class ProductDetails extends StatelessWidget {
                                             id: prod.id,
                                             sellerId:
                                                 moreController.savedUser.id,
+                                            vendorId: prod.vendorId,
                                             name: prod.prodName,
                                             imgUrl: prod.imgUrl,
                                             size: homeController.selectedSize ??

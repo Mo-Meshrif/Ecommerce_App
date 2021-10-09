@@ -12,10 +12,10 @@ import 'package:intl/intl.dart';
 
 class MessageView extends StatelessWidget {
   final UserModel customer;
-  final UserModel shippingCompany;
+  final UserModel vendor;
   final int orderNumber;
   MessageView({
-    @required this.shippingCompany,
+    @required this.vendor,
     @required this.orderNumber,
     @required this.customer,
   });
@@ -26,7 +26,7 @@ class MessageView extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('chats')
+            .collection('Chats')
             .orderBy('createdAt', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
@@ -35,7 +35,9 @@ class MessageView extends StatelessWidget {
             data = snapshot.data.docs;
           }
           List chats = data
-              .where((element) => element['orderNumber'] == orderNumber)
+              .where((element) =>
+                  element['orderNumber'] == orderNumber &&
+                  (element['from'] == vendor.id || element['to'] == vendor.id))
               .toList();
           return GetBuilder<ChatViewModel>(
             builder: (chatController) => Container(
@@ -60,7 +62,7 @@ class MessageView extends StatelessWidget {
                               child: ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 title: CustomText(
-                                  txt: shippingCompany.userName,
+                                  txt: vendor.userName,
                                   fSize: 17,
                                 ),
                                 subtitle: StreamBuilder(
@@ -75,7 +77,7 @@ class MessageView extends StatelessWidget {
                                     bool shippingCompIsOnline = users.length > 0
                                         ? users.firstWhere((element) =>
                                             element['id'] ==
-                                            shippingCompany.id)['isOnline']
+                                            vendor.id)['isOnline']
                                         : null;
                                     return userSnap.hasData
                                         ? CustomText(
@@ -89,8 +91,7 @@ class MessageView extends StatelessWidget {
                                 trailing: CircleAvatar(
                                   radius: 20,
                                   child: CustomText(
-                                    txt: joinFirstTwoLetter(
-                                        shippingCompany.userName),
+                                    txt: joinFirstTwoLetter(vendor.userName),
                                   ),
                                 ),
                               ),
@@ -105,6 +106,10 @@ class MessageView extends StatelessWidget {
                               OrderModel myOrder = cartController.allOrders
                                   .firstWhere((element) =>
                                       element.orderNumber == orderNumber);
+                              List items = myOrder.items
+                                  .where((element) =>
+                                      element['vendorId'] == vendor.id)
+                                  .toList();
                               return ExpansionTile(
                                 tilePadding: EdgeInsets.zero,
                                 title: CustomText(
@@ -113,7 +118,7 @@ class MessageView extends StatelessWidget {
                                   fWeight: FontWeight.bold,
                                   fSize: 17,
                                 ),
-                                children: myOrder.items
+                                children: items
                                     .map(
                                       (e) => Row(
                                         children: [
@@ -181,10 +186,9 @@ class MessageView extends StatelessWidget {
                           itemBuilder: (context, i) {
                             Timestamp messageTime = chats[i]['createdAt'];
                             return Column(
-                              crossAxisAlignment:
-                                  chats[i]['from'] != shippingCompany.id
-                                      ? CrossAxisAlignment.start
-                                      : CrossAxisAlignment.end,
+                              crossAxisAlignment: chats[i]['from'] != vendor.id
+                                  ? CrossAxisAlignment.start
+                                  : CrossAxisAlignment.end,
                               children: [
                                 i == chats.length - 1 ||
                                         i == chatController.clikedMessageNumber
@@ -205,22 +209,21 @@ class MessageView extends StatelessWidget {
                                       maxWidth: size.width * 0.5,
                                     ),
                                     child: Card(
-                                      color:
-                                          chats[i]['from'] != shippingCompany.id
-                                              ? Colors.blue
-                                              : Colors.black38,
+                                      color: chats[i]['from'] != vendor.id
+                                          ? Colors.blue
+                                          : Colors.black38,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(15),
                                               topRight: Radius.circular(15),
-                                              bottomRight: chats[i]['from'] !=
-                                                      shippingCompany.id
-                                                  ? Radius.circular(15)
-                                                  : Radius.zero,
-                                              bottomLeft: chats[i]['from'] ==
-                                                      shippingCompany.id
-                                                  ? Radius.circular(15)
-                                                  : Radius.zero)),
+                                              bottomRight:
+                                                  chats[i]['from'] != vendor.id
+                                                      ? Radius.circular(15)
+                                                      : Radius.zero,
+                                              bottomLeft:
+                                                  chats[i]['from'] == vendor.id
+                                                      ? Radius.circular(15)
+                                                      : Radius.zero)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: CustomText(
@@ -262,11 +265,13 @@ class MessageView extends StatelessWidget {
                                 ? null
                                 : () {
                                     Get.find<ChatViewModel>().uploadChat(
-                                        createdAt: Timestamp.now(),
-                                        from: customer.id,
-                                        to: shippingCompany.id,
-                                        message: chatController.message,
-                                        orderNumber: orderNumber);
+                                      createdAt: Timestamp.now(),
+                                      vendorId: vendor.id,
+                                      from: customer.id,
+                                      to: vendor.id,
+                                      message: chatController.message,
+                                      orderNumber: orderNumber,
+                                    );
                                     _messageController.clear();
                                   },
                             child: Image.asset('assets/other/send.png'),

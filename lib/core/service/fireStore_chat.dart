@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class FireStoreChat {
-  final collectionChat = FirebaseFirestore.instance.collection('chats');
+  final collectionChat = FirebaseFirestore.instance.collection('Chats');
 
   Future<List<QueryDocumentSnapshot>> getChatsFromFireStore() async {
     var val = await collectionChat.orderBy('createdAt').get();
@@ -11,12 +11,14 @@ class FireStoreChat {
 
   Future<void> addMessageToFireStore(
       {@required Timestamp createdAt,
+      @required String vendorId,
       @required String from,
       @required String to,
       @required String message,
       @required int orderNumber}) async {
     return await collectionChat.add({
       'createdAt': createdAt,
+      'vendorId': vendorId,
       'from': from,
       'to': to,
       'message': message,

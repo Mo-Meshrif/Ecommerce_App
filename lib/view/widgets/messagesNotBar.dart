@@ -5,6 +5,7 @@ import '../../view/subViews/chatView/chatView.dart';
 import 'package:flutter/material.dart';
 import 'customStackIcon.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessagesNotBar extends StatelessWidget {
   @override
@@ -13,21 +14,29 @@ class MessagesNotBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        GetBuilder<ChatViewModel>(
-          builder: (chatController) {
-            List<LastChatModel> unOpenedChats = chatController.lastchats
-                .where((element) =>
-                    element.isOpened == false && element.to.id == customerId)
-                .toList();
-            return GestureDetector(
-              onTap: () => Get.to(() => ChatView()),
-              child: CustomStackIcon(
-                imageUrl: 'assets/home/Messages.png',
-                txtNum: unOpenedChats.length.toString(),
-              ),
-            );
-          },
-        ),
+        StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('Chats').snapshots(),
+            builder: (context, chatSnap) {
+              if (chatSnap.hasData) {
+                Get.find<ChatViewModel>().getLastChats();
+              }
+              return GetBuilder<ChatViewModel>(
+                builder: (chatController) {
+                  List<LastChatModel> unOpenedChats = chatController.lastchats
+                      .where((element) =>
+                          element.isOpened == false &&
+                          element.to.id == customerId)
+                      .toList();
+                  return GestureDetector(
+                    onTap: () => Get.to(() => ChatView()),
+                    child: CustomStackIcon(
+                      imageUrl: 'assets/home/Messages.png',
+                      txtNum: unOpenedChats.length.toString(),
+                    ),
+                  );
+                },
+              );
+            }),
         SizedBox(
           width: 8,
         ),

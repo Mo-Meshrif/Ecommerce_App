@@ -28,17 +28,20 @@ class ChatViewModel extends GetxController {
 
   uploadChat(
       {@required Timestamp createdAt,
+      @required String vendorId,
       @required String from,
       @required String to,
       @required String message,
       @required int orderNumber}) {
     FireStoreChat()
         .addMessageToFireStore(
-            createdAt: createdAt,
-            from: from,
-            to: to,
-            message: message,
-            orderNumber: orderNumber)
+      createdAt: createdAt,
+      vendorId: vendorId,
+      from: from,
+      to: to,
+      message: message,
+      orderNumber: orderNumber,
+    )
         .then((value) {
       message = null;
       update();
@@ -50,34 +53,20 @@ class ChatViewModel extends GetxController {
     FireStoreChat().getChatsFromFireStore().then((chats) {
       chats.forEach((chat) {
         Map data = chat.data();
-        int indexIfSender =
-            _lastchats.indexWhere((element) => element.from.id == data['from']);
-        int indexIfReceiver =
-            _lastchats.indexWhere((element) => element.from.id == data['to']);
+        int index = _lastchats
+            .indexWhere((element) => element.vendorId == data['vendorId']);
         UserModel sender = authViewModel.users
             .firstWhere((element) => element.id == data['to']);
         UserModel receiver = authViewModel.users
             .firstWhere((element) => element.id == data['from']);
-        if (indexIfSender >= 0) {
-          _lastchats.removeAt(indexIfSender);
+        if (index >= 0) {
+          _lastchats.removeAt(index);
           _lastchats.insert(
               0,
               LastChatModel(
                 id: chat.id,
                 messageTime: data['createdAt'],
-                from: receiver,
-                to: sender,
-                lastMessage: data['message'],
-                orderNumber: data['orderNumber'],
-                isOpened: data['isOpened'],
-              ));
-        } else if (indexIfReceiver >= 0) {
-          _lastchats.removeAt(indexIfReceiver);
-          _lastchats.insert(
-              0,
-              LastChatModel(
-                id: chat.id,
-                messageTime: data['createdAt'],
+                vendorId: data['vendorId'],
                 from: receiver,
                 to: sender,
                 lastMessage: data['message'],
@@ -90,6 +79,7 @@ class ChatViewModel extends GetxController {
               LastChatModel(
                 id: chat.id,
                 messageTime: data['createdAt'],
+                vendorId: data['vendorId'],
                 from: receiver,
                 to: sender,
                 lastMessage: data['message'],
