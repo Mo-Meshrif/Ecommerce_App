@@ -2,10 +2,10 @@ import '../view/subViews/moreView/rateOurAppView.dart';
 import '../view/subViews/moreView/orderView/allOrdersView.dart';
 import '../view/subViews/moreView/orderView/finishedOrdersView.dart';
 import '../view/subViews/moreView/orderView/pendingShipmentsView.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'view/subViews/moreView/shippingAddressView/shippingAddressView.dart';
 import 'view/subViews/moreView/paymentMethodView/paymentMethodView.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const priColor = Color.fromRGBO(255, 105, 105, 1);
 const swatchColor = Color.fromRGBO(81, 92, 111, 1);
@@ -66,4 +66,9 @@ List<String> imgCards = [
   'assets/more/visa.png',
   'assets/more/mastercard.png',
   'assets/more/paypal.png',
+];
+List<String> notificationIcon = [
+  'assets/other/order.png',
+  'assets/other/destination.png',
+  'assets/other/discount.png',
 ];

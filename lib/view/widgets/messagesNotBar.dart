@@ -1,3 +1,4 @@
+import '../../view/subViews/notificationsView.dart';
 import '../../core/viewModel/chatViewModel.dart';
 import '../../core/viewModel/moreViewModel.dart';
 import '../../model/lastChatModel.dart';
@@ -41,7 +42,7 @@ class MessagesNotBar extends StatelessWidget {
           width: 8,
         ),
         GestureDetector(
-          onTap: () => null,
+          onTap: () => Get.to(() => NotificationsView()),
           child: CustomStackIcon(
             imageUrl: 'assets/home/notifications.png',
             txtNum: '10',
