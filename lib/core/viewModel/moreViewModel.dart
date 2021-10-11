@@ -1,16 +1,18 @@
 import 'dart:io';
+import '../../core/service/fireStore_notification.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../core/service/fireStore_rateApp.dart';
 import '../../core/service/fireStore_user.dart';
 import '../../helper/localStorageData.dart';
 import '../../model/userModel.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../helper/paymentDatabaseHelper.dart';
 import '../../model/paymentMethodModel.dart';
-import 'package:flutter/material.dart';
 import '../../helper/shippingDatabaseHelper.dart';
 import '../../model/shippingAddressModel.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class MoreViewModel extends GetxController {
   @override
@@ -44,11 +46,13 @@ class MoreViewModel extends GetxController {
   }
 
   Future<void> getUserData() async {
-    await _localStorageData.getUser.then((user) {
+    await _localStorageData.getUser.then((user) async {
       if (user != null) {
         savedUser = user;
         update();
         Get.find<CartViewModel>().getProducts(user);
+        var token = await FirebaseMessaging.instance.getToken();
+        FireStoreNotification().setDeviceToken(token, savedUser.id);
         getAppRateValue();
       }
     });
