@@ -22,31 +22,4 @@ class LastChatModel {
     this.orderNumber,
     this.isOpened,
   });
-  LastChatModel.fromJson(Map<String, dynamic> map) {
-    if (map == null) {
-      return;
-    }
-    id = map['id'];
-    messageTime = map['messageTime'];
-    vendorId = map['vendorId'];
-    customerId = map['customerId'];
-    from = map['from'];
-    to = map['to'];
-    lastMessage = map['lastMessage'];
-    orderNumber = map['orderNumber'];
-    isOpened = map['isOpened'];
-  }
-  toJson() {
-    return {
-      'id': id,
-      'messageTime': messageTime,
-      'vendorId': vendorId,
-      'customerId': customerId,
-      'from': from,
-      'to': to,
-      'lastMessage': lastMessage,
-      'orderNumber': orderNumber,
-      'isOpened': isOpened,
-    };
-  }
 }

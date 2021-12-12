@@ -13,28 +13,16 @@ class CategoryModel {
     this.shop,
     this.subCat,
   });
-  CategoryModel.fromJson(Map<String, dynamic> map) {
+  CategoryModel.fromJson(String catId,Map<String, dynamic> map) {
     if (map.isEmpty) {
       return;
     }
-    id = map['id'];
+    id = catId;
     imgUrl = map['imgUrl'];
     txt = map['txt'];
     avatarCol = map['avatarCol'];
     createdAt = map['createdAt'];
     shop = map['shop'];
     subCat = map['sub-cat'];
-  }
-
-  toJson() {
-    return {
-      'id': id,
-      'imgUrl': imgUrl,
-      'txt': txt,
-      'avatarCol': avatarCol,
-      'createdAt': createdAt,
-      'shop': shop,
-      'sub-cat': subCat
-    };
   }
 }

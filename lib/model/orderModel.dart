@@ -39,7 +39,6 @@ class OrderModel {
   }
   tojson() {
     return {
-      'orderId': orderId,
       'customerId': customerId,
       'status': status,
       'promoCode': promoCode,

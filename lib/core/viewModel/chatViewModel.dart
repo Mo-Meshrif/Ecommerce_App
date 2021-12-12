@@ -11,8 +11,9 @@ class ChatViewModel extends GetxController {
   List<LastChatModel> _lastchats = [];
   List<LastChatModel> get lastchats => _lastchats
       .where((element) =>
-          element.customerId == _moreViewModel.savedUser.id ||
-          element.vendorId == _moreViewModel.savedUser.id)
+          (element.customerId == _moreViewModel.savedUser.id ||
+              element.vendorId == _moreViewModel.savedUser.id) &&
+          element.orderNumber != null)
       .toList();
   final AuthViewModel authViewModel = Get.find();
   final MoreViewModel _moreViewModel = Get.find();

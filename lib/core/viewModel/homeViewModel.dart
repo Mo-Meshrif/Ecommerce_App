@@ -53,7 +53,10 @@ class HomeViewModel extends GetxController {
       _loading.value = true;
       HomeService().getCategoriesFromFireStore().then((value) {
         for (int i = 0; i < value.length; i++) {
-          _categories.add(CategoryModel.fromJson(value[i].data()));
+          _categories.add(CategoryModel.fromJson(
+            value[i].id,
+            value[i].data(),
+          ));
           _loading.value = false;
         }
         update();
@@ -68,7 +71,25 @@ class HomeViewModel extends GetxController {
       _loading.value = true;
       HomeService().getProductsFromFireStore().then((value) {
         for (int i = 0; i < value.length; i++) {
-          _products.add(ProductModel.fromJson(value[i].data()));
+          Map<String, dynamic> data = value[i].data();
+          _products.add(ProductModel(
+            id: value[i].id,
+            vendorId: data['vendorId'],
+            customerId: data['customerId'],
+            prodName: data['prodName'],
+            imgUrl: data['imgUrl'],
+            season: data['season'],
+            color: data['color'],
+            size: data['size'],
+            price: data['price'],
+            createdAt: data['createdAt'],
+            brand: data['brand'],
+            condition: data['condition'],
+            material: data['material'],
+            sku: data['sku'],
+            classification: data['classification'],
+            trending: data['trending'],
+          ));
           _loading.value = false;
         }
         update();

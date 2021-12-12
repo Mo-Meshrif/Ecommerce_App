@@ -43,7 +43,7 @@ class AddShippingAddressView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(),
+                Divider(thickness: 1),
                 CustomRowWidget(
                   title: 'Mobile Number',
                   widget: Container(
@@ -65,7 +65,7 @@ class AddShippingAddressView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(),
+                Divider(thickness: 1),
                 CustomRowWidget(
                   title: 'State',
                   widget: Container(
@@ -78,7 +78,7 @@ class AddShippingAddressView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(),
+                Divider(thickness: 1),
                 CustomRowWidget(
                   title: 'City',
                   widget: Container(
@@ -92,7 +92,7 @@ class AddShippingAddressView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Divider(),
+                Divider(thickness: 1),
                 SizedBox(height: 10),
                 CustomText(
                   txt: 'Street',
@@ -112,7 +112,7 @@ class AddShippingAddressView extends StatelessWidget {
                     border: InputBorder.none,
                   ),
                 ),
-                Divider(),
+                Divider(thickness: 1),
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment(0, 0),

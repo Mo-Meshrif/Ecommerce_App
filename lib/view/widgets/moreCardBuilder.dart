@@ -13,6 +13,7 @@ class MoreCardBuilder extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: ListView.separated(
         separatorBuilder: (context, i) => Divider(
+          thickness: 1,
           indent: 70,
           height: 5,
           color: Colors.grey[300],
