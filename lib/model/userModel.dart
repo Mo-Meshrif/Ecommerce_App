@@ -1,11 +1,12 @@
 class UserModel {
-  String id, userName, email, pic;
+  String id, userName, email, pic, role;
   bool isOnline;
   UserModel({
     this.id,
     this.userName,
     this.email,
     this.pic,
+    this.role,
     this.isOnline,
   });
   UserModel.fromJson(Map<String, dynamic> map) {
@@ -16,6 +17,7 @@ class UserModel {
     userName = map['userName'];
     email = map['email'];
     pic = map['pic'];
+    role = map['role'];
     isOnline = map['isOnline'];
   }
 
@@ -25,6 +27,7 @@ class UserModel {
       'userName': userName,
       'email': email,
       'pic': pic,
+      'role': role,
       'isOnline': isOnline,
     };
   }

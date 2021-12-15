@@ -23,7 +23,8 @@ class CartViewModel extends GetxController {
   var db = CartDataBaseHelper.db;
   final MoreViewModel _moreViewModel = Get.find();
   List<CartProductModel> cartProds = [];
-  double totalPrice = 0;
+  double _totalPrice = 0;
+  String  get totalPrice=>_totalPrice.toStringAsFixed(2);
   String promoCode = '';
   addProduct({
     @required CartProductModel cartProd,
@@ -50,16 +51,16 @@ class CartViewModel extends GetxController {
     }
     List<CartProductModel> tempList = await db.getAllProducts();
     cartProds =
-        tempList.where((element) => element.sellerId == user.id).toList();
+        tempList.where((element) => element.customerId == user.id).toList();
     getTotalPrice();
     update();
   }
 
   getTotalPrice() {
-    totalPrice = 0;
+    _totalPrice = 0;
     update();
     for (var i = 0; i < cartProds.length; i++) {
-      totalPrice += (double.parse(cartProds[i].price) * cartProds[i].quantity);
+      _totalPrice += (double.parse(cartProds[i].price) * cartProds[i].quantity);
     }
     update();
   }
@@ -67,7 +68,7 @@ class CartViewModel extends GetxController {
   increaseQuantity(index) async {
     if (cartProds[index].quantity >= 1) {
       cartProds[index].quantity++;
-      totalPrice += double.parse(cartProds[index].price);
+      _totalPrice += double.parse(cartProds[index].price);
       await db.updateProduct(cartProds[index]);
     }
     update();
@@ -76,7 +77,7 @@ class CartViewModel extends GetxController {
   decreaseQuantity(index, fromProdDetails) async {
     if (cartProds[index].quantity > 1) {
       cartProds[index].quantity--;
-      totalPrice -= double.parse(cartProds[index].price);
+      _totalPrice -= double.parse(cartProds[index].price);
       await db.updateProduct(cartProds[index]);
     } else if (cartProds[index].quantity == 1 && fromProdDetails == true) {
       deleteProduct(index);
@@ -168,7 +169,7 @@ class CartViewModel extends GetxController {
     await db.deleteAll();
     deleteSavedOrderNumber();
     cartProds = [];
-    totalPrice = 0;
+    _totalPrice = 0;
     promoCode = '';
     update();
   }

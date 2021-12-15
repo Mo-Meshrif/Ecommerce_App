@@ -22,7 +22,7 @@ class CheckoutView extends StatelessWidget {
         body: GetBuilder<CartViewModel>(
           builder: (cartController) {
             List<CartProductModel> cartProds = cartController.cartProds;
-            double totalPrice = cartController.totalPrice;
+            String totalPrice = cartController.totalPrice;
             return Column(children: [
               cartController.orderloading.value
                   ? Expanded(
@@ -369,7 +369,6 @@ class CheckoutView extends StatelessWidget {
                                     },
                               items: cartProds
                                   .map((e) => {
-                                        'vendorId': e.vendorId,
                                         'name': e.name,
                                         'imgUrl': e.imgUrl,
                                         'size': e.size,
@@ -378,6 +377,7 @@ class CheckoutView extends StatelessWidget {
                                         'quantity': e.quantity,
                                       })
                                   .toList(),
+                              totalPrice: totalPrice,
                             ));
                           }
                         }),

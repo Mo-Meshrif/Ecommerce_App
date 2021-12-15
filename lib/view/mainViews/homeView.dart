@@ -1,3 +1,5 @@
+import '/core/viewModel/moreViewModel.dart';
+import '/model/userModel.dart';
 import '../../core/viewModel/chatViewModel.dart';
 import '../../model/lastestCollectionModel.dart';
 import '../../view/subViews/lastestCollectionView.dart';
@@ -44,10 +46,11 @@ class HomeView extends StatelessWidget {
               ));
             }
           }
+          UserModel customer = Get.find<MoreViewModel>().savedUser;
           //initialize searchViewModel,chatViewModel
           Get.put(SearchViewModel());
           Get.put(ChatViewModel());
-          return categories.length < 3
+          return categories.length < 3 && customer == null
               ? Center(
                   child: CustomText(
                     txt: 'HomeView',

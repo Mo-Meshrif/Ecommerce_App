@@ -147,9 +147,8 @@ class ProductDetails extends StatelessWidget {
                                             cartController.addProduct(
                                           cartProd: CartProductModel(
                                             id: prod.id,
-                                            sellerId:
+                                            customerId:
                                                 moreController.savedUser.id,
-                                            vendorId: prod.vendorId,
                                             name: prod.prodName,
                                             imgUrl: prod.imgUrl,
                                             size: homeController.selectedSize ??

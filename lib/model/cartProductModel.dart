@@ -1,10 +1,9 @@
 class CartProductModel {
-  String id, sellerId, vendorId, name, imgUrl, size, color, price;
+  String id, customerId, name, imgUrl, size, color, price;
   int quantity;
   CartProductModel(
       {this.id,
-      this.sellerId,
-      this.vendorId,
+      this.customerId,
       this.name,
       this.imgUrl,
       this.size,
@@ -16,8 +15,7 @@ class CartProductModel {
       return;
     }
     id = map['id'];
-    sellerId = map['sellerId'];
-    vendorId = map['vendorId'];
+    customerId = map['customerId'];
     name = map['name'];
     imgUrl = map['imgUrl'];
     size = map['size'];
@@ -29,8 +27,7 @@ class CartProductModel {
   toJson() {
     return {
       'id': id,
-      'sellerId': sellerId,
-      'vendorId': vendorId,
+      'customerId': customerId,
       'name': name,
       'imgUrl': imgUrl,
       'size': size,

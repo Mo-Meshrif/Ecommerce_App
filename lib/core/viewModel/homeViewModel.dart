@@ -74,7 +74,6 @@ class HomeViewModel extends GetxController {
           Map<String, dynamic> data = value[i].data();
           _products.add(ProductModel(
             id: value[i].id,
-            vendorId: data['vendorId'],
             customerId: data['customerId'],
             prodName: data['prodName'],
             imgUrl: data['imgUrl'],

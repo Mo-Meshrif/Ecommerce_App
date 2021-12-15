@@ -10,8 +10,7 @@ class BottomCartBar extends StatelessWidget {
     @required this.onPress,
   });
 
-  final double totalPrice;
-  final String buttonTxt;
+  final String totalPrice,buttonTxt;
   final Function onPress;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class BottomCartBar extends StatelessWidget {
               fWeight: FontWeight.normal,
             ),
             CustomText(
-              txt: '\$' + totalPrice.toStringAsFixed(2),
+              txt: '\$' + totalPrice,
               fSize: 20,
               txtColor: swatchColor,
               fWeight: FontWeight.bold,

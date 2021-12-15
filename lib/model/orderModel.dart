@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
-  String orderId, customerId, status, promoCode;
+  String orderId, customerId, status, promoCode,totalPrice;
   Timestamp createdAt;
   List orderTrack;
   int orderNumber;
@@ -20,6 +20,7 @@ class OrderModel {
     this.paymentMehod,
     this.items,
     this.rate,
+    this.totalPrice,
   });
   OrderModel.fromJson(Map<String, dynamic> map) {
     if (map == null) {
@@ -36,6 +37,7 @@ class OrderModel {
     paymentMehod = map['paymentMehod'];
     items = map['items'];
     rate = map['rate'];
+    totalPrice = map['totalPrice'];
   }
   tojson() {
     return {
@@ -49,6 +51,7 @@ class OrderModel {
       'paymentMehod': paymentMehod,
       'items': items,
       'rate': rate,
+      'totalPrice': totalPrice,
     };
   }
 }

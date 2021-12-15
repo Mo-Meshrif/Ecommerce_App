@@ -35,9 +35,7 @@ class MessageView extends StatelessWidget {
             data = snapshot.data.docs;
           }
           List chats = data
-              .where((element) =>
-                  element['orderNumber'] == orderNumber &&
-                  (element['from'] == vendor.id || element['to'] == vendor.id))
+              .where((element) => element['orderNumber'] == orderNumber)
               .toList();
           return GetBuilder<ChatViewModel>(
             builder: (chatController) => Container(
@@ -106,11 +104,7 @@ class MessageView extends StatelessWidget {
                               OrderModel myOrder = cartController.allOrders
                                   .firstWhere((element) =>
                                       element.orderNumber == orderNumber);
-                              List items = myOrder.items
-                                  .where((element) =>
-                                      element['vendorId'] == vendor.id ||
-                                      element['vendorId'] == customer.id)
-                                  .toList();
+                              List items = myOrder.items;
                               return ExpansionTile(
                                 tilePadding: EdgeInsets.zero,
                                 title: CustomText(

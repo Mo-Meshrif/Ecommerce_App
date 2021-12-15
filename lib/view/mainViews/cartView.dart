@@ -20,7 +20,7 @@ class CartView extends StatelessWidget {
           init: Get.find(),
           builder: (cartController) {
             List<CartProductModel> cartProds = cartController.cartProds;
-            double totalPrice = cartController.totalPrice;
+           String totalPrice = cartController.totalPrice;
             return cartProds.length == 0
                 ? Center(
                     child: Column(

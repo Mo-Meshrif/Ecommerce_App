@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
   String id,
-      vendorId,
       customerId,
       prodName,
       imgUrl,
@@ -19,7 +18,6 @@ class ProductModel {
   Timestamp createdAt;
   ProductModel({
     this.id,
-    this.vendorId,
     this.customerId,
     this.prodName,
     this.imgUrl,
@@ -40,7 +38,6 @@ class ProductModel {
       return;
     }
     id = map['id'];
-    vendorId = map['vendorId'];
     customerId = map['customerId'];
     prodName = map['prodName'];
     imgUrl = map['imgUrl'];
@@ -61,7 +58,6 @@ class ProductModel {
   static toJson(ProductModel prod) {
     return {
       'id': prod.id,
-      'vendorId': prod.vendorId,
       'customerId': prod.customerId,
       'prodName': prod.prodName,
       'imgUrl': prod.imgUrl,
