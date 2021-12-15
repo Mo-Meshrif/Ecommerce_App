@@ -33,33 +33,6 @@ class AuthViewModel extends GetxController {
     _localStorageData.setUserData(user);
   }
 
-  signUp() async {
-    try {
-      _loading.value = true;
-      update();
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((user) async {
-        _loading.value = false;
-        if (user != null) {
-          UserModel userModel = UserModel(
-              id: user.user.uid,
-              userName: userName,
-              email: email,
-              isOnline: true);
-          await FireStoreUser().addUserToFireStore(userModel);
-          setUser(userModel);
-          Get.to(() => ControlView());
-        }
-        update();
-      });
-    } catch (e) {
-      _loading.value = false;
-      update();
-      handleAuthErrors(e);
-    }
-  }
-
   Future<void> getUsers() async {
     FireStoreUser().getUsersFromFireStore().then((usersData) {
       usersData.forEach((element) {
@@ -76,26 +49,70 @@ class AuthViewModel extends GetxController {
     });
   }
 
+  bool isCustomer(String loginEmail) {
+    var _index = _users.indexWhere((element) => element.email == loginEmail);
+    return _index == -1
+        ? true
+        : _users.firstWhere((element) => element.email == loginEmail).role ==
+            'Customer';
+  }
+
+  signUp() async {
+    try {
+      _loading.value = true;
+      update();
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((user) async {
+        _loading.value = false;
+        if (user != null) {
+          UserModel userModel = UserModel(
+              id: user.user.uid,
+              userName: userName,
+              email: email,
+              role: 'Customer',
+              isOnline: true);
+          await FireStoreUser().addUserToFireStore(userModel);
+          setUser(userModel);
+          Get.to(() => ControlView());
+        }
+        update();
+      });
+    } catch (e) {
+      _loading.value = false;
+      update();
+      handleAuthErrors(e.message);
+    }
+  }
+
   signIn() async {
     _loading.value = true;
     update();
-    await _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .onError((error, stackTrace) {
-      _loading.value = false;
-      update();
-      return handleAuthErrors(error);
-    }).then((user) async {
-      _loading.value = false;
-      if (user != null) {
-        FireStoreUser().updateOnlineState(user.user.uid, true);
-        UserModel userData =
-            _users.firstWhere((element) => element.id == user.user.uid);
-        setUser(userData);
-        Get.to(() => ControlView());
+    if (isCustomer(email)) {
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((user) async {
+          _loading.value = false;
+          if (user != null) {
+            FireStoreUser().updateOnlineState(user.user.uid, true);
+            UserModel userData =
+                _users.firstWhere((element) => element.id == user.user.uid);
+            setUser(userData);
+            Get.to(() => ControlView());
+          }
+          update();
+        });
+      } catch (e) {
+        _loading.value = false;
+        update();
+        handleAuthErrors(e.message);
       }
+    } else {
+      _loading.value = false;
       update();
-    });
+      handleAuthErrors('Only customers are allowed to enter !');
+    }
   }
 
   forgetPassword() async {
@@ -116,7 +133,7 @@ class AuthViewModel extends GetxController {
     } catch (e) {
       _loading.value = false;
       update();
-      handleAuthErrors(e);
+      handleAuthErrors(e.message);
     }
   }
 
@@ -128,7 +145,7 @@ class AuthViewModel extends GetxController {
   handleAuthErrors(error) {
     Get.snackbar(
       'AuthError',
-      error.message.toString(),
+      error.toString(),
       snackPosition: SnackPosition.BOTTOM,
       duration: Duration(seconds: 5),
     );
