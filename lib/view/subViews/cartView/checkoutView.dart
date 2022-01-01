@@ -288,7 +288,8 @@ class CheckoutView extends StatelessWidget {
                   if (shippingList.isNotEmpty) {
                     specificShipping = shippingList
                         .firstWhere((element) => element.isSelected == 1);
-                  } else if (paymentsList.isNotEmpty) {
+                  }
+                  if (paymentsList.isNotEmpty) {
                     specificPayment = paymentsList
                         .firstWhere((element) => element.isSelected == 1);
                   }
