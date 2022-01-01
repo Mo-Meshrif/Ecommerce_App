@@ -1,3 +1,4 @@
+import '../core/viewModel/notificationViewModel.dart';
 import '../core/viewModel/chatViewModel.dart';
 import '../core/viewModel/moreViewModel.dart';
 import '../core/viewModel/cartViewModel.dart';
@@ -19,5 +20,6 @@ class Bind extends Bindings {
     Get.lazyPut(() => CartViewModel());
     Get.lazyPut(() => MoreViewModel());
     Get.lazyPut(() => ChatViewModel());
+    Get.lazyPut(() => NotificationViewModel());
   }
 }

@@ -6,6 +6,7 @@ import '../../model/userModel.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'notificationViewModel.dart';
 
 class ChatViewModel extends GetxController {
   List<LastChatModel> _lastchats = [];
@@ -17,6 +18,7 @@ class ChatViewModel extends GetxController {
       .toList();
   final AuthViewModel authViewModel = Get.find();
   final MoreViewModel _moreViewModel = Get.find();
+  final NotificationViewModel _notificationViewModel = Get.find();
   List<LastChatModel> searchedCoversations = [];
   int clikedMessageNumber;
   bool clickedMessageState = false;
@@ -53,6 +55,7 @@ class ChatViewModel extends GetxController {
       message = null;
       update();
       getLastChats();
+      _notificationViewModel.sendNotification([to], 'New message ');
     });
   }
 

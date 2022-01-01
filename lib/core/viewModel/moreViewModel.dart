@@ -1,5 +1,4 @@
 import 'dart:io';
-import '../../core/service/fireStore_notification.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../core/service/fireStore_rateApp.dart';
 import '../../core/service/fireStore_user.dart';
@@ -12,7 +11,6 @@ import '../../model/shippingAddressModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class MoreViewModel extends GetxController {
   @override
@@ -51,8 +49,6 @@ class MoreViewModel extends GetxController {
         savedUser = user;
         update();
         Get.find<CartViewModel>().getProducts(user);
-        var token = await FirebaseMessaging.instance.getToken();
-        FireStoreNotification().setDeviceToken(token, savedUser.id);
         getAppRateValue();
       }
     });

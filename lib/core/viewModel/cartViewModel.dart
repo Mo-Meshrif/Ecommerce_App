@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'notificationViewModel.dart';
 
 enum paymentMethod { cashOnDelivery, masterCard }
 
@@ -22,6 +23,7 @@ class CartViewModel extends GetxController {
 
   var db = CartDataBaseHelper.db;
   final MoreViewModel _moreViewModel = Get.find();
+  final NotificationViewModel _notificationViewModel = Get.find();
   List<CartProductModel> cartProds = [];
   double _totalPrice = 0;
   String  get totalPrice=>_totalPrice.toStringAsFixed(2);
@@ -134,6 +136,7 @@ class CartViewModel extends GetxController {
               update();
               Get.offAll(() => OrderPlacedView());
               deleteAll();
+             _notificationViewModel.sendNotification([], 'New order ');
             }));
   }
 
