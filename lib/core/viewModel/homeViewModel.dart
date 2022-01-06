@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '/helper/dynamicLinkHelper.dart';
 import '../../model/lastestCollectionModel.dart';
 import '../../model/userModel.dart';
 import '../../core/service/fireStore_review.dart';
@@ -35,11 +36,13 @@ class HomeViewModel extends GetxController {
   List<LastestCollectionModel> get lastestCollections => _lastestCollections;
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
+  Map<String, String> dynamicUrls = {};
   onInit() {
     getCategories();
     getProducts();
     getLastestCollections();
     getAllReviews();
+    retrieveDynamicLink();
     super.onInit();
   }
 
@@ -170,5 +173,23 @@ class HomeViewModel extends GetxController {
       _reviewLoading.value = false;
       update();
     });
+  }
+
+  //DynamicLink logic
+  createDynamicLink(String id) {
+    if (!dynamicUrls.containsKey(id)) {
+      DynamicLinkHelper().createDynamicLink(id).then((value) {
+        dynamicUrls[id] = value.toString();
+        update();
+      });
+    }
+  }
+
+  String getspecDynamicUrl(String id) {
+    return dynamicUrls.containsKey(id) ? dynamicUrls[id] : null;
+  }
+
+  retrieveDynamicLink() {
+    DynamicLinkHelper().retrieveDynamicLink();
   }
 }

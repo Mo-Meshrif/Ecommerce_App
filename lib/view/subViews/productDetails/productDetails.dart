@@ -15,6 +15,7 @@ import '../../../view/widgets/customText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../const.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProductDetails extends StatelessWidget {
   final ProductModel prod;
@@ -28,6 +29,7 @@ class ProductDetails extends StatelessWidget {
             builder: (cartController) {
               List<CartProductModel> cartProds = cartController.cartProds;
               int cartProdIndex = cartController.getCartProdIndex(prod.id);
+              homeController.createDynamicLink(prod.id);
               return DefaultTabController(
                 length: 3,
                 child: Scaffold(
@@ -132,7 +134,14 @@ class ProductDetails extends StatelessWidget {
                               txt: 'SHARE THIS',
                               imgUrl: 'assets/shop/share_arrow.png',
                               txtColor: swatchColor,
-                              onPress: () {},
+                              onPress:
+                                  homeController.getspecDynamicUrl(prod.id) !=
+                                          null
+                                      ? () async => await Share.share(
+                                            homeController
+                                                .getspecDynamicUrl(prod.id),
+                                          )
+                                      : null,
                             )),
                             SizedBox(
                               width: 10,
