@@ -20,7 +20,6 @@ class NotificationViewModel extends GetxController {
   List<Map<String, dynamic>> _tokens;
   List<NotificationModel> tempNotifications = [];
   onInit() {
-    addDeviceToken();
     getDevicesToken();
     FirebaseMessaging.onMessage.listen((event) => onMessage(event));
     FirebaseMessaging.onMessageOpenedApp
@@ -43,11 +42,11 @@ class NotificationViewModel extends GetxController {
     });
   }
 
-  addDeviceToken() async {
+  addDeviceToken(String uid) async {
     await fbMessaging
         .getToken(vapidKey: vapidKey)
         .then((value) => FireStoreNotification().addTokenToFireStore(
-              _moreViewModel.savedUser.id,
+              uid,
               value,
             ));
   }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'notificationViewModel.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../core/service/fireStore_rateApp.dart';
 import '../../core/service/fireStore_user.dart';
@@ -49,6 +50,7 @@ class MoreViewModel extends GetxController {
         savedUser = user;
         update();
         Get.find<CartViewModel>().getProducts(user);
+        Get.find<NotificationViewModel>().addDeviceToken(user.id);
         getAppRateValue();
       }
     });
