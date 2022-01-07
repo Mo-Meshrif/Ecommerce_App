@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import '../../core/viewModel/moreViewModel.dart';
 import '../../core/service/fireStore_chat.dart';
 import '../../core/viewModel/authViewModel.dart';
@@ -23,6 +25,9 @@ class ChatViewModel extends GetxController {
   int clikedMessageNumber;
   bool clickedMessageState = false;
   String message;
+  File image;
+  final picker = ImagePicker();
+
   onInit() {
     getLastChats();
     super.onInit();
@@ -33,13 +38,63 @@ class ChatViewModel extends GetxController {
     update();
   }
 
+  attachImage() async {
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      image = File(pickedImage.path);
+      update();
+    }
+  }
+
+  deleteAttachedImage() {
+    image = null;
+    update();
+  }
+
   uploadChat(
-      {@required Timestamp createdAt,
+      {@required File pic,
+      @required Timestamp createdAt,
       @required String vendorId,
       @required String customerId,
       @required String from,
       @required String to,
       @required String message,
+      @required int orderNumber}) {
+    if (pic != null) {
+      FireStoreChat().uploadChatPic(pic, from, createdAt).then((imgUrl) =>
+          handleChatLogic(
+              pic: pic,
+              createdAt: createdAt,
+              vendorId: vendorId,
+              customerId: customerId,
+              from: from,
+              to: to,
+              message: message,
+              imgUrl: imgUrl,
+              orderNumber: orderNumber));
+    } else {
+      handleChatLogic(
+          pic: pic,
+          createdAt: createdAt,
+          vendorId: vendorId,
+          customerId: customerId,
+          from: from,
+          to: to,
+          message: message,
+          imgUrl: null,
+          orderNumber: orderNumber);
+    }
+  }
+
+  handleChatLogic(
+      {@required File pic,
+      @required Timestamp createdAt,
+      @required String vendorId,
+      @required String customerId,
+      @required String from,
+      @required String to,
+      @required String message,
+      @required String imgUrl,
       @required int orderNumber}) {
     FireStoreChat()
         .addMessageToFireStore(
@@ -49,9 +104,11 @@ class ChatViewModel extends GetxController {
       from: from,
       to: to,
       message: message,
+      imgUrl: imgUrl,
       orderNumber: orderNumber,
     )
         .then((value) {
+      image = null;
       message = null;
       update();
       getLastChats();

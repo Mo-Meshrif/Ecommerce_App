@@ -50,8 +50,8 @@ class MessageView extends StatelessWidget {
                           children: [
                             GestureDetector(
                                 onTap: () {
-                                  Get.find<ChatViewModel>()
-                                      .restClickedMessageNumber();
+                                  chatController.restClickedMessageNumber();
+                                  chatController.deleteAttachedImage();
                                   Get.back();
                                 },
                                 child: Image.asset('assets/shop/back.png')),
@@ -195,42 +195,62 @@ class MessageView extends StatelessWidget {
                                       )
                                     : Padding(padding: EdgeInsets.zero),
                                 SizedBox(height: 10),
-                                GestureDetector(
-                                  onTap: () =>
-                                      chatController.getClickedMessageNumber(i),
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      minWidth: 40,
-                                      maxWidth: size.width * 0.5,
-                                    ),
-                                    child: Card(
-                                      color: chats[i]['from'] != vendor.id
-                                          ? Colors.blue
-                                          : Colors.black38,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(15),
-                                              topRight: Radius.circular(15),
-                                              bottomRight:
-                                                  chats[i]['from'] != vendor.id
-                                                      ? Radius.circular(15)
-                                                      : Radius.zero,
-                                              bottomLeft:
-                                                  chats[i]['from'] == vendor.id
-                                                      ? Radius.circular(15)
-                                                      : Radius.zero)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: CustomText(
-                                          txt: chats[i]['message'],
-                                          maxLine: 20,
-                                          txtColor: Colors.white,
-                                          fSize: 17,
+                                chats[i]['message'] != null
+                                    ? GestureDetector(
+                                        onTap: () => chatController
+                                            .getClickedMessageNumber(i),
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                            minWidth: 40,
+                                            maxWidth: size.width * 0.5,
+                                          ),
+                                          child: Card(
+                                            color: chats[i]['from'] != vendor.id
+                                                ? Colors.blue
+                                                : Colors.black38,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(15),
+                                                    topRight:
+                                                        Radius.circular(15),
+                                                    bottomRight: chats[i]
+                                                                ['from'] !=
+                                                            vendor.id
+                                                        ? Radius.circular(15)
+                                                        : Radius.zero,
+                                                    bottomLeft: chats[i]
+                                                                ['from'] ==
+                                                            vendor.id
+                                                        ? Radius.circular(15)
+                                                        : Radius.zero)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: CustomText(
+                                                txt: chats[i]['message'],
+                                                maxLine: 20,
+                                                txtColor: Colors.white,
+                                                fSize: 17,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                      )
+                                    : Padding(padding: EdgeInsets.zero),
+                                chats[i]['pic'] != null
+                                    ? Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Image.network(
+                                          chats[i]['pic'],
+                                          width: 80,
+                                          height: 80,
+                                        ),
+                                      )
+                                    : Padding(padding: EdgeInsets.zero),
                               ],
                             );
                           },
@@ -240,39 +260,72 @@ class MessageView extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: TextFormField(
-                        controller: _messageController,
-                        onChanged: (val) => chatController.getMessage(val),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 14),
-                          hintText: 'Type your message...',
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: InkWell(
-                              onTap: null,
-                              child: Image.asset(
-                                'assets/other/add.png',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        chatController.image != null
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Stack(
+                                  children: [
+                                    Image.file(
+                                      chatController.image,
+                                      width: 80,
+                                      height: 80,
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: GestureDetector(
+                                        onTap: () => chatController
+                                            .deleteAttachedImage(),
+                                        child: CircleAvatar(
+                                          radius: 15,
+                                          child: Icon(Icons.close),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : Padding(padding: EdgeInsets.zero),
+                        TextFormField(
+                            controller: _messageController,
+                            onChanged: (val) => chatController.getMessage(val),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(top: 14),
+                              hintText: 'Type your message...',
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: InkWell(
+                                  onTap: () => chatController.attachImage(),
+                                  child: Image.asset(
+                                    'assets/other/add.png',
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          suffixIcon: InkWell(
-                            onTap: chatController.message == null
-                                ? null
-                                : () {
-                                    Get.find<ChatViewModel>().uploadChat(
-                                      createdAt: Timestamp.now(),
-                                      vendorId: vendor.id,
-                                      customerId: customer.id,
-                                      from: customer.id,
-                                      to: vendor.id,
-                                      message: chatController.message,
-                                      orderNumber: orderNumber,
-                                    );
-                                    _messageController.clear();
-                                  },
-                            child: Image.asset('assets/other/send.png'),
-                          ),
-                        )),
+                              suffixIcon: InkWell(
+                                onTap: chatController.message == null &&
+                                        chatController.image == null
+                                    ? null
+                                    : () {
+                                        Get.find<ChatViewModel>().uploadChat(
+                                          createdAt: Timestamp.now(),
+                                          vendorId: vendor.id,
+                                          customerId: customer.id,
+                                          from: customer.id,
+                                          to: vendor.id,
+                                          message: chatController.message,
+                                          pic: chatController.image,
+                                          orderNumber: orderNumber,
+                                        );
+                                        _messageController.clear();
+                                      },
+                                child: Image.asset('assets/other/send.png'),
+                              ),
+                            )),
+                      ],
+                    ),
                   )
                 ],
               ),
