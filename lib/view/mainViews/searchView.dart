@@ -20,7 +20,7 @@ class SearchView extends StatelessWidget {
             searchController.recentlyViewedProducts;
         List<String> recommendedCats = searchController.recommendedCats;
         return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,7 +41,7 @@ class SearchView extends StatelessWidget {
                     allProds: searchController.homeViewModel.products,
                   ),
                 ),
-                hintText: 'Search Something',
+                hintText: 'Search Something', 
               ),
               recentlyViewedProducts.length > 0
                   ? Padding(

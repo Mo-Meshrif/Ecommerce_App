@@ -85,6 +85,9 @@ class NotificationsView extends StatelessWidget {
                                             flex: 3,
                                             child: CustomText(
                                               txt: message,
+                                              txtColor: notifications[i].seen
+                                                  ? Colors.grey[600]
+                                                  : null,
                                               fSize: 18,
                                               maxLine: 3,
                                             ),

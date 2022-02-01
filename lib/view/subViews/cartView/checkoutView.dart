@@ -38,7 +38,7 @@ class CheckoutView extends StatelessWidget {
                               height: 35,
                             ),
                             Container(
-                              alignment: Alignment(1.1, 0),
+                              alignment: Alignment(1.05, 0),
                               child: IconButton(
                                 iconSize: 30,
                                 icon: Icon(Icons.close),
@@ -111,14 +111,20 @@ class CheckoutView extends StatelessWidget {
                                               ),
                                             ],
                                           )
-                                        : CustomText(
-                                            txt:
-                                                'Add your address,please..........',
-                                            txtColor: priColor,
+                                        : GestureDetector(
+                                            onTap: () => Get.to(
+                                                () => AddShippingAddressView()),
+                                            child: CustomText(
+                                              txt:
+                                                  'Add your address,please..........',
+                                              txtColor: priColor,
+                                            ),
                                           ),
                                     GestureDetector(
-                                      onTap: () => Get.to(
-                                          () => AddShippingAddressView()),
+                                      onTap: () {
+                                        moreController.clearShippingData();
+                                        Get.to(() => AddShippingAddressView());
+                                      },
                                       child: Image.asset(
                                           'assets/home/right_arrow_c.png'),
                                     )
@@ -385,6 +391,7 @@ class CheckoutView extends StatelessWidget {
                   );
                 },
               ),
+              SizedBox(height: 10)
             ]);
           },
         ));

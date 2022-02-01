@@ -114,12 +114,11 @@ class AddShippingAddressView extends StatelessWidget {
                 ),
                 Divider(thickness: 1),
                 SizedBox(height: 20),
-                Align(
-                  alignment: Alignment(0, 0),
+                Container(
+                  width: double.infinity,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 125, vertical: 15),
+                        padding: EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         textStyle: const TextStyle(fontSize: 20),

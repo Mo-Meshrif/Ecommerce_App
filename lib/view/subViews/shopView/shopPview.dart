@@ -68,7 +68,7 @@ class ShopPview extends StatelessWidget {
                           height: 5,
                         ),
                         Container(
-                          height: 120,
+                          height: 140,
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: shopProducts.length < 3
@@ -76,7 +76,9 @@ class ShopPview extends StatelessWidget {
                                 : 3,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3),
+                              crossAxisCount: 3,
+                              mainAxisExtent: 140,
+                            ),
                             itemBuilder: (context, x) {
                               return GestureDetector(
                                 onTap: () => Get.to(() => ProductDetails(

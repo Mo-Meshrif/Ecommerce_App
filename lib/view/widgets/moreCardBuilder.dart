@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'customText.dart';
 
 class MoreCardBuilder extends StatelessWidget {
-  final int initialIndex;
   final List<Map<String, dynamic>> components;
 
-  MoreCardBuilder({@required this.initialIndex, @required this.components});
+  MoreCardBuilder({@required this.components});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +18,13 @@ class MoreCardBuilder extends StatelessWidget {
           color: Colors.grey[300],
         ),
         padding: EdgeInsets.zero,
-        itemCount: 3,
+        itemCount: components.length,
         itemBuilder: (context, i) => GestureDetector(
-          onTap: components[i + initialIndex]['onTap'],
+          onTap: components[i]['onTap'],
           child: ListTile(
-            leading: Image.asset(components[i + initialIndex]['icon']),
+            leading: Image.asset(components[i]['icon']),
             title: CustomText(
-              txt: components[i + initialIndex]['txt'],
+              txt: components[i]['txt'],
             ),
             trailing: Image.asset('assets/home/right_arrow_c.png'),
           ),

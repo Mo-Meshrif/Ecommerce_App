@@ -15,10 +15,16 @@ class CustomDrawer extends StatelessWidget {
         List<String> avConditions = controller.avConditions.toSet().toList();
         List<String> avMaterials = controller.avMaterials.toSet().toList();
         List<String> avBrands = controller.avBrands.toSet().toList();
-        return Padding(
-          padding: EdgeInsets.only(top: controller.fromSearch ? 110 : 80),
+        return Container(
+          margin: EdgeInsets.only(top: controller.fromSearch ? 110 : 80),
+          width: MediaQuery.of(context).size.width * 0.7,
           child: Drawer(
             elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+              ),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(

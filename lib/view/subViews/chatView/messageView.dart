@@ -1,3 +1,4 @@
+import '/responsive.dart';
 import '../../../core/viewModel/chatViewModel.dart';
 import '../../../core/viewModel/cartViewModel.dart';
 import '../../../model/orderModel.dart';
@@ -86,10 +87,12 @@ class MessageView extends StatelessWidget {
                                         : Padding(padding: EdgeInsets.zero);
                                   },
                                 ),
-                                trailing: CircleAvatar(
-                                  radius: 20,
-                                  child: CustomText(
-                                    txt: joinFirstTwoLetter(vendor.userName),
+                                trailing: Responsive(
+                                  builder: (context, deviceInfo) => CircleAvatar(
+                                    radius: deviceInfo.widgetScaleFactor*20,
+                                    child: CustomText(
+                                      txt: joinFirstTwoLetter(vendor.userName),
+                                    ),
                                   ),
                                 ),
                               ),

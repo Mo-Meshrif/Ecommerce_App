@@ -22,6 +22,7 @@ class CustomPopUpMenuButton extends StatelessWidget {
           children: [
             CustomText(
               txt: title,
+              textFactor: 1.0,
               fSize: 17,
             ),
             SizedBox(

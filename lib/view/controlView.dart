@@ -17,7 +17,9 @@ class ControlView extends GetWidget<AuthViewModel> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : homeController.views[homeController.currentIndex],
+                  : SafeArea(
+                      child: homeController.views[homeController.currentIndex],
+                    ),
               bottomNavigationBar: BottomNavBar(),
             ),
           ));

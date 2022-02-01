@@ -23,6 +23,7 @@ class CustomSearchBar extends StatelessWidget {
         controller: searchController,
         onTap: onTap,
         autofocus: autoFocus,
+        readOnly: hintText == 'Search Coversations' ? false : !autoFocus,
         onChanged: onChanged,
         decoration: InputDecoration(
           border: InputBorder.none,

@@ -16,12 +16,15 @@ class ShopTview extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ProductModel> trendingProds =
         products.where((element) => element.trending).toList();
-    return Padding(
+    return Container(
+      height: 140,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
       child: GridView.builder(
         itemCount: trendingProds.length,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisExtent: 140,
+        ),
         itemBuilder: (context, i) => GestureDetector(
           onTap: () => Get.to(
             () => ProductDetails(

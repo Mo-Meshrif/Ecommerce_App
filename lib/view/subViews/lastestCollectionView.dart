@@ -58,12 +58,14 @@ class LastestCollectionView extends StatelessWidget {
                 ),
                 Expanded(
                   child: Container(
-                    height: 120,
+                    height: 140,
                     child: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: filteredProducts.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3),
+                        crossAxisCount: 3,
+                        mainAxisExtent: 140,
+                      ),
                       itemBuilder: (context, x) => GestureDetector(
                         onTap: () => Get.to(() => ProductDetails(
                               prod: filteredProducts[x],

@@ -1,3 +1,4 @@
+import '/responsive.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../model/categoryModel.dart';
 import '../../const.dart';
@@ -54,42 +55,44 @@ class CategoriesView extends StatelessWidget {
                 height: 20,
               ),
               Expanded(
-                  child: Row(
-                children: [
-                  Container(
-                    width: 84,
-                    child: ListView.separated(
-                      padding: EdgeInsets.all(0),
-                      separatorBuilder: (_, i) => SizedBox(
-                        height: 10,
-                      ),
-                      itemCount: categories.length,
-                      itemBuilder: (_, i) => GestureDetector(
-                        onTap: () => controller.changeCategories(i),
-                        child: CustomColTImage(
-                          imgUrl: categories[i].imgUrl,
-                          avatarCol: categories[i].avatarCol,
-                          txt: categories[i].txt,
-                          txtCol: categories[i].txt ==
-                                  categories[controller.currentCategory].txt
-                              ? priColor
-                              : null,
+                  child: Responsive(
+                builder: (context, deviceInfo) => Row(
+                  children: [
+                    Container(
+                      width: deviceInfo.screenWidth*0.25,
+                      child: ListView.separated(
+                        padding: EdgeInsets.all(0),
+                        separatorBuilder: (_, i) => SizedBox(
+                          height: 10,
+                        ),
+                        itemCount: categories.length,
+                        itemBuilder: (_, i) => GestureDetector(
+                          onTap: () => controller.changeCategories(i),
+                          child: CustomColTImage(
+                            imgUrl: categories[i].imgUrl,
+                            avatarCol: categories[i].avatarCol,
+                            txt: categories[i].txt,
+                            txtCol: categories[i].txt ==
+                                    categories[controller.currentCategory].txt
+                                ? priColor
+                                : null,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  subCategories['s'][0].isEmpty
-                      ? Expanded(
-                          child: Center(
-                          child: CustomText(
-                            txt: 'Comming Soon !',
-                          ),
-                        ))
-                      : Expanded(
-                          child: Column(
-                          children: children,
-                        )),
-                ],
+                    subCategories['s'][0].isEmpty
+                        ? Expanded(
+                            child: Center(
+                            child: CustomText(
+                              txt: 'Comming Soon !',
+                            ),
+                          ))
+                        : Expanded(
+                            child: Column(
+                            children: children,
+                          )),
+                  ],
+                ),
               ))
             ],
           );

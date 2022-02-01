@@ -15,7 +15,7 @@ class MoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 35, bottom: 10, right: 25, left: 25),
+      padding: EdgeInsets.symmetric(horizontal: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -108,21 +108,17 @@ class MoreView extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Expanded(
-            child: MoreCardBuilder(
-              initialIndex: 0,
-              components: moreComponents,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: MoreCardBuilder(
-              initialIndex: 3,
-              components: moreComponents,
-            ),
-          ),
+          MediaQuery.of(context).size.height < 700
+              ? Expanded(
+                  child: MoreCardBuilder(
+                    components: moreComponents,
+                  ),
+                )
+              : Container(
+                  height: 380,
+                  child: MoreCardBuilder(
+                    components: moreComponents,
+                  )),
           SizedBox(
             height: 10,
           ),

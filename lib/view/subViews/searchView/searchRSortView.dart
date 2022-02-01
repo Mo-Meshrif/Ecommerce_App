@@ -14,8 +14,10 @@ class SearchRSortView extends StatelessWidget {
     return Expanded(
       child: GridView.builder(
         padding: EdgeInsets.zero,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 140,
+        ),
         itemCount: products.length,
         itemBuilder: (context, x) => GetBuilder<SearchViewModel>(
           builder: (controller) => GestureDetector(

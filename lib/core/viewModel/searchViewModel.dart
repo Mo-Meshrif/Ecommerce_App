@@ -59,7 +59,7 @@ class SearchViewModel extends GetxController {
     if (index < 0) {
       recentlyViewedProducts.add(prod);
     } else {
-      recentlyViewedProducts.remove(prod);
+      recentlyViewedProducts.removeAt(index);
       recentlyViewedProducts.add(prod);
     }
     update();

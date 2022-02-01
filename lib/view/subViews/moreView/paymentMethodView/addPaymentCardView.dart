@@ -71,7 +71,9 @@ class AddPaymentCardView extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 30, horizontal: 20),
+                      vertical: 30,
+                      horizontal: 20,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -168,41 +170,42 @@ class AddPaymentCardView extends StatelessWidget {
                           ),
                           hasValue: moreController.cardHolderName != '',
                         ),
+                        SizedBox(height: 40),
+                        Container(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                textStyle: const TextStyle(fontSize: 20),
+                                primary: priColor,
+                              ),
+                              onPressed: () {
+                                moreController.paymentKey.currentState.save();
+                                if (moreController.paymentKey.currentState
+                                    .validate()) {
+                                  moreController.addPayment(PaymentMehodModel(
+                                    isSelected: 1,
+                                    cardImage: moreController.cardImage,
+                                    cardNumber: moreController.cardNumber,
+                                    expireDate: moreController.expireDate,
+                                    cvv: moreController.cvv,
+                                    cardHolderName: moreController
+                                        .cardHolderName.capitalize,
+                                  ));
+                                }
+                              },
+                              child: CustomText(
+                                txt: 'Add Card',
+                                txtColor: Colors.white,
+                              )),
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment(0, 0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 145, vertical: 15),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          textStyle: const TextStyle(fontSize: 20),
-                          primary: priColor,
-                        ),
-                        onPressed: () {
-                          moreController.paymentKey.currentState.save();
-                          if (moreController.paymentKey.currentState
-                              .validate()) {
-                            moreController.addPayment(PaymentMehodModel(
-                              isSelected: 1,
-                              cardImage: moreController.cardImage,
-                              cardNumber: moreController.cardNumber,
-                              expireDate: moreController.expireDate,
-                              cvv: moreController.cvv,
-                              cardHolderName:
-                                  moreController.cardHolderName.capitalize,
-                            ));
-                          }
-                        },
-                        child: CustomText(
-                          txt: 'Add Card',
-                          txtColor: Colors.white,
-                        )),
-                  )
                 ],
               )),
         ),

@@ -14,13 +14,13 @@ import 'package:get/get.dart';
 class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeViewModel>(
-      builder: (homeController) => Scaffold(
+    return Scaffold(
         body: GetBuilder<CartViewModel>(
           init: Get.find(),
           builder: (cartController) {
             List<CartProductModel> cartProds = cartController.cartProds;
-           String totalPrice = cartController.totalPrice;
+            String totalPrice = cartController.totalPrice;
+            HomeViewModel homeController=Get.find<HomeViewModel>();
             return cartProds.length == 0
                 ? Center(
                     child: Column(
@@ -42,13 +42,13 @@ class CartView extends StatelessWidget {
                     ),
                   )
                 : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 20,
-                        ),
+                        homeController.currentIndex != 2
+                            ? SizedBox(height: 50)
+                            : Padding(padding: EdgeInsets.zero),
                         MessagesNotBar(),
                         CustomText(
                           txt: 'Cart',
@@ -90,13 +90,15 @@ class CartView extends StatelessWidget {
                             cartController.setOrderNumber();
                             Get.to(() => CheckoutView());
                           },
-                        )
+                        ),
+                        SizedBox(
+                          height: homeController.currentIndex != 2 ? 25 : 10,
+                        ),
                       ],
                     ),
                   );
           },
         ),
-      ),
-    );
+      );
   }
 }

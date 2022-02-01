@@ -1,3 +1,4 @@
+import '/responsive.dart';
 import '../../../core/viewModel/moreViewModel.dart';
 import '../../../core/viewModel/homeViewModel.dart';
 import '../../../view/widgets/quantityChanger.dart';
@@ -101,17 +102,19 @@ class ProductDetails extends StatelessWidget {
                           prod.imgUrl,
                           fit: BoxFit.contain,
                         )),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 55),
-                          child: TabBar(
-                            unselectedLabelColor: swatchColor,
-                            labelColor: priColor,
-                            indicatorColor: Colors.white10,
-                            tabs: [
-                              Tab(text: 'Product'),
-                              Tab(text: 'Details'),
-                              Tab(text: 'Reviews'),
-                            ],
+                        Responsive(
+                          builder: (context, deviceInfo) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: deviceInfo.screenWidth/18),
+                            child: TabBar(
+                              unselectedLabelColor: swatchColor,
+                              labelColor: priColor,
+                              indicatorColor: Colors.white10,
+                              tabs: [
+                                Tab(text: 'Product'),
+                                Tab(text: 'Details'),
+                                Tab(text: 'Reviews'),
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 const priColor = Color.fromRGBO(255, 105, 105, 1);
 const swatchColor = Color.fromRGBO(81, 92, 111, 1);
+enum DeviceType { Mobile, Tablet, Desktop }
 
 String joinFirstTwoLetter(String subtence) {
   return subtence.capitalize.split(" ").length == 1

@@ -17,21 +17,21 @@ class CustomColumImgTT extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           imgUrl.startsWith('a')
-              ? Expanded(
-                  child: Image.asset(
-                    imgUrl,
-                    fit: BoxFit.fitHeight,
-                  ),
-                )
-              : Expanded(
-                  child: Image.network(
-                    imgUrl,
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
+              ? Image.asset(
+                imgUrl,
+                fit: BoxFit.contain,
+                height: 70,
+                width: 70,
+              )
+              : Image.network(
+                imgUrl,
+                fit: BoxFit.contain,
+                height: 70,
+                width: 70,
+              ),
           CustomText(
             txt: txt1,
             txtColor: swatchColor,
