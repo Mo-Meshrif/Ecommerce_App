@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../helper/goTransittedPage.dart';
 import '/view/subViews/chatView/chatView.dart';
 import '/view/subViews/moreView/orderView/allOrdersView.dart';
 import '/core/viewModel/authViewModel.dart';
@@ -147,9 +148,9 @@ class NotificationViewModel extends GetxController {
 
   handleNotifications(String message) {
     if (message.contains('message')) {
-      Get.to(() => ChatView());
+      Go.to(() => ChatView());
     } else {
-      Get.to(() => AllOrdersView());
+      Go.to(() => AllOrdersView());
     }
   }
 

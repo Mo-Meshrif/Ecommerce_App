@@ -1,3 +1,4 @@
+import '../../../../helper/goTransittedPage.dart';
 import '../../../../view/subViews/moreView/shippingAddressView/AddShippingAddressView.dart';
 import '../../../../model/shippingAddressModel.dart';
 import '../../../../core/viewModel/moreViewModel.dart';
@@ -123,7 +124,7 @@ class ShippingView extends StatelessWidget {
                   height: 170,
                   width: MediaQuery.of(context).size.width,
                   child: GestureDetector(
-                    onTap: () => Get.to(
+                    onTap: () => Go.to(
                       () => AddShippingAddressView(),
                     ),
                     child: Card(

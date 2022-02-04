@@ -1,3 +1,4 @@
+import '../../helper/goTransittedPage.dart';
 import '../../core/viewModel/homeViewModel.dart';
 import '../../view/subViews/cartView/checkoutView.dart';
 import '../../const.dart';
@@ -88,7 +89,7 @@ class CartView extends StatelessWidget {
                           buttonTxt: 'CHECKOUT',
                           onPress: () {
                             cartController.setOrderNumber();
-                            Get.to(() => CheckoutView());
+                            Go.to(() => CheckoutView());
                           },
                         ),
                         SizedBox(

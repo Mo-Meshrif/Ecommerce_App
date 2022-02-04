@@ -2,6 +2,7 @@ import '../view/subViews/moreView/rateOurAppView.dart';
 import '../view/subViews/moreView/orderView/allOrdersView.dart';
 import '../view/subViews/moreView/orderView/finishedOrdersView.dart';
 import '../view/subViews/moreView/orderView/pendingShipmentsView.dart';
+import 'helper/goTransittedPage.dart';
 import 'view/subViews/moreView/shippingAddressView/shippingAddressView.dart';
 import 'view/subViews/moreView/paymentMethodView/paymentMethodView.dart';
 import 'package:flutter/material.dart';
@@ -22,32 +23,32 @@ List<Map<String, dynamic>> moreComponents = [
   {
     'icon': 'assets/more/all-order.png',
     'txt': 'All My Orders',
-    'onTap': () => Get.to(() => AllOrdersView()),
+    'onTap': () => Go.to(() => AllOrdersView()),
   },
   {
     'icon': 'assets/more/pending-shipments.png',
     'txt': 'Pending Shipments',
-    'onTap': () => Get.to(() => PendingShipmentsView()),
+    'onTap': () => Go.to(() => PendingShipmentsView()),
   },
   {
     'icon': 'assets/more/finished.png',
     'txt': 'Finished Orders',
-    'onTap': () => Get.to(() => FinishedOrdersView()),
+    'onTap': () => Go.to(() => FinishedOrdersView()),
   },
   {
     'icon': 'assets/more/shipping.png',
     'txt': 'Shipping Address',
-    'onTap': () => Get.to(() => ShippingView()),
+    'onTap': () => Go.to(() => ShippingView()),
   },
   {
     'icon': 'assets/more/payment.png',
     'txt': 'Payment Method',
-    'onTap': () => Get.to(() => PaymentMethodView()),
+    'onTap': () => Go.to(() => PaymentMethodView()),
   },
   {
     'icon': 'assets/more/rate.png',
     'txt': 'Rate Our App',
-    'onTap': () => Get.to(() => RateOurAppView()),
+    'onTap': () => Go.to(() => RateOurAppView()),
   },
 ];
 List<String> states = ['Cairo', 'Dakahlia'];

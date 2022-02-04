@@ -1,3 +1,4 @@
+import '../../helper/goTransittedPage.dart';
 import '/core/viewModel/notificationViewModel.dart';
 import '/model/notificationModel.dart';
 import '../../view/subViews/notificationsView.dart';
@@ -31,7 +32,7 @@ class MessagesNotBar extends StatelessWidget {
                           element.to.id == customerId)
                       .toList();
                   return GestureDetector(
-                    onTap: () => Get.to(() => ChatView()),
+                    onTap: () => Go.to(() => ChatView()),
                     child: CustomStackIcon(
                       imageUrl: 'assets/home/Messages.png',
                       txtNum: unOpenedChats.length.toString(),
@@ -69,7 +70,7 @@ class MessagesNotBar extends StatelessWidget {
                 builder: (notificationController) => GestureDetector(
                   onTap: () {
                     notificationController.getTempNotifications(notifications);
-                    Get.to(() => NotificationsView());
+                    Go.to(() => NotificationsView());
                   },
                   child: CustomStackIcon(
                     imageUrl: 'assets/home/notifications.png',

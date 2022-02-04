@@ -1,3 +1,4 @@
+import '../../../../helper/goTransittedPage.dart';
 import '../../../../model/paymentMethodModel.dart';
 import '../../../../core/viewModel/moreViewModel.dart';
 import '../../../../view/widgets/customAppBar.dart';
@@ -128,7 +129,7 @@ class PaymentMethodView extends StatelessWidget {
                   height: 170,
                   width: MediaQuery.of(context).size.width,
                   child: GestureDetector(
-                    onTap: () => Get.to(() => AddPaymentCardView()),
+                    onTap: () => Go.to(() => AddPaymentCardView()),
                     child: Card(
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

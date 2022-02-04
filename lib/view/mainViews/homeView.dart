@@ -1,3 +1,4 @@
+import '../../helper/goTransittedPage.dart';
 import '/responsive.dart';
 import '/core/viewModel/moreViewModel.dart';
 import '/model/userModel.dart';
@@ -66,46 +67,35 @@ class HomeView extends StatelessWidget {
                             : Row(
                                 children: [
                                   Expanded(
-                                    child: InkResponse(
-                                      radius: 25,
-                                      onTap: () => Get.to(() =>
-                                          ShopView(cateTxt: categories[0].txt)),
-                                      child: CustomColTImage(
-                                        imgUrl: categories[0].imgUrl,
-                                        txt: categories[0].txt,
-                                        avatarCol: categories[0].avatarCol,
-                                      ),
-                                    ),
+                                    flex: 3,
+                                    child: Row(
+                                        children: categories
+                                            .sublist(0, 3)
+                                            .map(
+                                              (cat) => Expanded(
+                                                child: InkResponse(
+                                                  radius: 25,
+                                                  onTap: () => Go.to(
+                                                    () => ShopView(
+                                                      cateTxt: cat.txt,
+                                                    ),
+                                                  ),
+                                                  child: CustomColTImage(
+                                                    imgUrl: cat.imgUrl,
+                                                    txt: cat.txt,
+                                                    avatarCol: cat.avatarCol,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                            .toList()),
                                   ),
                                   Expanded(
                                     child: InkResponse(
                                       radius: 25,
-                                      onTap: () => Get.to(() =>
-                                          ShopView(cateTxt: categories[1].txt)),
-                                      child: CustomColTImage(
-                                        imgUrl: categories[1].imgUrl,
-                                        txt: categories[1].txt,
-                                        avatarCol: categories[1].avatarCol,
+                                      onTap: () => Go.to(
+                                        () => CategoriesView(),
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: InkResponse(
-                                      radius: 25,
-                                      onTap: () => Get.to(() =>
-                                          ShopView(cateTxt: categories[2].txt)),
-                                      child: CustomColTImage(
-                                        imgUrl: categories[2].imgUrl,
-                                        txt: categories[2].txt,
-                                        avatarCol: categories[2].avatarCol,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: InkResponse(
-                                      radius: 25,
-                                      onTap: () =>
-                                          Get.to(() => CategoriesView()),
                                       child: CustomColTImage(
                                         imgUrl: 'assets/home/right_arrow_h.png',
                                         txt: 'See All',
@@ -138,7 +128,7 @@ class HomeView extends StatelessWidget {
                               imgH: deviceInfo.screenHeight * 0.25,
                               imgUrl: lastestCollections[i].imgUrl,
                               txt: lastestCollections[i].title,
-                              onTap: () => Get.to(
+                              onTap: () => Go.to(
                                 () => LastestCollectionView(
                                   allProducts: products,
                                   season: lastestCollections[i].season,
@@ -163,11 +153,12 @@ class HomeView extends StatelessWidget {
                                 .map((prod) => products.indexOf(prod) <
                                         lastProductFactor * 3
                                     ? GestureDetector(
-                                        onTap: () =>
-                                            Get.to(() => ProductDetails(
-                                                  prod: prod,
-                                                  fromSearchView: false,
-                                                )),
+                                        onTap: () => Go.to(
+                                          () => ProductDetails(
+                                            prod: prod,
+                                            fromSearchView: false,
+                                          ),
+                                        ),
                                         child: CustomColumImgTT(
                                           imgUrl: prod.imgUrl,
                                           txt1: prod.prodName,

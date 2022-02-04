@@ -1,3 +1,4 @@
+import '../../../helper/goTransittedPage.dart';
 import '../../../const.dart';
 import '../../../model/orderModel.dart';
 import '../../../view/subViews/moreView/paymentMethodView/addPaymentCardView.dart';
@@ -123,7 +124,7 @@ class CheckoutView extends StatelessWidget {
                                     GestureDetector(
                                       onTap: () {
                                         moreController.clearShippingData();
-                                        Get.to(() => AddShippingAddressView());
+                                        Go.to(() => AddShippingAddressView());
                                       },
                                       child: Image.asset(
                                           'assets/home/right_arrow_c.png'),
@@ -178,9 +179,8 @@ class CheckoutView extends StatelessWidget {
                                       groupValue: cartController.pay,
                                       onChanged: (val) {
                                         if (paymentsList.isEmpty) {
-                                          Get.to(() => AddPaymentCardView());
+                                          Go.to(() => AddPaymentCardView());
                                         }
-
                                         cartController.changePay(val);
                                       },
                                       secondary: Image.asset(

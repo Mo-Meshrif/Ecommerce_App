@@ -1,3 +1,4 @@
+import '../../helper/goTransittedPage.dart';
 import '../../const.dart';
 import 'customText.dart';
 import '../../core/viewModel/cartViewModel.dart';
@@ -5,7 +6,6 @@ import '../../model/orderModel.dart';
 import '../../view/subViews/moreView/orderView/trackOrderView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class OrdersDisplay extends StatelessWidget {
@@ -39,7 +39,7 @@ class OrdersDisplay extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     itemCount: specOrders.length,
                     itemBuilder: (context, i) => GestureDetector(
-                          onTap: () => Get.to(
+                          onTap: () => Go.to(
                             () => TrackOrderView(
                               order: specOrders[i],
                             ),

@@ -1,3 +1,4 @@
+import '../../helper/goTransittedPage.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../view/subViews/searchView/searchResultsView.dart';
@@ -36,12 +37,14 @@ class SearchView extends StatelessWidget {
               CustomSearchBar(
                 autoFocus: false,
                 onChanged: null,
-                onTap: () => Get.to(
+                onTap: () => Go.to(
                   () => SearchResultsView(
                     allProds: searchController.homeViewModel.products,
                   ),
+                  transition: Transition.noTransition,
+                  duration: Duration(),
                 ),
-                hintText: 'Search Something', 
+                hintText: 'Search Something',
               ),
               recentlyViewedProducts.length > 0
                   ? Padding(
@@ -67,10 +70,12 @@ class SearchView extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: GestureDetector(
-                              onTap: () => Get.to(() => ProductDetails(
-                                    prod: recentlyViewedProducts[i],
-                                    fromSearchView: true,
-                                  )),
+                              onTap: () => Go.to(
+                                () => ProductDetails(
+                                  prod: recentlyViewedProducts[i],
+                                  fromSearchView: true,
+                                ),
+                              ),
                               child: Row(
                                 children: [
                                   Image.network(
@@ -123,12 +128,14 @@ class SearchView extends StatelessWidget {
                       crossAxisCount: 3,
                     ),
                     itemBuilder: (context, x) => GestureDetector(
-                          onTap: () => Get.to(() => ProductsView(
-                                catTxt: null,
-                                prodsTxt: recommendedCats[x],
-                                fromCategoriesView: false,
-                                fromSearchView: true,
-                              )),
+                          onTap: () => Go.to(
+                            () => ProductsView(
+                              catTxt: null,
+                              prodsTxt: recommendedCats[x],
+                              fromCategoriesView: false,
+                              fromSearchView: true,
+                            ),
+                          ),
                           child: Card(
                             child: Center(
                               child: CustomText(

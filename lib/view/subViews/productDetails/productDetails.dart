@@ -1,3 +1,4 @@
+import '../../../helper/goTransittedPage.dart';
 import '/responsive.dart';
 import '../../../core/viewModel/moreViewModel.dart';
 import '../../../core/viewModel/homeViewModel.dart';
@@ -86,7 +87,7 @@ class ProductDetails extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () => Get.to(() => CartView()),
+                              onTap: () => Go.to(() => CartView()),
                               child: CustomStackIcon(
                                 imageUrl: 'assets/shop/Cart.png',
                                 txtNum: cartProds.length.toString(),

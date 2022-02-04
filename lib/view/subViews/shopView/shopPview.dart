@@ -1,3 +1,4 @@
+import '../../../helper/goTransittedPage.dart';
 import '../../../model/categoryModel.dart';
 import '../../../model/productModel.dart';
 import '../../../view/subViews/productDetails/productDetails.dart';
@@ -5,7 +6,6 @@ import '../../../view/subViews/productsView.dart';
 import '../../../view/widgets/customColumImgTT.dart';
 import '../../../view/widgets/customText.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../const.dart';
 
 class ShopPview extends StatelessWidget {
@@ -51,11 +51,13 @@ class ShopPview extends StatelessWidget {
                               fWeight: FontWeight.bold,
                             ),
                             GestureDetector(
-                              onTap: () => Get.to(() => ProductsView(
-                                    prodsTxt: subCatWithoutRepeated[i],
-                                    fromCategoriesView: false,
-                                    fromSearchView: false,
-                                  )),
+                              onTap: () => Go.to(
+                                () => ProductsView(
+                                  prodsTxt: subCatWithoutRepeated[i],
+                                  fromCategoriesView: false,
+                                  fromSearchView: false,
+                                ),
+                              ),
                               child: CustomText(
                                 txt: 'SEE ALL',
                                 txtColor: priColor,
@@ -81,9 +83,12 @@ class ShopPview extends StatelessWidget {
                             ),
                             itemBuilder: (context, x) {
                               return GestureDetector(
-                                onTap: () => Get.to(() => ProductDetails(
+                                onTap: () => Go.to(
+                                  () => ProductDetails(
                                     prod: shopProducts[x],
-                                    fromSearchView: false)),
+                                    fromSearchView: false,
+                                  ),
+                                ),
                                 child: Card(
                                   child: Center(
                                     child: CustomColumImgTT(

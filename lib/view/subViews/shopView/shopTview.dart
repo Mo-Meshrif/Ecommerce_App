@@ -1,9 +1,9 @@
+import '../../../helper/goTransittedPage.dart';
 import '../../../view/subViews/productDetails/productDetails.dart';
 import '../../../model/categoryModel.dart';
 import '../../../model/productModel.dart';
 import '../../../view/widgets/customColumImgTT.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ShopTview extends StatelessWidget {
   final CategoryModel cat;
@@ -26,7 +26,7 @@ class ShopTview extends StatelessWidget {
           mainAxisExtent: 140,
         ),
         itemBuilder: (context, i) => GestureDetector(
-          onTap: () => Get.to(
+          onTap: () => Go.to(
             () => ProductDetails(
               prod: trendingProds[i],
               fromSearchView: false,

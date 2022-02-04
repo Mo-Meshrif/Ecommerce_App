@@ -1,3 +1,4 @@
+import '../../../helper/goTransittedPage.dart';
 import '../../../core/viewModel/cartViewModel.dart';
 import '../../../view/subViews/moreView/orderView/allOrdersView.dart';
 import '../../../view/widgets/customElevatedButton.dart';
@@ -75,7 +76,7 @@ class OrderPlacedView extends StatelessWidget {
                   child: CustomElevatedButton(
                     txt: 'MY ORDERS',
                     imgUrl: 'assets/auth/right_arrow.png',
-                    onPress: () => Get.to(() => AllOrdersView()),
+                    onPress: () => Go.to(() => AllOrdersView()),
                   ),
                 ),
               ],

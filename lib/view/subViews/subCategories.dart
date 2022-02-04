@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import '../../helper/goTransittedPage.dart';
 import 'package:flutter/material.dart';
 import '../../view/widgets/customText.dart';
 import 'productsView.dart';
@@ -36,12 +36,14 @@ class SubCategories extends StatelessWidget {
                 itemBuilder: (_, i) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: GestureDetector(
-                    onTap: () => Get.to(() => ProductsView(
-                          prodsTxt: prods[i],
-                          catTxt: subCat,
-                          fromCategoriesView: true,
-                          fromSearchView: false,
-                        )),
+                    onTap: () => Go.to(
+                      () => ProductsView(
+                        prodsTxt: prods[i],
+                        catTxt: subCat,
+                        fromCategoriesView: true,
+                        fromSearchView: false,
+                      ),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

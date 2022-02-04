@@ -1,3 +1,4 @@
+import '../../helper/goTransittedPage.dart';
 import '../../const.dart';
 import '../../core/viewModel/filterViewModel.dart';
 import '../../model/productModel.dart';
@@ -35,9 +36,7 @@ class LastestCollectionView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                        onTap: () {
-                          Get.back();
-                        },
+                        onTap: () => Get.back(),
                         child: Image.asset('assets/shop/back.png')),
                     Expanded(
                       child: Center(
@@ -67,10 +66,12 @@ class LastestCollectionView extends StatelessWidget {
                         mainAxisExtent: 140,
                       ),
                       itemBuilder: (context, x) => GestureDetector(
-                        onTap: () => Get.to(() => ProductDetails(
-                              prod: filteredProducts[x],
-                              fromSearchView: false,
-                            )),
+                        onTap: () => Go.to(
+                          () => ProductDetails(
+                            prod: filteredProducts[x],
+                            fromSearchView: false,
+                          ),
+                        ),
                         child: Card(
                           child: Center(
                             child: CustomColumImgTT(

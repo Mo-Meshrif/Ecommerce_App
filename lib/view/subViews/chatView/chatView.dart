@@ -1,3 +1,4 @@
+import '../../../helper/goTransittedPage.dart';
 import '/model/userModel.dart';
 import '../../../core/viewModel/moreViewModel.dart';
 import '../../../core/viewModel/chatViewModel.dart';
@@ -96,7 +97,7 @@ class ChatView extends StatelessWidget {
                                           onTap: () {
                                             chatController
                                                 .updateChat(lastchats[i].id);
-                                            Get.to(
+                                            Go.to(
                                               () => MessageView(
                                                 customer: customer,
                                                 vendor: vendor,
