@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/service/fireStore_user.dart';
 import '../../core/viewModel/searchViewModel.dart';
 import '../../model/userModel.dart';
@@ -43,7 +44,7 @@ class MoreView extends StatelessWidget {
                           backgroundColor: Colors.grey,
                           backgroundImage: pic == null
                               ? AssetImage('assets/more/place_holder.jpg')
-                              : NetworkImage(pic),
+                              : CachedNetworkImageProvider(pic),
                         ),
                       ),
                       Positioned(

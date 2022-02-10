@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '/helper/networkManager.dart';
 import '/helper/dynamicLinkHelper.dart';
 import '../../model/lastestCollectionModel.dart';
 import '../../model/userModel.dart';
@@ -177,11 +178,24 @@ class HomeViewModel extends GetxController {
 
   //DynamicLink logic
   createDynamicLink(String id) {
-    if (!dynamicUrls.containsKey(id)) {
-      DynamicLinkHelper().createDynamicLink(id).then((value) {
-        dynamicUrls[id] = value.toString();
-        update();
-      });
+    try {
+      if (Get.find<NetworkManager>().isConnected) {
+        if (!dynamicUrls.containsKey(id)) {
+          DynamicLinkHelper().createDynamicLink(id).then((value) {
+            dynamicUrls[id] = value.toString();
+            update();
+          });
+        }
+      } else {
+        Get.snackbar(
+          'Network Error',
+          'There is no internet connection !',
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 2),
+        );
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 

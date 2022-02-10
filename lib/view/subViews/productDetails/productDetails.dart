@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../helper/goTransittedPage.dart';
 import '/responsive.dart';
 import '../../../core/viewModel/moreViewModel.dart';
@@ -99,13 +100,21 @@ class ProductDetails extends StatelessWidget {
                           height: 10,
                         ),
                         Expanded(
-                            child: Image.network(
-                          prod.imgUrl,
-                          fit: BoxFit.contain,
-                        )),
+                          child: CachedNetworkImage(
+                            placeholder: (_, __) => Image.asset(
+                              'assets/shop/place_holder.jpg',
+                              fit: BoxFit.contain,
+                            ),
+                            imageUrl: prod.imgUrl,
+                            fit: BoxFit.contain,
+                            errorWidget: (context, error, stackTrace) =>
+                                Image.asset('assets/shop/place_holder.jpg'),
+                          ),
+                        ),
                         Responsive(
                           builder: (context, deviceInfo) => Padding(
-                            padding: EdgeInsets.symmetric(horizontal: deviceInfo.screenWidth/18),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: deviceInfo.screenWidth / 18),
                             child: TabBar(
                               unselectedLabelColor: swatchColor,
                               labelColor: priColor,

@@ -1,4 +1,5 @@
 import 'dart:io';
+import '/helper/networkManager.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/viewModel/moreViewModel.dart';
 import '../../core/service/fireStore_chat.dart';
@@ -60,29 +61,38 @@ class ChatViewModel extends GetxController {
       @required String to,
       @required String message,
       @required int orderNumber}) {
-    if (pic != null) {
-      FireStoreChat().uploadChatPic(pic, from, createdAt).then((imgUrl) =>
-          handleChatLogic(
-              pic: pic,
-              createdAt: createdAt,
-              vendorId: vendorId,
-              customerId: customerId,
-              from: from,
-              to: to,
-              message: message,
-              imgUrl: imgUrl,
-              orderNumber: orderNumber));
+    if (Get.find<NetworkManager>().isConnected) {
+      if (pic != null) {
+        FireStoreChat().uploadChatPic(pic, from, createdAt).then((imgUrl) =>
+            handleChatLogic(
+                pic: pic,
+                createdAt: createdAt,
+                vendorId: vendorId,
+                customerId: customerId,
+                from: from,
+                to: to,
+                message: message,
+                imgUrl: imgUrl,
+                orderNumber: orderNumber));
+      } else {
+        handleChatLogic(
+            pic: pic,
+            createdAt: createdAt,
+            vendorId: vendorId,
+            customerId: customerId,
+            from: from,
+            to: to,
+            message: message,
+            imgUrl: null,
+            orderNumber: orderNumber);
+      }
     } else {
-      handleChatLogic(
-          pic: pic,
-          createdAt: createdAt,
-          vendorId: vendorId,
-          customerId: customerId,
-          from: from,
-          to: to,
-          message: message,
-          imgUrl: null,
-          orderNumber: orderNumber);
+      Get.snackbar(
+        'Network Error',
+        'There is no internet connection !',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 2),
+      );
     }
   }
 

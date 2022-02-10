@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import '/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,12 +19,19 @@ class CustomStackImg2IconTxt extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Responsive(
-          builder: (context, deviceInfo) => FadeInImage.assetNetwork(
-            placeholder: 'assets/shop/place_holder.jpg',
-            image: banner,
+          builder: (context, deviceInfo) => CachedNetworkImage(
+            placeholder: (_, __) => Image.asset(
+              'assets/shop/place_holder.jpg',
+              width: double.infinity,
+              height: deviceInfo.screenHeight * 0.35,
+              fit: BoxFit.cover,
+            ),
+            imageUrl: banner,
             width: double.infinity,
-            height: deviceInfo.screenHeight*0.35,
+            height: deviceInfo.screenHeight * 0.35,
             fit: BoxFit.cover,
+            errorWidget: (context, error, stackTrace) =>
+                Image.asset('assets/shop/place_holder.jpg'),
           ),
         ),
         Positioned(

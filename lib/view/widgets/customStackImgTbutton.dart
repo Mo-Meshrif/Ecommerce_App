@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import '/responsive.dart';
 import 'package:flutter/material.dart';
 import 'customElevatedButton.dart';
@@ -29,12 +30,19 @@ class CustomStackImgTbutton extends StatelessWidget {
                   height: imgH,
                   width: imgW ?? null,
                 )
-              : FadeInImage.assetNetwork(
-                  placeholder: 'assets/shop/place_holder.jpg',
-                  image: imgUrl,
+              : CachedNetworkImage(
+                  placeholder: (_, __) => Image.asset(
+                    'assets/shop/place_holder.jpg',
+                    height: imgH,
+                    width: imgW ?? null,
+                    fit: BoxFit.fill,
+                  ),
+                  imageUrl: imgUrl,
                   height: imgH,
                   width: imgW ?? null,
                   fit: BoxFit.fill,
+                  errorWidget: (context, error, stackTrace) =>
+                      Image.asset('assets/shop/place_holder.jpg'),
                 ),
           Positioned(
             top: 20,

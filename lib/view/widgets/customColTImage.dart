@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'customText.dart';
@@ -24,8 +25,11 @@ class CustomColTImage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10),
             child: imgUrl.startsWith('a')
                 ? Image.asset(imgUrl)
-                : Image.network(
-                    imgUrl,
+                : CachedNetworkImage(
+                    imageUrl: imgUrl,
+                    errorWidget: (context, error, stackTrace) => Padding(
+                      padding: EdgeInsets.zero,
+                    ),
                   ),
           ),
         ),

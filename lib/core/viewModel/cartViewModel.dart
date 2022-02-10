@@ -1,3 +1,4 @@
+import '/helper/networkManager.dart';
 import '../../model/userModel.dart';
 import '../../core/service/fireStore_order.dart';
 import '../../view/subViews/cartView/orderPlacedView.dart';
@@ -26,7 +27,7 @@ class CartViewModel extends GetxController {
   final NotificationViewModel _notificationViewModel = Get.find();
   List<CartProductModel> cartProds = [];
   double _totalPrice = 0;
-  String  get totalPrice=>_totalPrice.toStringAsFixed(2);
+  String get totalPrice => _totalPrice.toStringAsFixed(2);
   String promoCode = '';
   addProduct({
     @required CartProductModel cartProd,
@@ -127,17 +128,26 @@ class CartViewModel extends GetxController {
   }
 
   addOrder(OrderModel order) async {
-    _orderLoading.value = true;
-    update();
-    await FireStoreOrder()
-        .addOrderToFireStore(order)
-        .then((_) async => await getOrders().then((_) {
-              _orderLoading.value = false;
-              update();
-              Get.offAll(() => OrderPlacedView());
-              deleteAll();
-             _notificationViewModel.sendNotification([], 'New order ');
-            }));
+    if (Get.find<NetworkManager>().isConnected) {
+      _orderLoading.value = true;
+      update();
+      await FireStoreOrder()
+          .addOrderToFireStore(order)
+          .then((_) async => await getOrders().then((_) {
+                _orderLoading.value = false;
+                update();
+                Get.offAll(() => OrderPlacedView());
+                deleteAll();
+                _notificationViewModel.sendNotification([], 'New order ');
+              }));
+    } else {
+      Get.snackbar(
+        'Network Error',
+        'There is no internet connection !',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 2),
+      );
+    }
   }
 
   Future<void> getOrders() async {

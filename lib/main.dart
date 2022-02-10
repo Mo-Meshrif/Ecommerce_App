@@ -1,3 +1,4 @@
+import '/helper/networkManager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import './helper/bind.dart';
@@ -8,9 +9,9 @@ import 'view/controlView.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent,)
-  );
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    statusBarColor: Colors.transparent,
+  ));
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -25,7 +26,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mega Store',
-      home: ControlView(),
+      home: GetBuilder<NetworkManager>(
+        init: NetworkManager(),
+        builder: (_) => ControlView(),
+      ),
       initialBinding: Bind(),
     );
   }

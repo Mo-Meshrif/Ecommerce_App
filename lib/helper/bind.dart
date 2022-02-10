@@ -1,3 +1,4 @@
+import '/helper/networkManager.dart';
 import '../core/viewModel/notificationViewModel.dart';
 import '../core/viewModel/chatViewModel.dart';
 import '../core/viewModel/moreViewModel.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 class Bind extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut(() => NetworkManager());
     Get.lazyPut(() => AuthViewModel());
     Get.lazyPut(() => LocalStorageData());
     Get.lazyPut(() => HomeViewModel());

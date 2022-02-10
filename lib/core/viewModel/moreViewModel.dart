@@ -1,4 +1,5 @@
 import 'dart:io';
+import '/helper/networkManager.dart';
 import 'notificationViewModel.dart';
 import '../../core/viewModel/cartViewModel.dart';
 import '../../core/service/fireStore_rateApp.dart';
@@ -28,20 +29,29 @@ class MoreViewModel extends GetxController {
   File image;
   final picker = ImagePicker();
   Future<void> getUserImage({@required UserModel user}) async {
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      image = File(pickedImage.path);
-      FireStoreUser().uploadProfilePic(image, user).then(
-          (_) => FireStoreUser().getUserFromFireStore(user.id).then((userData) {
-                Map x = userData.data();
-                _localStorageData.setUserData(UserModel(
-                    id: user.id,
-                    userName: user.userName,
-                    email: user.email,
-                    pic: x['pic']));
-              }));
+    if (Get.find<NetworkManager>().isConnected) {
+      final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        image = File(pickedImage.path);
+        FireStoreUser().uploadProfilePic(image, user).then((_) =>
+            FireStoreUser().getUserFromFireStore(user.id).then((userData) {
+              Map x = userData.data();
+              _localStorageData.setUserData(UserModel(
+                  id: user.id,
+                  userName: user.userName,
+                  email: user.email,
+                  pic: x['pic']));
+            }));
+      }
+      update();
+    } else {
+      Get.snackbar(
+        'Network Error',
+        'There is no internet connection !',
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 2),
+      );
     }
-    update();
   }
 
   Future<void> getUserData() async {

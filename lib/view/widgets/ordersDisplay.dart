@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../helper/goTransittedPage.dart';
 import '../../const.dart';
 import 'customText.dart';
@@ -97,10 +98,20 @@ class OrdersDisplay extends StatelessWidget {
                                                           .items
                                                           .length),
                                           itemBuilder: (context, x) =>
-                                              Image.network(
-                                            specOrders[i].items[x]['imgUrl'],
+                                              CachedNetworkImage(
                                             height: 35,
                                             width: 35,
+                                            placeholder: (_, __) => Image.asset(
+                                              'assets/shop/place_holder.jpg',
+                                              height: 35,
+                                              width: 35,
+                                            ),
+                                            imageUrl: specOrders[i].items[x]
+                                                ['imgUrl'],
+                                            errorWidget: (context, error,
+                                                    stackTrace) =>
+                                                Image.asset(
+                                                    'assets/shop/place_holder.jpg'),
                                           ),
                                         ),
                                       )

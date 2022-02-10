@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import '/responsive.dart';
 import '../../../core/viewModel/chatViewModel.dart';
 import '../../../core/viewModel/cartViewModel.dart';
@@ -88,8 +89,9 @@ class MessageView extends StatelessWidget {
                                   },
                                 ),
                                 trailing: Responsive(
-                                  builder: (context, deviceInfo) => CircleAvatar(
-                                    radius: deviceInfo.widgetScaleFactor*20,
+                                  builder: (context, deviceInfo) =>
+                                      CircleAvatar(
+                                    radius: deviceInfo.widgetScaleFactor * 20,
                                     child: CustomText(
                                       txt: joinFirstTwoLetter(vendor.userName),
                                     ),
@@ -123,8 +125,8 @@ class MessageView extends StatelessWidget {
                                           CircleAvatar(
                                             radius: 35,
                                             backgroundColor: Colors.white,
-                                            child: Image.network(
-                                              e['imgUrl'],
+                                            child: CachedNetworkImage(
+                                              imageUrl: e['imgUrl'],
                                               height: 50,
                                               width: 60,
                                             ),
@@ -247,8 +249,8 @@ class MessageView extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
-                                        child: Image.network(
-                                          chats[i]['pic'],
+                                        child: CachedNetworkImage(
+                                          imageUrl: chats[i]['pic'],
                                           width: 80,
                                           height: 80,
                                         ),
