@@ -3,9 +3,9 @@ import '../../const.dart';
 import 'customText.dart';
 
 class CustomElevatedButton extends StatelessWidget {
-  final String txt, imgUrl;
-  final Color txtColor, buttonColor;
-  final Function onPress;
+  final String? txt, imgUrl;
+  final Color? txtColor, buttonColor;
+  final Function? onPress;
 
   CustomElevatedButton(
       {this.txt, this.onPress, this.imgUrl, this.txtColor, this.buttonColor});
@@ -17,7 +17,7 @@ class CustomElevatedButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         padding: EdgeInsets.all(15),
       ),
-      onPressed: onPress,
+      onPressed: onPress as void Function()?,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -30,7 +30,7 @@ class CustomElevatedButton extends StatelessWidget {
               ),
             ),
           ),
-          Image.asset(imgUrl),
+          Image.asset(imgUrl!),
         ],
       ),
     );

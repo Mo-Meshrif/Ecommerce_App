@@ -4,7 +4,7 @@ import 'model/deviceInfo.dart';
 
 class Responsive extends StatelessWidget {
   final Widget Function(BuildContext context, DeviceInfo deviceInfo) builder;
-  Responsive({@required this.builder});
+  Responsive({required this.builder});
 
   @override
   Widget build(BuildContext context) {

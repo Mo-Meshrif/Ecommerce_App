@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class SearchRSortView extends StatelessWidget {
   final List<ProductModel> products;
 
-  SearchRSortView({@required this.products});
+  SearchRSortView({required this.products});
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -32,7 +32,7 @@ class SearchRSortView extends StatelessWidget {
                 child: CustomColumImgTT(
                   imgUrl: products[x].imgUrl,
                   txt1: products[x].prodName,
-                  txt2: '\$' + products[x].price,
+                  txt2: '\$' + products[x].price!,
                 ),
               ),
             ),

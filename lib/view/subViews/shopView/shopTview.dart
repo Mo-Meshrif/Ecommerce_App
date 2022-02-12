@@ -9,13 +9,13 @@ class ShopTview extends StatelessWidget {
   final CategoryModel cat;
   final List<ProductModel> products;
   ShopTview({
-    @required this.cat,
-    @required this.products,
+    required this.cat,
+    required this.products,
   });
   @override
   Widget build(BuildContext context) {
     List<ProductModel> trendingProds =
-        products.where((element) => element.trending).toList();
+        products.where((element) => element.trending!).toList();
     return Container(
       height: 140,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),

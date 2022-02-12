@@ -48,7 +48,7 @@ class RateOurAppView extends StatelessWidget {
               SizedBox(height: 15),
               GetBuilder<MoreViewModel>(
                 builder: (moreController) => RatingBar.builder(
-                  initialRating: moreController.appRateValue,
+                  initialRating: moreController.appRateValue!,
                   minRating: 1,
                   direction: Axis.horizontal,
                   itemCount: 5,

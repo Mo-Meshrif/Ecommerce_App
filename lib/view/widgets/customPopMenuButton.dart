@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'customText.dart';
 
 class CustomPopUpMenuButton extends StatelessWidget {
-  final String title;
-  final List<String> popList;
+  final String? title;
+  final List<String>? popList;
   final Function(String) onSelected;
   final bool enabled;
 
   const CustomPopUpMenuButton(
-      {@required this.title,
-      @required this.popList,
-      @required this.onSelected,
-      @required this.enabled});
+      {required this.title,
+      required this.popList,
+      required this.onSelected,
+      required this.enabled});
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
@@ -32,7 +32,7 @@ class CustomPopUpMenuButton extends StatelessWidget {
           ],
         ),
       ),
-      itemBuilder: (BuildContext context) => popList
+      itemBuilder: (BuildContext context) => popList!
           .map((e) => PopupMenuItem(
               value: e,
               child: CustomText(

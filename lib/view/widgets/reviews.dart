@@ -3,13 +3,13 @@ import '../../const.dart';
 import 'customText.dart';
 
 class Reviews extends StatelessWidget {
-  final String name, date, reviewDetails;
+  final String? name, date, reviewDetails;
   final double rateValue;
   Reviews(
-      {@required this.name,
-      @required this.date,
-      @required this.reviewDetails,
-      @required this.rateValue});
+      {required this.name,
+      required this.date,
+      required this.reviewDetails,
+      required this.rateValue});
   @override
   Widget build(BuildContext context) {
     String getInitials(String name) => name.isNotEmpty
@@ -21,7 +21,7 @@ class Reviews extends StatelessWidget {
         CircleAvatar(
           radius: 35,
           child: CustomText(
-            txt: getInitials(name),
+            txt: getInitials(name!),
             fSize: 22,
           ),
         ),

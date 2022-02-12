@@ -13,17 +13,13 @@ class LocalStorageData extends GetxController {
 
   _getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var userData = prefs.getString('userData');
+    var userData = prefs.getString('userData')!;
     return UserModel.fromJson(jsonDecode(userData));
   }
 
-  Future<UserModel> get getUser async {
+  Future<UserModel?> get getUser async {
     try {
-      UserModel user = await _getUserData();
-      if (user == null) {
-        return null;
-      }
-      return user;
+      return await _getUserData();
     } catch (e) {
       return null;
     }
@@ -43,17 +39,14 @@ class LocalStorageData extends GetxController {
   _getrecentlyViewedProductsData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var recentlyViewedProductsData =
-        prefs.getString('recentlyViewedProductsData');
+        prefs.getString('recentlyViewedProductsData')!;
     return ProductModel.decode(recentlyViewedProductsData);
   }
 
-  Future<List<ProductModel>> get getrecentlyViewedProducts async {
+  Future<List<ProductModel>?> get getrecentlyViewedProducts async {
     try {
       List<ProductModel> recentlyViewedProducts =
           await _getrecentlyViewedProductsData();
-      if (recentlyViewedProducts == null) {
-        return null;
-      }
       return recentlyViewedProducts;
     } catch (e) {
       return null;

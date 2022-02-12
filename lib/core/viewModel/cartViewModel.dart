@@ -30,7 +30,7 @@ class CartViewModel extends GetxController {
   String get totalPrice => _totalPrice.toStringAsFixed(2);
   String promoCode = '';
   addProduct({
-    @required CartProductModel cartProd,
+    required CartProductModel cartProd,
   }) {
     if (cartProds.length == 0) {
       db.insert(cartProd);
@@ -49,9 +49,6 @@ class CartViewModel extends GetxController {
   }
 
   getProducts(UserModel user) async {
-    if (user == null) {
-      return;
-    }
     List<CartProductModel> tempList = await db.getAllProducts();
     cartProds =
         tempList.where((element) => element.customerId == user.id).toList();
@@ -63,24 +60,24 @@ class CartViewModel extends GetxController {
     _totalPrice = 0;
     update();
     for (var i = 0; i < cartProds.length; i++) {
-      _totalPrice += (double.parse(cartProds[i].price) * cartProds[i].quantity);
+      _totalPrice += (double.parse(cartProds[i].price!) * cartProds[i].quantity!);
     }
     update();
   }
 
   increaseQuantity(index) async {
-    if (cartProds[index].quantity >= 1) {
-      cartProds[index].quantity++;
-      _totalPrice += double.parse(cartProds[index].price);
+    if (cartProds[index].quantity! >= 1) {
+      cartProds[index].quantity= cartProds[index].quantity!+1;
+      _totalPrice += double.parse(cartProds[index].price!);
       await db.updateProduct(cartProds[index]);
     }
     update();
   }
 
   decreaseQuantity(index, fromProdDetails) async {
-    if (cartProds[index].quantity > 1) {
-      cartProds[index].quantity--;
-      _totalPrice -= double.parse(cartProds[index].price);
+    if (cartProds[index].quantity! > 1) {
+      cartProds[index].quantity=cartProds[index].quantity!-1;
+      _totalPrice -= double.parse(cartProds[index].price!);
       await db.updateProduct(cartProds[index]);
     } else if (cartProds[index].quantity == 1 && fromProdDetails == true) {
       deleteProduct(index);
@@ -105,14 +102,14 @@ class CartViewModel extends GetxController {
   }
 
   //order
-  paymentMethod pay = paymentMethod.cashOnDelivery;
-  int orderNumber;
+  paymentMethod? pay = paymentMethod.cashOnDelivery;
+  int? orderNumber;
   ValueNotifier<bool> _orderLoading = ValueNotifier(false);
   ValueNotifier<bool> get orderloading => _orderLoading;
   List<OrderModel> _orders = [];
   List<OrderModel> get allOrders => _orders;
   List<OrderModel> get specOrders => _orders
-      .where((order) => order.customerId == _moreViewModel.savedUser.id)
+      .where((order) => order.customerId == _moreViewModel.savedUser!.id)
       .toList();
 
   changePay(val) {
@@ -154,7 +151,7 @@ class CartViewModel extends GetxController {
     _orders = [];
     await FireStoreOrder().getOrdersFromFireStore().then((value) {
       for (int i = 0; i < value.length; i++) {
-        Map<String, dynamic> data = value[i].data();
+        Map<String, dynamic> data = value[i].data() as Map<String, dynamic>;
         _orders.add(OrderModel(
           orderId: value[i].id,
           customerId: data['customerId'],

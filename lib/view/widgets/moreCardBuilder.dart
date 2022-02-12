@@ -4,7 +4,7 @@ import 'customText.dart';
 class MoreCardBuilder extends StatelessWidget {
   final List<Map<String, dynamic>> components;
 
-  MoreCardBuilder({@required this.components});
+  MoreCardBuilder({required this.components});
 
   @override
   Widget build(BuildContext context) {

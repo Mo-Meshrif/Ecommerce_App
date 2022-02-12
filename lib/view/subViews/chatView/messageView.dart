@@ -13,13 +13,13 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 class MessageView extends StatelessWidget {
-  final UserModel customer;
+  final UserModel? customer;
   final UserModel vendor;
-  final int orderNumber;
+  final int? orderNumber;
   MessageView({
-    @required this.vendor,
-    @required this.orderNumber,
-    @required this.customer,
+    required this.vendor,
+    required this.orderNumber,
+    required this.customer,
   });
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class MessageView extends StatelessWidget {
             .orderBy('createdAt', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
-          List data = [];
+          List? data = [];
           if (snapshot.hasData) {
-            data = snapshot.data.docs;
+            data = (snapshot.data as QuerySnapshot).docs;
           }
           List chats = data
               .where((element) => element['orderNumber'] == orderNumber)
@@ -70,18 +70,18 @@ class MessageView extends StatelessWidget {
                                       .collection('Users')
                                       .snapshots(),
                                   builder: (context, userSnap) {
-                                    List users = [];
+                                    List? users = [];
                                     if (userSnap.hasData) {
-                                      users = userSnap.data.docs;
+                                      users = (userSnap.data as QuerySnapshot).docs;
                                     }
-                                    bool shippingCompIsOnline = users.length > 0
+                                    bool? shippingCompIsOnline = users.length > 0
                                         ? users.firstWhere((element) =>
                                             element['id'] ==
                                             vendor.id)['isOnline']
                                         : null;
                                     return userSnap.hasData
                                         ? CustomText(
-                                            txt: shippingCompIsOnline
+                                            txt: shippingCompIsOnline!
                                                 ? 'Active'
                                                 : 'Offline',
                                           )
@@ -91,9 +91,9 @@ class MessageView extends StatelessWidget {
                                 trailing: Responsive(
                                   builder: (context, deviceInfo) =>
                                       CircleAvatar(
-                                    radius: deviceInfo.widgetScaleFactor * 20,
+                                    radius: deviceInfo.widgetScaleFactor! * 20,
                                     child: CustomText(
-                                      txt: joinFirstTwoLetter(vendor.userName),
+                                      txt: joinFirstTwoLetter(vendor.userName!),
                                     ),
                                   ),
                                 ),
@@ -109,7 +109,7 @@ class MessageView extends StatelessWidget {
                               OrderModel myOrder = cartController.allOrders
                                   .firstWhere((element) =>
                                       element.orderNumber == orderNumber);
-                              List items = myOrder.items;
+                              List items = myOrder.items!;
                               return ExpansionTile(
                                 tilePadding: EdgeInsets.zero,
                                 title: CustomText(
@@ -184,7 +184,7 @@ class MessageView extends StatelessWidget {
                           padding: EdgeInsets.all(20),
                           itemCount: chats.length,
                           itemBuilder: (context, i) {
-                            Timestamp messageTime = chats[i]['createdAt'];
+                            Timestamp? messageTime = chats[i]['createdAt'];
                             return Column(
                               crossAxisAlignment: chats[i]['from'] != vendor.id
                                   ? CrossAxisAlignment.start
@@ -195,7 +195,7 @@ class MessageView extends StatelessWidget {
                                     ? Center(
                                         child: CustomText(
                                           txt: DateFormat('h:mm a')
-                                              .format(messageTime.toDate()),
+                                              .format(messageTime!.toDate()),
                                         ),
                                       )
                                     : Padding(padding: EdgeInsets.zero),
@@ -274,7 +274,7 @@ class MessageView extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     Image.file(
-                                      chatController.image,
+                                      chatController.image!,
                                       width: 80,
                                       height: 80,
                                     ),
@@ -317,8 +317,8 @@ class MessageView extends StatelessWidget {
                                         Get.find<ChatViewModel>().uploadChat(
                                           createdAt: Timestamp.now(),
                                           vendorId: vendor.id,
-                                          customerId: customer.id,
-                                          from: customer.id,
+                                          customerId: customer!.id,
+                                          from: customer!.id,
                                           to: vendor.id,
                                           message: chatController.message,
                                           pic: chatController.image,

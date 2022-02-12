@@ -4,9 +4,9 @@ import 'customText.dart';
 
 class CustomR2TxtPopupMenu extends StatelessWidget {
   final txt1, txt2;
-  final List<String> popMenuItems;
+  final List<String?>? popMenuItems;
   final bool enableState;
-  final void Function(dynamic) onSelected;
+  final void Function(dynamic)? onSelected;
   CustomR2TxtPopupMenu(
       {this.txt1,
       this.popMenuItems,
@@ -15,7 +15,7 @@ class CustomR2TxtPopupMenu extends StatelessWidget {
       this.enableState = true});
   @override
   Widget build(BuildContext context) {
-    String nullTxt = popMenuItems.length > 0 ? popMenuItems[0] : '';
+    String? nullTxt = popMenuItems!.length > 0 ? popMenuItems![0] : '';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -37,10 +37,10 @@ class CustomR2TxtPopupMenu extends StatelessWidget {
               child: PopupMenuButton(
                 onSelected: onSelected,
                 enabled: enableState,
-                itemBuilder: (context) => popMenuItems
+                itemBuilder: (context) => popMenuItems!
                     .map(
                       (item) => PopupMenuItem(
-                        child: Text(item),
+                        child: Text(item!),
                         value: item,
                       ),
                     )

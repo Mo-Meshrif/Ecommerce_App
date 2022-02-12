@@ -18,16 +18,16 @@ class NotificationViewModel extends GetxController {
   FirebaseMessaging fbMessaging = FirebaseMessaging.instance;
   AuthViewModel _authViewModel = Get.find();
   MoreViewModel _moreViewModel = Get.find();
-  List<Map<String, dynamic>> _tokens;
+  late List<Map<String, dynamic>> _tokens;
   List<NotificationModel> tempNotifications = [];
   onInit() {
     getDevicesToken();
     FirebaseMessaging.onMessage.listen((event) => onMessage(event));
     FirebaseMessaging.onMessageOpenedApp
-        .listen((event) => handleNotifications(event.notification.body));
+        .listen((event) => handleNotifications(event.notification!.body!));
     fbMessaging.getInitialMessage().then((event) {
       if (event != null) {
-        handleNotifications(event.notification.body);
+        handleNotifications(event.notification!.body!);
       }
     });
     super.onInit();
@@ -36,14 +36,14 @@ class NotificationViewModel extends GetxController {
   getDevicesToken() {
     FireStoreNotification().getTokensfromFireStore().then((value) {
       _tokens = value.map((e) {
-        Map<String, dynamic> data = e.data();
+        Map<String, dynamic> data = e.data() as Map<String, dynamic>;
         return {'id': e.id, 'token': data['token']};
       }).toList();
       update();
     });
   }
 
-  addDeviceToken(String uid) async {
+  addDeviceToken(String? uid) async {
     await fbMessaging
         .getToken(vapidKey: vapidKey)
         .then((value) => FireStoreNotification().addTokenToFireStore(
@@ -66,8 +66,8 @@ class NotificationViewModel extends GetxController {
     };
   }
 
-  sendNotification(List<String> uids, String body) async {
-    List userToken = uids.length == 1
+  sendNotification(List<String?> uids, String body) async {
+    List? userToken = uids.length == 1
         ? [
             _tokens
                 .firstWhere((element) => element['id'] == uids.first)['token']
@@ -101,7 +101,7 @@ class NotificationViewModel extends GetxController {
       });
       FireStoreNotification().addNotificationToFireStore(
         NotificationModel(
-          from: _moreViewModel.savedUser.id,
+          from: _moreViewModel.savedUser!.id,
           to: uids.length == 1 ? uids : getMangerTokens()['ids'],
           message: body,
           createdAt: Timestamp.now(),
@@ -113,14 +113,14 @@ class NotificationViewModel extends GetxController {
 
   onMessage(RemoteMessage message) {
     String currentRoute = Get.currentRoute;
-    RemoteNotification remoteNotification = message.notification;
+    RemoteNotification? remoteNotification = message.notification;
     if (currentRoute != '/() => NotificationsView') {
-      if (remoteNotification.body.contains('message')) {
+      if (remoteNotification!.body!.contains('message')) {
         if (currentRoute != '/() => ChatView') {
           if (currentRoute == '/() => MessageView') {
             Get.snackbar(
               'Alert',
-              remoteNotification.body,
+              remoteNotification.body!,
             );
           } else {
             Get.dialog(OnMessageNotify(notification: remoteNotification));
@@ -131,7 +131,7 @@ class NotificationViewModel extends GetxController {
           if (currentRoute == '/() => TrackOrderView') {
             Get.snackbar(
               'Alert',
-              remoteNotification.body,
+              remoteNotification.body!,
             );
           } else {
             Get.dialog(OnMessageNotify(notification: remoteNotification));
@@ -154,7 +154,7 @@ class NotificationViewModel extends GetxController {
     }
   }
 
-  handleNotificationTapped(String id, index, message) {
+  handleNotificationTapped(String? id, index, message) {
     handleNotifications(message);
     tempNotifications[index].seen = true;
     update();

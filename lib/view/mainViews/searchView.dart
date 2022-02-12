@@ -19,7 +19,7 @@ class SearchView extends StatelessWidget {
       builder: (searchController) {
         List<ProductModel> recentlyViewedProducts =
             searchController.recentlyViewedProducts;
-        List<String> recommendedCats = searchController.recommendedCats;
+        List<String?> recommendedCats = searchController.recommendedCats;
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 25),
           child: Column(
@@ -79,7 +79,7 @@ class SearchView extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Image.network(
-                                    recentlyViewedProducts[i].imgUrl,
+                                    recentlyViewedProducts[i].imgUrl!,
                                     height: 40,
                                     width: 40,
                                   ),
@@ -96,7 +96,7 @@ class SearchView extends StatelessWidget {
                                       ),
                                       CustomText(
                                         txt: '\$' +
-                                            recentlyViewedProducts[i].price,
+                                            recentlyViewedProducts[i].price!,
                                       ),
                                     ],
                                   )

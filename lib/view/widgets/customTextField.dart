@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String lableTxt;
-  final String hintTxt;
-  final TextEditingController controller;
-  final String img;
-  final void Function(String) onSave;
-  final String Function(String) valid;
+  final String? lableTxt;
+  final String? hintTxt;
+  final TextEditingController? controller;
+  final String? img;
+  final void Function(String?)? onSave;
+  final String? Function(String?)? valid;
   final bool isScure;
 
   CustomTextField({
@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: <Widget>[
-          Image.asset(img),
+          Image.asset(img!),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),

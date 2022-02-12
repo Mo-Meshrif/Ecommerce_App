@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class SearchResultsView extends StatelessWidget {
   final List<ProductModel> allProds;
-  SearchResultsView({@required this.allProds});
+  SearchResultsView({required this.allProds});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class SearchResultsView extends StatelessWidget {
               ? filteredController.filteredProducts
               : searchController.searchProducts;
           List<ProductModel> searchedLhProducts = []..addAll(searchedProducts);
-          searchedLhProducts.sort((a, b) => a.price.compareTo(b.price));
+          searchedLhProducts.sort((a, b) => a.price!.compareTo(b.price!));
           List<ProductModel> searchedHlProducts =
               searchedLhProducts.reversed.toList();
           int currentIndex = searchController.currentIndex;

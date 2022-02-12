@@ -12,30 +12,29 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
       builder: (controller) {
-        //initialize cartViewModel,moreViewModel
+        //initialize moreViewModel
         Get.put(MoreViewModel());
-        Get.put(CartViewModel());
-        return GetBuilder<CartViewModel>(
-          init: Get.find(),
-          builder: (cartController) {
-            List<CartProductModel> cartProds = cartController.cartProds;
-            return BottomNavigationBar(
-                selectedItemColor: priColor,
-                unselectedItemColor: swatchColor,
-                showUnselectedLabels: true,
-                currentIndex: controller.currentIndex,
-                onTap: (index) => controller.changeIndex(index),
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined),
-                    label: 'Home',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.search),
-                    label: 'Search',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Stack(
+        return BottomNavigationBar(
+            selectedItemColor: priColor,
+            unselectedItemColor: swatchColor,
+            showUnselectedLabels: true,
+            currentIndex: controller.currentIndex,
+            onTap: (index) => controller.changeIndex(index),
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Search',
+              ),
+              BottomNavigationBarItem(
+                icon: GetBuilder<CartViewModel>(
+                  init: CartViewModel(),
+                  builder: (cartController) {
+                    List<CartProductModel> cartProds = cartController.cartProds;
+                    return Stack(
                       children: [
                         Container(
                             height: 25,
@@ -55,16 +54,16 @@ class BottomNavBar extends StatelessWidget {
                                 ),
                               )
                       ],
-                    ),
-                    label: 'Cart',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.menu),
-                    label: 'More',
-                  ),
-                ]);
-          },
-        );
+                    );
+                  },
+                ),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.menu),
+                label: 'More',
+              ),
+            ]);
       },
     );
   }

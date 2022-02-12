@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class DynamicLinkHelper {
   FirebaseDynamicLinks _firebaseDynamicLinks = FirebaseDynamicLinks.instance;
-  Future<Uri> createDynamicLink(String id) async {
+  Future<Uri> createDynamicLink(String? id) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://ecommerce77.page.link',
       link: Uri.parse('https://www.ecommerceApp.com/product?id=$id'),
@@ -35,11 +35,11 @@ class DynamicLinkHelper {
         .then((dynamicLink) => _navigationLogic(dynamicLink));
   }
 
-  _navigationLogic(PendingDynamicLinkData dynamicLink) {
-    final Uri deepLink = dynamicLink?.link;
+  _navigationLogic(PendingDynamicLinkData? dynamicLink) {
+    final Uri? deepLink = dynamicLink?.link;
     if (deepLink != null) {
       if (deepLink.pathSegments.contains('product')) {
-        String id = deepLink.queryParameters['id'];
+        String? id = deepLink.queryParameters['id'];
         ProductModel prod = Get.find<HomeViewModel>()
             .products
             .firstWhere((prod) => prod.id == id);

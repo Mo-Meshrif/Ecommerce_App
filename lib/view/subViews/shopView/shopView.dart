@@ -11,7 +11,7 @@ import 'shopPview.dart';
 import 'shopTview.dart';
 
 class ShopView extends StatelessWidget {
-  final String cateTxt;
+  final String? cateTxt;
   ShopView({this.cateTxt});
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,9 @@ class ShopView extends StatelessWidget {
                 .firstWhere((element) => element.txt == cateTxt);
             List<ProductModel> prods = controller.products
                 .where((element) =>
-                    element.classification['cat-id'] == category.id)
+                    element.classification!['cat-id'] == category.id)
                 .toList();
-            return category.shop['banner'] == ''
+            return category.shop!['banner'] == ''
                 ? Center(
                     child: Text('Commming Soooooooooooooon !'),
                   )
@@ -34,9 +34,9 @@ class ShopView extends StatelessWidget {
                     children: [
                       SizedBox(height: 3),
                       CustomStackImg2IconTxt(
-                        banner: category.shop['banner'],
-                        txtTitle: category.shop['txtTitle'],
-                        txtDesc: category.shop['txtDesc'],
+                        banner: category.shop!['banner'],
+                        txtTitle: category.shop!['txtTitle'],
+                        txtDesc: category.shop!['txtDesc'],
                         searchTap: () => Go.to(
                           () => SearchResultsView(
                             allProds: prods,

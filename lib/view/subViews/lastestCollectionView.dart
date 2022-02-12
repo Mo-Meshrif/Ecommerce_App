@@ -11,9 +11,9 @@ import 'package:get/get.dart';
 
 class LastestCollectionView extends StatelessWidget {
   final List<ProductModel> allProducts;
-  final String season;
+  final String? season;
   const LastestCollectionView(
-      {@required this.allProducts, @required this.season});
+      {required this.allProducts, required this.season});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FilterViewModel>(
@@ -41,7 +41,7 @@ class LastestCollectionView extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: CustomText(
-                            txt: season.capitalize,
+                            txt: season!.capitalize,
                             fSize: 20,
                             fWeight: FontWeight.bold),
                       ),
@@ -77,7 +77,7 @@ class LastestCollectionView extends StatelessWidget {
                             child: CustomColumImgTT(
                               imgUrl: filteredProducts[x].imgUrl,
                               txt1: filteredProducts[x].prodName,
-                              txt2: '\$' + filteredProducts[x].price,
+                              txt2: '\$' + filteredProducts[x].price!,
                             ),
                           ),
                         ),

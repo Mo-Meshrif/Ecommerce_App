@@ -12,14 +12,14 @@ class ShopPview extends StatelessWidget {
   final CategoryModel cat;
   final List<ProductModel> products;
   ShopPview({
-    @required this.cat,
-    @required this.products,
+    required this.cat,
+    required this.products,
   });
   @override
   Widget build(BuildContext context) {
     List<dynamic> subCat = [];
-    for (var i = 0; i < cat.subCat['s'].length; i++) {
-      subCat.addAll(cat.subCat['s' + i.toString()]);
+    for (var i = 0; i < cat.subCat!['s'].length; i++) {
+      subCat.addAll(cat.subCat!['s' + i.toString()]);
     }
     List<dynamic> subCatWithoutRepeated = subCat.toSet().toList();
     return Padding(
@@ -33,11 +33,11 @@ class ShopPview extends StatelessWidget {
             itemBuilder: (context, i) {
               List shopProducts = products
                   .where((prod) =>
-                      prod.classification['sub-cat'] ==
+                      prod.classification!['sub-cat'] ==
                       subCatWithoutRepeated[i])
                   .toList();
               int index = products.indexWhere((prods) =>
-                  prods.classification['sub-cat'] == subCatWithoutRepeated[i]);
+                  prods.classification!['sub-cat'] == subCatWithoutRepeated[i]);
               return index >= 0
                   ? Column(
                       children: [

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
-  String id,
+  String? id,
       customerId,
       prodName,
       imgUrl,
@@ -12,10 +12,10 @@ class ProductModel {
       condition,
       sku,
       material;
-  bool trending;
-  Map<String, dynamic> classification;
-  List<dynamic> color, size;
-  Timestamp createdAt;
+  bool? trending;
+  Map<String, dynamic>? classification;
+  List<dynamic>? color, size;
+  Timestamp? createdAt;
   ProductModel({
     this.id,
     this.customerId,
@@ -34,9 +34,6 @@ class ProductModel {
     this.trending,
   });
   ProductModel.fromJson(Map<String, dynamic> map) {
-    if (map == null) {
-      return;
-    }
     id = map['id'];
     customerId = map['customerId'];
     prodName = map['prodName'];
@@ -65,7 +62,7 @@ class ProductModel {
       'color': prod.color,
       'size': prod.size,
       'price': prod.price,
-      'createdAt': prod.createdAt.toDate()?.toIso8601String(),
+      'createdAt': prod.createdAt!.toDate().toIso8601String(),
       'brand': prod.brand,
       'condition': prod.condition,
       'sku': prod.sku,

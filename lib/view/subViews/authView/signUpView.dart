@@ -31,7 +31,7 @@ class SignUpView extends StatelessWidget {
                         controller: TextEditingController(text: controller.email),
                         onSave: (val) => controller.email = val,
                         valid: (val) {
-                          if (val.isEmpty) {
+                          if (val=='') {
                             return 'The Feild is empty';
                           }
                           return null;
@@ -45,7 +45,7 @@ class SignUpView extends StatelessWidget {
                             TextEditingController(text: controller.userName),
                         onSave: (val) => controller.userName = val,
                         valid: (val) {
-                          if (val.isEmpty) {
+                          if (val=='') {
                             return 'The Feild is empty';
                           }
                           return null;
@@ -60,7 +60,7 @@ class SignUpView extends StatelessWidget {
                         onSave: (val) => controller.password = val,
                         isScure: true,
                         valid: (val) {
-                          if (val.isEmpty) {
+                          if (val=='') {
                             return 'The Feild is empty';
                           }
                           return null;
@@ -82,8 +82,8 @@ class SignUpView extends StatelessWidget {
                         imgUrl: 'assets/auth/right_arrow.png',
                         txt: 'SIGN UP',
                         onPress: () {
-                          _key.currentState.save();
-                          if (_key.currentState.validate()) {
+                          _key.currentState!.save();
+                          if (_key.currentState!.validate()) {
                             controller.signUp();
                           }
                         },

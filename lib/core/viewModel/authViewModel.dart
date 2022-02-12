@@ -17,7 +17,7 @@ class AuthViewModel extends GetxController {
   List<UserModel> _users = [];
   List<UserModel> get users => _users;
   Rxn<User> _user = Rxn<User>();
-  String get user => _user.value?.email;
+  String? get user => _user.value?.email;
   @override
   void onInit() {
     _user.bindStream(_auth.authStateChanges());
@@ -25,7 +25,7 @@ class AuthViewModel extends GetxController {
     super.onInit();
   }
 
-  String userName, email, password;
+  String? userName, email, password;
   FirebaseAuth _auth = FirebaseAuth.instance;
   final LocalStorageData _localStorageData = Get.find();
 
@@ -36,20 +36,20 @@ class AuthViewModel extends GetxController {
   Future<void> getUsers() async {
     FireStoreUser().getUsersFromFireStore().then((usersData) {
       usersData.forEach((element) {
-        Map data = element.data();
+        Map data = element.data() as Map<dynamic, dynamic>;
         var index = _users.indexWhere((element) => element.id == data['id']);
         if (index >= 0) {
           _users.removeAt(index);
-          _users.add(UserModel.fromJson(data));
+          _users.add(UserModel.fromJson(data as Map<String, dynamic>));
         } else {
-          _users.add(UserModel.fromJson(data));
+          _users.add(UserModel.fromJson(data as Map<String, dynamic>));
         }
       });
       update();
     });
   }
 
-  bool isCustomer(String loginEmail) {
+  bool isCustomer(String? loginEmail) {
     var _index = _users.indexWhere((element) => element.email == loginEmail);
     return _index == -1
         ? true
@@ -62,26 +62,24 @@ class AuthViewModel extends GetxController {
       _loading.value = true;
       update();
       await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
+          .createUserWithEmailAndPassword(email: email!, password: password!)
           .then((user) async {
         _loading.value = false;
-        if (user != null) {
-          UserModel userModel = UserModel(
-              id: user.user.uid,
-              userName: userName,
-              email: email,
-              role: 'Customer',
-              isOnline: true);
-          await FireStoreUser().addUserToFireStore(userModel);
-          setUser(userModel);
-          Get.to(() => ControlView());
-        }
+        UserModel userModel = UserModel(
+            id: user.user!.uid,
+            userName: userName,
+            email: email,
+            role: 'Customer',
+            isOnline: true);
+        await FireStoreUser().addUserToFireStore(userModel);
+        setUser(userModel);
+        Get.to(() => ControlView());
         update();
       });
     } catch (e) {
       _loading.value = false;
       update();
-      handleAuthErrors(e.message);
+      handleAuthErrors(e.toString());
     }
   }
 
@@ -91,22 +89,20 @@ class AuthViewModel extends GetxController {
     if (isCustomer(email)) {
       try {
         await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
+            .signInWithEmailAndPassword(email: email!, password: password!)
             .then((user) async {
           _loading.value = false;
-          if (user != null) {
-            FireStoreUser().updateOnlineState(user.user.uid, true);
-            UserModel userData =
-                _users.firstWhere((element) => element.id == user.user.uid);
-            setUser(userData);
-            Get.to(() => ControlView());
-          }
+          FireStoreUser().updateOnlineState(user.user!.uid, true);
+          UserModel userData =
+              _users.firstWhere((element) => element.id == user.user!.uid);
+          setUser(userData);
+          Get.to(() => ControlView());
           update();
         });
       } catch (e) {
         _loading.value = false;
         update();
-        handleAuthErrors(e.message);
+        handleAuthErrors(e.toString());
       }
     } else {
       _loading.value = false;
@@ -119,7 +115,7 @@ class AuthViewModel extends GetxController {
     try {
       _loading.value = true;
       update();
-      await _auth.sendPasswordResetEmail(email: email).then((_) {
+      await _auth.sendPasswordResetEmail(email: email!).then((_) {
         _loading.value = false;
         update();
         Get.snackbar(
@@ -133,7 +129,7 @@ class AuthViewModel extends GetxController {
     } catch (e) {
       _loading.value = false;
       update();
-      handleAuthErrors(e.message);
+      handleAuthErrors(e.toString());
     }
   }
 
@@ -142,10 +138,10 @@ class AuthViewModel extends GetxController {
     update();
   }
 
-  handleAuthErrors(error) {
+  handleAuthErrors(String error) {
     Get.snackbar(
       'AuthError',
-      error.toString(),
+      error,
       snackPosition: SnackPosition.BOTTOM,
       duration: Duration(seconds: 5),
     );

@@ -14,7 +14,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MessagesNotBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String customerId = Get.find<MoreViewModel>().savedUser.id;
+    String? customerId = Get.find<MoreViewModel>().savedUser!.id;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -29,7 +29,7 @@ class MessagesNotBar extends StatelessWidget {
                   List<LastChatModel> unOpenedChats = chatController.lastchats
                       .where((element) =>
                           element.isOpened == false &&
-                          element.to.id == customerId)
+                          element.to!.id == customerId)
                       .toList();
                   return GestureDetector(
                     onTap: () => Go.to(() => ChatView()),
@@ -51,20 +51,20 @@ class MessagesNotBar extends StatelessWidget {
                 .snapshots(),
             builder: (context, snapshot) {
               List<DocumentSnapshot> notificationsSnap =
-                  snapshot.hasData ? snapshot.data.docs : [];
+                  snapshot.hasData ? (snapshot.data as QuerySnapshot).docs : [];
               List<NotificationModel> notifications = notificationsSnap
                   .map(
                     (e) => NotificationModel.fromJson(
                       e.id,
-                      e.data(),
+                      e.data() as Map<String, dynamic>?,
                     ),
                   )
                   .where((notify) =>
-                      notify.to.indexOf(customerId) >= 0 &&
-                      !notify.message.contains('message'))
+                      notify.to!.indexOf(customerId) >= 0 &&
+                      !notify.message!.contains('message'))
                   .toList();
               int notSeenLength =
-                  notifications.where((notify) => !notify.seen).toList().length;
+                  notifications.where((notify) => !notify.seen!).toList().length;
               return GetBuilder<NotificationViewModel>(
                 init:NotificationViewModel() ,
                 builder: (notificationController) => GestureDetector(

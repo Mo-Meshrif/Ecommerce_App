@@ -23,12 +23,12 @@ class MoreView extends StatelessWidget {
           MessagesNotBar(),
           GetBuilder<MoreViewModel>(
             builder: (moreController) {
-              String uid, userName, email, pic;
+              String? uid, userName, email, pic;
               if (moreController.savedUser != null) {
-                uid = moreController.savedUser.id;
-                userName = moreController.savedUser.userName;
-                email = moreController.savedUser.email;
-                pic = moreController.savedUser.pic;
+                uid = moreController.savedUser!.id;
+                userName = moreController.savedUser!.userName;
+                email = moreController.savedUser!.email;
+                pic = moreController.savedUser!.pic;
               }
               return Row(
                 children: [
@@ -42,25 +42,23 @@ class MoreView extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 60,
                           backgroundColor: Colors.grey,
-                          backgroundImage: pic == null
+                          backgroundImage: (pic == null
                               ? AssetImage('assets/more/place_holder.jpg')
-                              : CachedNetworkImageProvider(pic),
+                              : CachedNetworkImageProvider(pic)) as ImageProvider<Object>?,
                         ),
                       ),
                       Positioned(
                         bottom: 0,
                         right: 0,
                         child: GestureDetector(
-                          onTap: () {
-                            return moreController
+                          onTap: () => moreController
                                 .getUserImage(
                                     user: UserModel(
                                   id: uid,
                                   userName: userName,
                                   email: email,
                                 ))
-                                .then((_) => moreController.getUserData());
-                          },
+                                .then((_) => moreController.getUserData()),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.grey,
@@ -131,7 +129,7 @@ class MoreView extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     FireStoreUser().updateOnlineState(
-                      Get.find<MoreViewModel>().savedUser.id,
+                      Get.find<MoreViewModel>().savedUser!.id,
                       false,
                     );
                     controller.logout();

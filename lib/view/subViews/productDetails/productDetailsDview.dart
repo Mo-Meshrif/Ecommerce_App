@@ -4,7 +4,7 @@ import '../../../view/widgets/customText.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsDview extends StatelessWidget {
-  final ProductModel prod;
+  final ProductModel? prod;
 
   ProductDetailsDview({this.prod});
   @override
@@ -19,25 +19,25 @@ class ProductDetailsDview extends StatelessWidget {
           ),
           CustomRow2CTxtTxt(
             txt1: 'BRAND',
-            content1: prod.brand,
+            content1: prod!.brand,
             txt2: 'SKU',
-            content2: prod.sku,
+            content2: prod!.sku,
           ),
           SizedBox(
             height: 40,
           ),
           CustomRow2CTxtTxt(
             txt1: 'CONDITION',
-            content1: prod.condition,
+            content1: prod!.condition,
             txt2: 'MATERIAL',
-            content2: prod.material,
+            content2: prod!.material,
           ),
           SizedBox(
             height: 40,
           ),
           CustomRow2CTxtTxt(
             txt1: 'CATEGORY',
-            content1: prod.classification['category'],
+            content1: prod!.classification!['category'],
             txt2: 'FITTING',
             content2: 'True To Size',
           )
@@ -51,7 +51,7 @@ class CustomRow2CTxtTxt extends StatelessWidget {
   final txt1, content1, txt2, content2;
 
   CustomRow2CTxtTxt(
-      {Key key, this.txt1, this.content1, this.txt2, this.content2});
+      {Key? key, this.txt1, this.content1, this.txt2, this.content2});
   @override
   Widget build(BuildContext context) {
     return Row(

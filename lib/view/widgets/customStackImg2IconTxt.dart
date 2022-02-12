@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'customRichText.dart';
 
 class CustomStackImg2IconTxt extends StatelessWidget {
-  final String banner, txtTitle, txtDesc;
+  final String? banner, txtTitle, txtDesc;
   final void Function() searchTap;
   CustomStackImg2IconTxt({
-    @required this.banner,
-    @required this.txtTitle,
-    @required this.txtDesc,
-    @required this.searchTap,
+    required this.banner,
+    required this.txtTitle,
+    required this.txtDesc,
+    required this.searchTap,
   });
   @override
   Widget build(BuildContext context) {
@@ -23,12 +23,12 @@ class CustomStackImg2IconTxt extends StatelessWidget {
             placeholder: (_, __) => Image.asset(
               'assets/shop/place_holder.jpg',
               width: double.infinity,
-              height: deviceInfo.screenHeight * 0.35,
+              height: deviceInfo.screenHeight! * 0.35,
               fit: BoxFit.cover,
             ),
-            imageUrl: banner,
+            imageUrl: banner!,
             width: double.infinity,
-            height: deviceInfo.screenHeight * 0.35,
+            height: deviceInfo.screenHeight! * 0.35,
             fit: BoxFit.cover,
             errorWidget: (context, error, stackTrace) =>
                 Image.asset('assets/shop/place_holder.jpg'),
@@ -59,7 +59,7 @@ class CustomStackImg2IconTxt extends StatelessWidget {
           ),
         ),
         CustomRichText(
-            txt1: txtTitle + '\n',
+            txt1: txtTitle! + '\n',
             txt1color: Colors.white,
             txt1Size: 30,
             txt2: txtDesc,

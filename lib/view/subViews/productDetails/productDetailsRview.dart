@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 
 class ProductDetailsRview extends StatelessWidget {
   final ProductModel prod;
-  ProductDetailsRview({@required this.prod});
+  ProductDetailsRview({required this.prod});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
@@ -29,7 +29,7 @@ class ProductDetailsRview extends StatelessWidget {
                 itemBuilder: (context, i) => Reviews(
                   name: filteredReviews[i].userName,
                   date: DateFormat('yyyy-MM-dd hh:mm')
-                      .format(filteredReviews[i].createdAt.toDate())
+                      .format(filteredReviews[i].createdAt!.toDate())
                       .toString(),
                   reviewDetails: filteredReviews[i].reviewTxt,
                   rateValue: filteredReviews[i].rateValue ?? 0,
@@ -76,7 +76,7 @@ class ProductDetailsRview extends StatelessWidget {
                                         homeController.addReview(
                                           prod.id,
                                           prod.imgUrl,
-                                          moreController.savedUser,
+                                          moreController.savedUser!,
                                         );
                                         Get.back();
                                       },

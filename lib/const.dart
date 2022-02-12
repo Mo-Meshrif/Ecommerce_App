@@ -13,10 +13,10 @@ const swatchColor = Color.fromRGBO(81, 92, 111, 1);
 enum DeviceType { Mobile, Tablet, Desktop }
 
 String joinFirstTwoLetter(String subtence) {
-  return subtence.capitalize.split(" ").length == 1
-      ? subtence.capitalize[0]
-      : subtence.capitalize.split(" ")[0][0] +
-          subtence.capitalize.split(" ")[1][0];
+  return subtence.capitalize!.split(" ").length == 1
+      ? subtence.capitalize![0]
+      : subtence.capitalize!.split(" ")[0][0] +
+          subtence.capitalize!.split(" ")[1][0];
 }
 
 List<Map<String, dynamic>> moreComponents = [

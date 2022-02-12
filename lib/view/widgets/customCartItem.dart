@@ -8,29 +8,29 @@ import 'customText.dart';
 
 class CustomCartItem extends StatelessWidget {
   const CustomCartItem({
-    @required this.cartProd,
-    @required this.increase,
-    @required this.decrease,
-    @required this.onDismiss,
-    @required this.fromCheckoutView,
+    required this.cartProd,
+    required this.increase,
+    required this.decrease,
+    required this.onDismiss,
+    required this.fromCheckoutView,
   });
 
   final CartProductModel cartProd;
   final void Function() increase, decrease;
-  final void Function(DismissDirection) onDismiss;
+  final void Function(DismissDirection)? onDismiss;
   final bool fromCheckoutView;
   @override
   Widget build(BuildContext context) {
     return fromCheckoutView
         ? Responsive(
             builder: (context, deviceInfo) => Container(
-              height: deviceInfo.widgetScaleFactor * 90,
+              height: deviceInfo.widgetScaleFactor! * 90,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     child: Image.network(
-                      cartProd.imgUrl,
+                      cartProd.imgUrl!,
                       height: 50,
                       width: 50,
                     ),
@@ -59,7 +59,7 @@ class CustomCartItem extends StatelessWidget {
                         Row(
                           children: [
                             CustomText(
-                              txt: cartProd.size + ' ,',
+                              txt: cartProd.size! + ' ,',
                               fSize: 15,
                               txtColor: HexColor('#515C6F'),
                               fWeight: FontWeight.normal,
@@ -71,7 +71,7 @@ class CustomCartItem extends StatelessWidget {
                               height: 20,
                               width: 20,
                               decoration: BoxDecoration(
-                                color: HexColor(cartProd.color),
+                                color: HexColor(cartProd.color!),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
@@ -84,7 +84,7 @@ class CustomCartItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              txt: '\$' + cartProd.price,
+                              txt: '\$' + cartProd.price!,
                               fSize: 15,
                               txtColor: priColor,
                               fWeight: FontWeight.normal,
@@ -106,7 +106,7 @@ class CustomCartItem extends StatelessWidget {
           )
         : Responsive(
             builder: (context, deviceInfo) => Dismissible(
-              key: Key(cartProd.id),
+              key: Key(cartProd.id!),
               direction: DismissDirection.endToStart,
               background: Container(
                 alignment: Alignment.centerRight,
@@ -122,13 +122,13 @@ class CustomCartItem extends StatelessWidget {
               ),
               onDismissed: onDismiss,
               child: Container(
-                height: deviceInfo.widgetScaleFactor * 110,
+                height: deviceInfo.widgetScaleFactor! * 110,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
                       child: Image.network(
-                        cartProd.imgUrl,
+                        cartProd.imgUrl!,
                         height: 70,
                         width: 70,
                       ),
@@ -156,7 +156,7 @@ class CustomCartItem extends StatelessWidget {
                         Row(
                           children: [
                             CustomText(
-                              txt: cartProd.size + ' ,',
+                              txt: cartProd.size! + ' ,',
                               fSize: 15,
                               txtColor: HexColor('#515C6F'),
                               fWeight: FontWeight.normal,
@@ -168,7 +168,7 @@ class CustomCartItem extends StatelessWidget {
                               height: 20,
                               width: 20,
                               decoration: BoxDecoration(
-                                color: HexColor(cartProd.color),
+                                color: HexColor(cartProd.color!),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
@@ -178,7 +178,7 @@ class CustomCartItem extends StatelessWidget {
                           height: 5,
                         ),
                         CustomText(
-                          txt: '\$' + cartProd.price,
+                          txt: '\$' + cartProd.price!,
                           fSize: 15,
                           txtColor: priColor,
                           fWeight: FontWeight.normal,

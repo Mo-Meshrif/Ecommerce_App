@@ -4,13 +4,13 @@ import 'customText.dart';
 
 class QuantityChanger extends StatelessWidget {
   final void Function() add, minimize;
-  final int quantityVal;
+  final int? quantityVal;
   final bool fromProdDetails;
   QuantityChanger(
-      {@required this.add,
-      @required this.minimize,
-      @required this.fromProdDetails,
-      @required this.quantityVal});
+      {required this.add,
+      required this.minimize,
+      required this.fromProdDetails,
+      required this.quantityVal});
   @override
   Widget build(BuildContext context) {
     return Row(

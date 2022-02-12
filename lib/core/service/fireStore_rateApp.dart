@@ -6,7 +6,7 @@ class FireStoreRateApp {
     return await collectionOrder.doc(uid).set({'rateValue': rateVal});
   }
 
-  Future<Map<String, dynamic>> getAppRateFromFireStore(uid) async {
+  Future<Map<String, dynamic>?> getAppRateFromFireStore(uid) async {
     var val = await collectionOrder.doc(uid).get();
     return val.data();
   }

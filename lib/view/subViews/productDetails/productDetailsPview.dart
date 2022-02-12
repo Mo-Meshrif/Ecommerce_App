@@ -7,7 +7,7 @@ import '../../../view/widgets/customText.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsPview extends StatelessWidget {
-  final ProductModel prod;
+  final ProductModel? prod;
   ProductDetailsPview({this.prod});
   @override
   Widget build(BuildContext context) {
@@ -33,12 +33,12 @@ class ProductDetailsPview extends StatelessWidget {
                         width: 20,
                       ),
                   scrollDirection: Axis.horizontal,
-                  itemCount: prod.color.length,
+                  itemCount: prod!.color!.length,
                   itemBuilder: (context, i) => GestureDetector(
                         onTap: () => homeController.changeSelectedColor(
-                            i, prod.color[i]),
+                            i, prod!.color![i]),
                         child: CircleAvatar(
-                          backgroundColor: HexColor(prod.color[i]) ?? null,
+                          backgroundColor: HexColor(prod!.color![i]),
                           radius: 20,
                           child: i == homeController.selectedColorIndex
                               ? Icon(
@@ -63,10 +63,10 @@ class ProductDetailsPview extends StatelessWidget {
               height: 60,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemCount: prod.size.length,
+                itemCount: prod!.size!.length,
                 itemBuilder: (context, i) => GestureDetector(
                   onTap: () =>
-                      homeController.changeSelectedSize(i, prod.size[i]),
+                      homeController.changeSelectedSize(i, prod!.size![i]),
                   child: Container(
                     alignment: Alignment.center,
                     width: 70,
@@ -75,7 +75,7 @@ class ProductDetailsPview extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white),
                     child: CustomText(
-                      txt: prod.size[i],
+                      txt: prod!.size![i],
                       fSize: 17,
                       txtColor: i == homeController.selectedSizeIndex
                           ? priColor

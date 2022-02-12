@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class NetworkManager extends GetxController {
-  bool isConnected;
+  late bool isConnected;
   //Stream to keep listening to network change state
-  StreamSubscription _streamSubscription;
+  late StreamSubscription _streamSubscription;
 
   @override
   void onInit() {

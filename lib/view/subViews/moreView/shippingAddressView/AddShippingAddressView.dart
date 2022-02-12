@@ -29,7 +29,7 @@ class AddShippingAddressView extends StatelessWidget {
                     width: 170,
                     child: TextFormField(
                       validator: (val) {
-                        if (val.isEmpty) {
+                        if (val!.isEmpty) {
                           return 'The Value is Empty';
                         }
                         return null;
@@ -50,7 +50,7 @@ class AddShippingAddressView extends StatelessWidget {
                     width: 170,
                     child: TextFormField(
                       validator: (val) {
-                        if (val.isEmpty) {
+                        if (val!.isEmpty) {
                           return 'The Value is Empty';
                         }
                         return null;
@@ -85,7 +85,7 @@ class AddShippingAddressView extends StatelessWidget {
                     width: 170,
                     child: CustomPopUpMenuButton(
                       title: moreController.city,
-                      popList: cities[moreController.state],
+                      popList: cities[moreController.state!],
                       onSelected: (val) => moreController.getCity(val),
                       enabled:
                           moreController.state == 'Select State' ? false : true,
@@ -100,7 +100,7 @@ class AddShippingAddressView extends StatelessWidget {
                 ),
                 TextFormField(
                   validator: (val) {
-                    if (val.isEmpty) {
+                    if (val!.isEmpty) {
                       return 'The Value is Empty';
                     }
                     return null;
@@ -125,16 +125,16 @@ class AddShippingAddressView extends StatelessWidget {
                         primary: priColor,
                       ),
                       onPressed: () {
-                        moreController.shippingKey.currentState.save();
-                        if (moreController.shippingKey.currentState
+                        moreController.shippingKey.currentState!.save();
+                        if (moreController.shippingKey.currentState!
                             .validate()) {
                           moreController.addAddress(
                             ShippingAddressModel(
-                              fullName: moreController.fullName.capitalize,
+                              fullName: moreController.fullName!.capitalize,
                               mobileNumber: moreController.mobileNumber,
                               state: moreController.state,
                               city: moreController.city,
-                              street: moreController.street.capitalize,
+                              street: moreController.street!.capitalize,
                               isSelected: 1,
                             ),
                           );
@@ -158,7 +158,7 @@ class CustomRowWidget extends StatelessWidget {
   final String title;
   final Widget widget;
 
-  CustomRowWidget({@required this.title, @required this.widget});
+  CustomRowWidget({required this.title, required this.widget});
   @override
   Widget build(BuildContext context) {
     return Row(

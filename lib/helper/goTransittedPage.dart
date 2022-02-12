@@ -5,8 +5,8 @@ class Go {
   static Future<dynamic> to(
     dynamic page, {
     dynamic arguments,
-    Transition transition,
-    Duration duration,
+    Transition? transition,
+    Duration? duration,
   }) async {
     Get.to(
       page,
@@ -18,7 +18,7 @@ class Go {
               : Transition.size,
       duration: duration != null
           ? duration
-          : Duration(milliseconds: Platform.isIOS ? 500 : 1000),
+          : Duration(milliseconds: Platform.isIOS ? 500 : 700),
     );
   }
 }

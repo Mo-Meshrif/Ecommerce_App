@@ -8,25 +8,24 @@ import '../../model/lastChatModel.dart';
 import '../../model/userModel.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'notificationViewModel.dart';
 
 class ChatViewModel extends GetxController {
   List<LastChatModel> _lastchats = [];
   List<LastChatModel> get lastchats => _lastchats
       .where((element) =>
-          (element.customerId == _moreViewModel.savedUser.id ||
-              element.vendorId == _moreViewModel.savedUser.id) &&
+          (element.customerId == _moreViewModel.savedUser!.id ||
+              element.vendorId == _moreViewModel.savedUser!.id) &&
           element.orderNumber != null)
       .toList();
   final AuthViewModel authViewModel = Get.find();
   final MoreViewModel _moreViewModel = Get.find();
   final NotificationViewModel _notificationViewModel = Get.find();
   List<LastChatModel> searchedCoversations = [];
-  int clikedMessageNumber;
+  int? clikedMessageNumber;
   bool clickedMessageState = false;
-  String message;
-  File image;
+  String? message;
+  File? image;
   final picker = ImagePicker();
 
   onInit() {
@@ -53,17 +52,17 @@ class ChatViewModel extends GetxController {
   }
 
   uploadChat(
-      {@required File pic,
-      @required Timestamp createdAt,
-      @required String vendorId,
-      @required String customerId,
-      @required String from,
-      @required String to,
-      @required String message,
-      @required int orderNumber}) {
+      {required File? pic,
+      required Timestamp createdAt,
+      required String? vendorId,
+      required String? customerId,
+      required String? from,
+      required String? to,
+      required String? message,
+      required int? orderNumber}) {
     if (Get.find<NetworkManager>().isConnected) {
       if (pic != null) {
-        FireStoreChat().uploadChatPic(pic, from, createdAt).then((imgUrl) =>
+        FireStoreChat().uploadChatPic(pic, from!, createdAt).then((imgUrl) =>
             handleChatLogic(
                 pic: pic,
                 createdAt: createdAt,
@@ -97,15 +96,15 @@ class ChatViewModel extends GetxController {
   }
 
   handleChatLogic(
-      {@required File pic,
-      @required Timestamp createdAt,
-      @required String vendorId,
-      @required String customerId,
-      @required String from,
-      @required String to,
-      @required String message,
-      @required String imgUrl,
-      @required int orderNumber}) {
+      {required File? pic,
+      required Timestamp createdAt,
+      required String? vendorId,
+      required String? customerId,
+      required String? from,
+      required String? to,
+      required String? message,
+      required String? imgUrl,
+      required int? orderNumber}) {
     FireStoreChat()
         .addMessageToFireStore(
       createdAt: createdAt,
@@ -129,7 +128,7 @@ class ChatViewModel extends GetxController {
   getLastChats() {
     FireStoreChat().getChatsFromFireStore().then((chats) {
       chats.forEach((chat) {
-        Map data = chat.data();
+        Map data = chat.data() as Map<dynamic, dynamic>;
         int index = _lastchats.indexWhere((element) =>
             element.vendorId == data['vendorId'] &&
             element.customerId == data['customerId']);
@@ -176,7 +175,7 @@ class ChatViewModel extends GetxController {
     FireStoreChat().updateIsOpenedParameter(id).then((_) => getLastChats());
   }
 
-  getSearchedCoversations({@required String searchEntry}) {
+  getSearchedCoversations({required String searchEntry}) {
     try {
       update();
       if (searchedCoversations.length > 0) {
@@ -186,15 +185,15 @@ class ChatViewModel extends GetxController {
         return;
       }
       searchedCoversations = lastchats
-          .where((chat) => _moreViewModel.savedUser.id == chat.from.id
-              ? chat.to.userName.capitalizeFirst
-                  .startsWith(searchEntry.capitalizeFirst)
-              : chat.from.userName.capitalizeFirst
-                  .startsWith(searchEntry.capitalizeFirst))
+          .where((chat) => _moreViewModel.savedUser!.id == chat.from!.id
+              ? chat.to!.userName!.capitalizeFirst!
+                  .startsWith(searchEntry.capitalizeFirst!)
+              : chat.from!.userName!.capitalizeFirst!
+                  .startsWith(searchEntry.capitalizeFirst!))
           .toList();
       update();
     } catch (e) {
-      Get.snackbar('Alert', e);
+      Get.snackbar('Alert', e.toString());
     }
   }
 

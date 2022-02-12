@@ -11,13 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductsView extends StatelessWidget {
-  final String prodsTxt, catTxt;
+  final String? prodsTxt, catTxt;
   final bool fromCategoriesView, fromSearchView;
   ProductsView(
-      {@required this.prodsTxt,
+      {required this.prodsTxt,
       this.catTxt,
-      @required this.fromCategoriesView,
-      @required this.fromSearchView});
+      required this.fromCategoriesView,
+      required this.fromSearchView});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
@@ -30,10 +30,10 @@ class ProductsView extends StatelessWidget {
                 ? filterController.filteredProducts
                 : products.where((prod) {
                     if (fromCategoriesView) {
-                      return prod.classification['sub-cat'] == prodsTxt &&
-                          prod.classification['category'] == catTxt;
+                      return prod.classification!['sub-cat'] == prodsTxt &&
+                          prod.classification!['category'] == catTxt;
                     }
-                    return prod.classification['sub-cat'] == prodsTxt;
+                    return prod.classification!['sub-cat'] == prodsTxt;
                   }).toList();
             return Scaffold(
               key: filterController.catFilterKey,
@@ -101,7 +101,7 @@ class ProductsView extends StatelessWidget {
                                       child: CustomColumImgTT(
                                         imgUrl: filteredProducts[x].imgUrl,
                                         txt1: filteredProducts[x].prodName,
-                                        txt2: '\$' + filteredProducts[x].price,
+                                        txt2: '\$' + filteredProducts[x].price!,
                                       ),
                                     ),
                                   ),

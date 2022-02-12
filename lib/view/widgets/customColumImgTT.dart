@@ -4,9 +4,9 @@ import '../../const.dart';
 import 'customText.dart';
 
 class CustomColumImgTT extends StatelessWidget {
-  final String imgUrl;
-  final String txt1;
-  final String txt2;
+  final String? imgUrl;
+  final String? txt1;
+  final String? txt2;
 
   CustomColumImgTT({
     this.imgUrl,
@@ -20,9 +20,9 @@ class CustomColumImgTT extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          imgUrl.startsWith('a')
+          imgUrl!.startsWith('a')
               ? Image.asset(
-                  imgUrl,
+                  imgUrl!,
                   fit: BoxFit.contain,
                   height: 70,
                   width: 70,
@@ -34,7 +34,7 @@ class CustomColumImgTT extends StatelessWidget {
                     height: 70,
                     width: 70,
                   ),
-                  imageUrl: imgUrl,
+                  imageUrl: imgUrl!,
                   fit: BoxFit.contain,
                   height: 70,
                   width: 70,

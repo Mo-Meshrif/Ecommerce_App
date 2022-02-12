@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomRichText extends StatelessWidget {
-  final String txt1, txt2, txt3, txt4;
-  final Color txt1color, txt2color, txt3color, txt4color;
-  final double txt1Size, txt2Size, txt3Size, txt4Size;
+  final String? txt1, txt2, txt3, txt4;
+  final Color? txt1color, txt2color, txt3color, txt4color;
+  final double? txt1Size, txt2Size, txt3Size, txt4Size;
 
   const CustomRichText({
     this.txt1,

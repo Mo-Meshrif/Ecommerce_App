@@ -3,9 +3,7 @@ import '../../model/orderModel.dart';
 
 class FireStoreOrder {
   final collectionOrder = FirebaseFirestore.instance.collection('Orders');
-  Future<void> addOrderToFireStore(OrderModel order) async {
-    return await collectionOrder.add(order.tojson());
-  }
+  Future<void> addOrderToFireStore(OrderModel order) async => await collectionOrder.add(order.tojson());
 
   Future<List<QueryDocumentSnapshot>> getOrdersFromFireStore() async {
     var val =

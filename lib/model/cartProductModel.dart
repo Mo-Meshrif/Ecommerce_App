@@ -1,6 +1,6 @@
 class CartProductModel {
-  String id, customerId, name, imgUrl, size, color, price;
-  int quantity;
+  String? id, customerId, name, imgUrl, size, color, price;
+  int? quantity;
   CartProductModel(
       {this.id,
       this.customerId,

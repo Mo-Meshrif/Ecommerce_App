@@ -14,7 +14,7 @@ class ShippingView extends StatelessWidget {
       init: Get.find(),
       builder: (moreController) {
         List<ShippingAddressModel> shippingList =
-            moreController.shippingList.reversed.toList();
+            moreController.shippingList!.reversed.toList();
         return Scaffold(
           appBar: CustomAppBar(
             title: 'Shipping Address',
@@ -99,11 +99,11 @@ class ShippingView extends StatelessWidget {
                                           ListTile(
                                             leading: Icon(Icons.location_on),
                                             title: CustomText(
-                                              txt: e.street +
+                                              txt: e.street! +
                                                   ',' +
-                                                  e.city +
+                                                  e.city! +
                                                   ',' +
-                                                  e.state,
+                                                  e.state!,
                                             ),
                                             visualDensity: VisualDensity(
                                               vertical: -4,

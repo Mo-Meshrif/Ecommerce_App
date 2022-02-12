@@ -16,7 +16,7 @@ class FinishedOrdersView extends StatelessWidget {
       ),
       body: GetBuilder<CartViewModel>(builder: (cartController) {
         List<OrderModel> specOrders = cartController.specOrders
-            .where((element) => element.orderTrack[4]['status'] == true)
+            .where((element) => element.orderTrack![4]['status'] == true)
             .toList();
         return OrdersDisplay(
             specOrders: specOrders,

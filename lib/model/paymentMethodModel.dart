@@ -1,6 +1,6 @@
 class PaymentMehodModel {
-  String cardImage, cardNumber, expireDate, cvv, cardHolderName;
-  int id, isSelected;
+  String? cardImage, cardNumber, expireDate, cvv, cardHolderName;
+  int? id, isSelected;
   PaymentMehodModel({
     this.id,
     this.isSelected,
@@ -11,9 +11,6 @@ class PaymentMehodModel {
     this.cardHolderName,
   });
   PaymentMehodModel.fromJson(Map<String, dynamic> map) {
-    if (map == null) {
-      return;
-    }
     id = map['id'];
     isSelected = map['isSelected'];
     cardImage = map['cardImage'];

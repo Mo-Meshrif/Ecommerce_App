@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
         List<ProductModel> products = controller.products;
         List<LastestCollectionModel> lastestCollections =
             controller.lastestCollections;
-        UserModel customer = Get.find<MoreViewModel>().savedUser;
+        UserModel? customer = Get.find<MoreViewModel>().savedUser;
         //initialize searchViewModel,chatViewModel
         Get.put(SearchViewModel());
         Get.put(ChatViewModel());
@@ -43,7 +43,7 @@ class HomeView extends StatelessWidget {
             : Responsive(
                 builder: (context, deviceInfo) {
                   double lastProductFactor =
-                      ((deviceInfo.screenHeight - 458) / 120).floorToDouble();
+                      ((deviceInfo.screenHeight! - 458) / 120).floorToDouble();
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
@@ -118,14 +118,14 @@ class HomeView extends StatelessWidget {
                           height: 10,
                         ),
                         Container(
-                          height: deviceInfo.screenHeight * 0.25,
+                          height: deviceInfo.screenHeight! * 0.25,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: lastestCollections.length,
                             itemBuilder: (context, i) => CustomStackImgTbutton(
                               fromlocal: false,
                               imgW: deviceInfo.screenWidth,
-                              imgH: deviceInfo.screenHeight * 0.25,
+                              imgH: deviceInfo.screenHeight! * 0.25,
                               imgUrl: lastestCollections[i].imgUrl,
                               txt: lastestCollections[i].title,
                               onTap: () => Go.to(
@@ -162,7 +162,7 @@ class HomeView extends StatelessWidget {
                                         child: CustomColumImgTT(
                                           imgUrl: prod.imgUrl,
                                           txt1: prod.prodName,
-                                          txt2: '\$' + prod.price,
+                                          txt2: '\$' + prod.price!,
                                         ),
                                       )
                                     : Padding(padding: EdgeInsets.zero))

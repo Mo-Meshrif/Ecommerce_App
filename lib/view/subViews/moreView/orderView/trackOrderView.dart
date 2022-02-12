@@ -9,7 +9,7 @@ import 'package:timelines/timelines.dart';
 
 class TrackOrderView extends StatelessWidget {
   final OrderModel order;
-  TrackOrderView({@required this.order});
+  TrackOrderView({required this.order});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,7 @@ class TrackOrderView extends StatelessWidget {
                 ),
                 builder: TimelineTileBuilder.connected(
                   connectionDirection: ConnectionDirection.before,
-                  itemCount: order.orderTrack.length,
+                  itemCount: order.orderTrack!.length,
                   contentsBuilder: (_, index) {
                     return Padding(
                       padding: EdgeInsets.only(left: 8.0, bottom: 50),
@@ -58,35 +58,35 @@ class TrackOrderView extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CustomText(
-                              txt: order.orderTrack[index]['title'],
+                              txt: order.orderTrack![index]['title'],
                               fSize: 18,
                               txtColor:
-                                  order.orderTrack[index]['status'] == true
+                                  order.orderTrack![index]['status'] == true
                                       ? null
                                       : Colors.grey,
                             ),
-                            order.orderTrack[index]['createdAt'] != null
+                            order.orderTrack![index]['createdAt'] != null
                                 ? CustomText(
-                                    txt: order.orderTrack[index]['subTitle'] +
+                                    txt: order.orderTrack![index]['subTitle'] +
                                         ' ' +
                                         DateFormat('yyyy-MM-dd')
-                                            .format(order.orderTrack[index]
+                                            .format(order.orderTrack![index]
                                                     ['createdAt']
                                                 .toDate())
                                             .toString(),
                                     maxLine: 2,
                                     txtColor: Colors.grey,
                                   )
-                                : order.orderTrack[index]['subTitle'] !=
+                                : order.orderTrack![index]['subTitle'] !=
                                         'We has been confirmed on'
                                     ? CustomText(
-                                        txt: order.orderTrack[index]
+                                        txt: order.orderTrack![index]
                                             ['subTitle'],
                                         maxLine: 2,
                                         txtColor: Colors.grey,
                                       )
                                     : CustomText(
-                                        txt: order.orderTrack[index]
+                                        txt: order.orderTrack![index]
                                                 ['subTitle'] +
                                             ' .....',
                                         maxLine: 2,
@@ -96,7 +96,7 @@ class TrackOrderView extends StatelessWidget {
                     );
                   },
                   indicatorBuilder: (_, index) {
-                    if (order.orderTrack[index]['status'] == true) {
+                    if (order.orderTrack![index]['status'] == true) {
                       return DotIndicator(
                         size: 30,
                         color: priColor,
@@ -114,7 +114,7 @@ class TrackOrderView extends StatelessWidget {
                     }
                   },
                   connectorBuilder: (_, index, ___) => SolidLineConnector(
-                    color: order.orderTrack[index]['status'] == true
+                    color: order.orderTrack![index]['status'] == true
                         ? priColor
                         : null,
                   ),

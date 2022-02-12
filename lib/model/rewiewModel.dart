@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReviewModel {
-  String prodId, userName, reviewTxt;
-  Timestamp createdAt;
-  double rateValue;
+  String? prodId, userName, reviewTxt;
+  Timestamp? createdAt;
+  double? rateValue;
   ReviewModel({
     this.prodId,
     this.userName,

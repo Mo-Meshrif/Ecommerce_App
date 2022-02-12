@@ -84,7 +84,7 @@ class AddPaymentCardView extends StatelessWidget {
                               maxLength: 16,
                               keyboardType: TextInputType.number,
                               validator: (val) {
-                                if (val.isEmpty) {
+                                if (val!.isEmpty) {
                                   return 'The Value is Empty';
                                 }
                                 return null;
@@ -109,7 +109,7 @@ class AddPaymentCardView extends StatelessWidget {
                                 widget: TextFormField(
                                   keyboardType: TextInputType.datetime,
                                   validator: (val) {
-                                    if (val.isEmpty) {
+                                    if (val!.isEmpty) {
                                       return 'The Value is Empty';
                                     }
                                     return null;
@@ -134,7 +134,7 @@ class AddPaymentCardView extends StatelessWidget {
                                   obscureText: true,
                                   keyboardType: TextInputType.number,
                                   validator: (val) {
-                                    if (val.isEmpty) {
+                                    if (val!.isEmpty) {
                                       return 'The Value is Empty';
                                     }
                                     return null;
@@ -156,7 +156,7 @@ class AddPaymentCardView extends StatelessWidget {
                           title: 'CARD HOLDER’S NAME',
                           widget: TextFormField(
                             validator: (val) {
-                              if (val.isEmpty) {
+                              if (val!.isEmpty) {
                                 return 'The Value is Empty';
                               }
                               return null;
@@ -184,8 +184,8 @@ class AddPaymentCardView extends StatelessWidget {
                                 primary: priColor,
                               ),
                               onPressed: () {
-                                moreController.paymentKey.currentState.save();
-                                if (moreController.paymentKey.currentState
+                                moreController.paymentKey.currentState!.save();
+                                if (moreController.paymentKey.currentState!
                                     .validate()) {
                                   moreController.addPayment(PaymentMehodModel(
                                     isSelected: 1,
@@ -219,7 +219,7 @@ class CustomColWidget extends StatelessWidget {
   final Widget widget;
   final bool hasValue;
   CustomColWidget(
-      {@required this.title, @required this.widget, @required this.hasValue});
+      {required this.title, required this.widget, required this.hasValue});
   @override
   Widget build(BuildContext context) {
     return Column(

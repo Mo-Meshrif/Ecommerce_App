@@ -14,7 +14,7 @@ class PaymentMethodView extends StatelessWidget {
       init: Get.find(),
       builder: (moreController) {
         List<PaymentMehodModel> cardList =
-            moreController.paymentsList.reversed.toList();
+            moreController.paymentsList!.reversed.toList();
         return Scaffold(
           appBar: CustomAppBar(
             title: 'Payment Method',
@@ -64,7 +64,7 @@ class PaymentMethodView extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Image.asset(
-                                              e.cardImage,
+                                              e.cardImage!,
                                               height: 50,
                                             ),
                                             GestureDetector(
@@ -91,7 +91,7 @@ class PaymentMethodView extends StatelessWidget {
                                         ),
                                         SizedBox(height: 5),
                                         CustomText(
-                                          txt: e.cardNumber.replaceAll(
+                                          txt: e.cardNumber!.replaceAll(
                                               RegExp(r'\d(?!\d{0,3}$)'), '* '),
                                           fSize: 15,
                                         ),

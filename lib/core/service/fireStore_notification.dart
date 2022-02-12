@@ -11,7 +11,7 @@ class FireStoreNotification {
     return val.docs;
   }
 
-  Future<void> addTokenToFireStore(String id, token) async {
+  Future<void> addTokenToFireStore(String? id, token) async {
     return await collectionToken.doc(id).set({'token': token});
   }
 
@@ -21,11 +21,9 @@ class FireStoreNotification {
   }
 
   Future<void> addNotificationToFireStore(
-      NotificationModel notification) async {
-    return await collectionNotification.add(notification.toJson());
-  }
+      NotificationModel notification) async => await collectionNotification.add(notification.toJson());
 
-  Future<void> updateSeenValue(String id) async {
+  Future<void> updateSeenValue(String? id) async {
     await collectionNotification.doc(id).update({'seen': true});
   }
 }

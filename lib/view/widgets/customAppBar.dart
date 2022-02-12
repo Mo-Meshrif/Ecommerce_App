@@ -5,7 +5,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Function backFun;
 
-  CustomAppBar({@required this.title, @required this.backFun});
+  CustomAppBar({required this.title, required this.backFun});
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -14,7 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       leading: GestureDetector(
         child: Image.asset('assets/shop/back.png'),
-        onTap: backFun,
+        onTap: backFun as void Function()?,
       ),
       elevation: 0,
     );

@@ -25,17 +25,17 @@ class MoreViewModel extends GetxController {
 
   //userData
   final LocalStorageData _localStorageData = Get.find();
-  UserModel savedUser;
-  File image;
+  UserModel? savedUser;
+  late File image;
   final picker = ImagePicker();
-  Future<void> getUserImage({@required UserModel user}) async {
+  Future<void> getUserImage({required UserModel user}) async {
     if (Get.find<NetworkManager>().isConnected) {
       final pickedImage = await picker.pickImage(source: ImageSource.gallery);
       if (pickedImage != null) {
         image = File(pickedImage.path);
         FireStoreUser().uploadProfilePic(image, user).then((_) =>
             FireStoreUser().getUserFromFireStore(user.id).then((userData) {
-              Map x = userData.data();
+              Map x = userData.data() as Map<dynamic, dynamic>;
               _localStorageData.setUserData(UserModel(
                   id: user.id,
                   userName: user.userName,
@@ -68,12 +68,12 @@ class MoreViewModel extends GetxController {
 
   //ShippingAddress
   final ShippingDatabaseHelper dbShippingClient = ShippingDatabaseHelper.db;
-  List<ShippingAddressModel> _shippingList;
-  List<ShippingAddressModel> get shippingList => _shippingList;
+  List<ShippingAddressModel>? _shippingList;
+  List<ShippingAddressModel>? get shippingList => _shippingList;
   GlobalKey<FormState> _shippingKey = GlobalKey<FormState>();
   GlobalKey<FormState> get shippingKey => _shippingKey;
 
-  String fullName,
+  String? fullName,
       mobileNumber,
       state = 'Select State',
       city = 'Select City',
@@ -120,8 +120,8 @@ class MoreViewModel extends GetxController {
   final PaymentDatabaseHelper dbPaymentClient = PaymentDatabaseHelper.db;
   GlobalKey<FormState> _paymentKey = GlobalKey<FormState>();
   GlobalKey<FormState> get paymentKey => _paymentKey;
-  List<PaymentMehodModel> _paymentsList;
-  List<PaymentMehodModel> get paymentsList => _paymentsList;
+  List<PaymentMehodModel>? _paymentsList;
+  List<PaymentMehodModel>? get paymentsList => _paymentsList;
   getSelectedCardImg(cardImg) {
     cardImage = cardImg;
     update();
@@ -175,15 +175,15 @@ class MoreViewModel extends GetxController {
   }
 
   //rateOurApp
-  double appRateValue = 0;
+  double? appRateValue = 0;
   setAppRateValue(rateVal) {
     appRateValue = rateVal;
     update();
-    FireStoreRateApp().addAppRateToFireStore(rateVal, savedUser.id);
+    FireStoreRateApp().addAppRateToFireStore(rateVal, savedUser!.id);
   }
 
   getAppRateValue() {
-    FireStoreRateApp().getAppRateFromFireStore(savedUser.id).then((value) {
+    FireStoreRateApp().getAppRateFromFireStore(savedUser!.id).then((value) {
       if (value == null) {
         return;
       }

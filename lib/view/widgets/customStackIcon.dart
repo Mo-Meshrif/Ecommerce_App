@@ -3,8 +3,8 @@ import '../../const.dart';
 import 'customText.dart';
 
 class CustomStackIcon extends StatelessWidget {
-  final String imageUrl;
-  final String txtNum;
+  final String? imageUrl;
+  final String? txtNum;
 
   CustomStackIcon({this.imageUrl, this.txtNum});
   @override
@@ -12,7 +12,7 @@ class CustomStackIcon extends StatelessWidget {
     return Stack(
       children: [
         Image.asset(
-          imageUrl,
+          imageUrl!,
           width: 42,
           height: 33,
         ),

@@ -57,7 +57,7 @@ class NotificationsView extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(vertical: 10),
                                 itemCount: notifications.length,
                                 itemBuilder: (context, i) {
-                                  String message = notifications[i].message;
+                                  String message = notifications[i].message!;
                                   int x = message.contains('destination')
                                       ? 1
                                       : message.contains('order')
@@ -85,7 +85,7 @@ class NotificationsView extends StatelessWidget {
                                             flex: 3,
                                             child: CustomText(
                                               txt: message,
-                                              txtColor: notifications[i].seen
+                                              txtColor: notifications[i].seen!
                                                   ? Colors.grey[600]
                                                   : null,
                                               fSize: 18,
@@ -102,12 +102,12 @@ class NotificationsView extends StatelessWidget {
                                                   txt: DateFormat('hh:mm a')
                                                       .format(
                                                     notifications[i]
-                                                        .createdAt
+                                                        .createdAt!
                                                         .toDate(),
                                                   ),
                                                   txtColor: Colors.grey,
                                                 ),
-                                                notifications[i].seen
+                                                notifications[i].seen!
                                                     ? Padding(
                                                         padding:
                                                             EdgeInsets.only(

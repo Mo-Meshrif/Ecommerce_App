@@ -23,7 +23,7 @@ class ChatView extends StatelessWidget {
               chatController.searchedCoversations.length > 0
                   ? chatController.searchedCoversations
                   : chatController.lastchats;
-          String customerId = Get.find<MoreViewModel>().savedUser.id;
+          String? customerId = Get.find<MoreViewModel>().savedUser!.id;
           return Container(
             padding: EdgeInsets.only(top: 36, right: 20, left: 20),
             child: Column(
@@ -80,17 +80,17 @@ class ChatView extends StatelessWidget {
                                           EdgeInsets.only(top: 10, bottom: 20),
                                       itemCount: lastchats.length,
                                       itemBuilder: (context, i) {
-                                        UserModel customer =
-                                            customerId == lastchats[i].to.id
+                                        UserModel? customer =
+                                            customerId == lastchats[i].to!.id
                                                 ? lastchats[i].to
                                                 : lastchats[i].from;
                                         UserModel vendor =
-                                            customerId == lastchats[i].to.id
-                                                ? lastchats[i].from
-                                                : lastchats[i].to;
-                                        bool notSeen = (!lastchats[i].isOpened &&
+                                            customerId == lastchats[i].to!.id
+                                                ? lastchats[i].from!
+                                                : lastchats[i].to!;
+                                        bool notSeen = (!lastchats[i].isOpened! &&
                                                 customerId ==
-                                                    lastchats[i].to.id)
+                                                    lastchats[i].to!.id)
                                             ? true
                                             : false;
                                         return GestureDetector(
@@ -114,7 +114,7 @@ class ChatView extends StatelessWidget {
                                                   radius: 30,
                                                   child: CustomText(
                                                     txt: joinFirstTwoLetter(
-                                                      vendor.userName,
+                                                      vendor.userName!,
                                                     ),
                                                   ),
                                                 ),
@@ -125,7 +125,7 @@ class ChatView extends StatelessWidget {
                                                         EdgeInsets.zero,
                                                     title: CustomText(
                                                       txt: vendor
-                                                          .userName.capitalize,
+                                                          .userName!.capitalize,
                                                       fSize: 17,
                                                       fWeight: FontWeight.w500,
                                                     ),
@@ -150,7 +150,7 @@ class ChatView extends StatelessWidget {
                                                                   'h:mm a')
                                                               .format(lastchats[
                                                                       i]
-                                                                  .messageTime
+                                                                  .messageTime!
                                                                   .toDate()),
                                                           txtColor: swatchColor,
                                                           fSize: 17,

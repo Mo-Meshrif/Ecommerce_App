@@ -70,10 +70,10 @@ class CheckoutView extends StatelessWidget {
                             ),
                             GetBuilder<MoreViewModel>(
                               builder: (moreController) {
-                                ShippingAddressModel specificShippingAddress;
-                                if (moreController.shippingList.isNotEmpty) {
+                                ShippingAddressModel? specificShippingAddress;
+                                if (moreController.shippingList!.isNotEmpty) {
                                   specificShippingAddress =
-                                      moreController.shippingList.firstWhere(
+                                      moreController.shippingList!.firstWhere(
                                           (element) => element.isSelected == 1);
                                 }
                                 return Row(
@@ -87,7 +87,7 @@ class CheckoutView extends StatelessWidget {
                                             children: [
                                               CustomText(
                                                 txt: specificShippingAddress
-                                                    .fullName.capitalizeFirst,
+                                                    .fullName!.capitalizeFirst,
                                                 fSize: 15,
                                                 fWeight: FontWeight.bold,
                                                 txtColor: swatchColor,
@@ -100,13 +100,13 @@ class CheckoutView extends StatelessWidget {
                                               ),
                                               CustomText(
                                                 txt: specificShippingAddress
-                                                        .street +
+                                                        .street! +
                                                     ',' +
                                                     specificShippingAddress
-                                                        .city +
+                                                        .city! +
                                                     ',' +
                                                     specificShippingAddress
-                                                        .state,
+                                                        .state!,
                                                 fSize: 15,
                                                 txtColor: swatchColor,
                                               ),
@@ -150,7 +150,7 @@ class CheckoutView extends StatelessWidget {
                                   title: CustomText(txt: 'Cash On Delivery'),
                                   value: paymentMethod.cashOnDelivery,
                                   groupValue: cartController.pay,
-                                  onChanged: (val) =>
+                                  onChanged: (dynamic val) =>
                                       cartController.changePay(val),
                                   secondary: Image.asset(
                                     'assets/cart/cashOnDelivery.png',
@@ -161,8 +161,8 @@ class CheckoutView extends StatelessWidget {
                                 GetBuilder<MoreViewModel>(
                                   builder: (moreController) {
                                     List<PaymentMehodModel> paymentsList =
-                                        moreController.paymentsList;
-                                    PaymentMehodModel specificPayment;
+                                        moreController.paymentsList!;
+                                    late PaymentMehodModel specificPayment;
                                     if (paymentsList.isNotEmpty) {
                                       specificPayment = paymentsList.firstWhere(
                                           (element) => element.isSelected == 1);
@@ -171,13 +171,13 @@ class CheckoutView extends StatelessWidget {
                                       title: CustomText(
                                           txt: paymentsList.isEmpty
                                               ? 'Credit Card'
-                                              : specificPayment.cardNumber
+                                              : specificPayment.cardNumber!
                                                   .replaceAll(
                                                       RegExp(r'\d(?!\d{0,3}$)'),
                                                       '* ')),
                                       value: paymentMethod.masterCard,
                                       groupValue: cartController.pay,
-                                      onChanged: (val) {
+                                      onChanged: (dynamic val) {
                                         if (paymentsList.isEmpty) {
                                           Go.to(() => AddPaymentCardView());
                                         }
@@ -186,7 +186,7 @@ class CheckoutView extends StatelessWidget {
                                       secondary: Image.asset(
                                         paymentsList.isEmpty
                                             ? 'assets/cart/card.png'
-                                            : specificPayment.cardImage,
+                                            : specificPayment.cardImage!,
                                         height: 50,
                                         width: 50,
                                       ),
@@ -286,11 +286,11 @@ class CheckoutView extends StatelessWidget {
               GetBuilder<MoreViewModel>(
                 builder: (moreController) {
                   List<PaymentMehodModel> paymentsList =
-                      moreController.paymentsList;
+                      moreController.paymentsList!;
                   List<ShippingAddressModel> shippingList =
-                      moreController.shippingList;
-                  ShippingAddressModel specificShipping;
-                  PaymentMehodModel specificPayment;
+                      moreController.shippingList!;
+                  ShippingAddressModel? specificShipping;
+                  PaymentMehodModel? specificPayment;
                   if (shippingList.isNotEmpty) {
                     specificShipping = shippingList
                         .firstWhere((element) => element.isSelected == 1);
@@ -313,7 +313,7 @@ class CheckoutView extends StatelessWidget {
                                 snackPosition: SnackPosition.TOP);
                           } else {
                             cartController.addOrder(OrderModel(
-                              customerId: moreController.savedUser.id,
+                              customerId: moreController.savedUser!.id,
                               status: 'Pending',
                               promoCode: cartController.promoCode,
                               createdAt: Timestamp.now(),
@@ -360,7 +360,7 @@ class CheckoutView extends StatelessWidget {
                                       'paymentMehod': 'Cash on Delivery',
                                     }
                                   : {
-                                      'paymentMehod': specificPayment.cardImage
+                                      'paymentMehod': specificPayment.cardImage!
                                           .split('/')
                                           .last
                                           .split(".")[0],

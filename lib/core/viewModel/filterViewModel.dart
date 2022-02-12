@@ -8,29 +8,29 @@ class FilterViewModel extends GetxController {
   bool fromSearch = false;
   List<ProductModel> nonFilteredProducts = [];
   List<ProductModel> filteredProducts = [];
-  List<String> avCategories = [],
+  List<String?> avCategories = [],
       avConditions = [],
       avMaterials = [],
       avBrands = [];
-  String selectedCategory, selectedCondition, selectedMaterial, selectedBrand;
+  String? selectedCategory, selectedCondition, selectedMaterial, selectedBrand;
   bool isFiltered = false;
   openFilterDrawer(
-      {@required bool searchFilter, @required List<ProductModel> products}) {
+      {required bool searchFilter, required List<ProductModel> products}) {
     getFilteredListItems(products);
     fromSearch = searchFilter;
     nonFilteredProducts = products;
     update();
     if (searchFilter) {
-      searchFilterKey.currentState.openEndDrawer();
+      searchFilterKey.currentState!.openEndDrawer();
     } else {
-      catFilterKey.currentState.openEndDrawer();
+      catFilterKey.currentState!.openEndDrawer();
     }
   }
 
   getFilteredListItems(List<ProductModel> nonFilteredProducts) {
     clearFilteredListItems();
     nonFilteredProducts.forEach((prod) {
-      avCategories.add(prod.classification['category']);
+      avCategories.add(prod.classification!['category']);
       avConditions.add(prod.condition);
       avMaterials.add(prod.material);
       avBrands.add(prod.brand);
@@ -70,7 +70,7 @@ class FilterViewModel extends GetxController {
     isFiltered = true;
     filteredProducts = nonFilteredProducts
         .where((prod) =>
-            prod.classification['category'] ==
+            prod.classification!['category'] ==
                 (selectedCategory ?? avCategories[0]) &&
             prod.condition == (selectedCondition ?? avConditions[0]) &&
             prod.material == (selectedMaterial ?? avMaterials[0]) &&

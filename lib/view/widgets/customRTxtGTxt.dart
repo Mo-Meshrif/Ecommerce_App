@@ -7,7 +7,7 @@ class CustomRTxtGTxt extends StatelessWidget {
   final void Function() onT;
 
   CustomRTxtGTxt(
-      {@required this.txt1, @required this.txt2, @required this.onT});
+      {required this.txt1, required this.txt2, required this.onT});
   @override
   Widget build(BuildContext context) {
     return Row(

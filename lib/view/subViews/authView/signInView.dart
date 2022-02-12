@@ -31,7 +31,7 @@ class SignInView extends StatelessWidget {
                         controller: TextEditingController(text: controller.email),
                         onSave: (val) => controller.email = val,
                         valid: (val) {
-                          if (val.isEmpty) {
+                          if (val=='') {
                             return 'The Feild is empty';
                           }
                           return null;
@@ -42,7 +42,7 @@ class SignInView extends StatelessWidget {
                         lableTxt: 'PASSWORD',
                         hintTxt: '************************',
                         valid: (val) {
-                          if (val.isEmpty) {
+                          if (val=='') {
                             return 'The Feild is empty';
                           }
                           return null;
@@ -68,8 +68,8 @@ class SignInView extends StatelessWidget {
                         imgUrl: 'assets/auth/right_arrow.png',
                         txt: 'LOG IN',
                         onPress: () {
-                          _key.currentState.save();
-                          if (_key.currentState.validate()) {
+                          _key.currentState!.save();
+                          if (_key.currentState!.validate()) {
                             controller.signIn();
                           }
                         },

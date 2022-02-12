@@ -8,8 +8,8 @@ class SubCategories extends StatelessWidget {
     this.subCat,
     this.prods,
   });
-  final String subCat;
-  final List prods;
+  final String? subCat;
+  final List? prods;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,7 +18,7 @@ class SubCategories extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 5),
           child: CustomText(
-            txt: subCat.toUpperCase(),
+            txt: subCat!.toUpperCase(),
             fSize: 12,
             fWeight: FontWeight.w300,
           ),
@@ -32,13 +32,13 @@ class SubCategories extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               child: ListView.separated(
                 padding: EdgeInsets.symmetric(vertical: 10),
-                itemCount: prods.length,
+                itemCount: prods!.length,
                 itemBuilder: (_, i) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: GestureDetector(
                     onTap: () => Go.to(
                       () => ProductsView(
-                        prodsTxt: prods[i],
+                        prodsTxt: prods![i],
                         catTxt: subCat,
                         fromCategoriesView: true,
                         fromSearchView: false,
@@ -49,7 +49,7 @@ class SubCategories extends StatelessWidget {
                       children: [
                         Expanded(
                           child: CustomText(
-                            txt: prods[i],
+                            txt: prods![i],
                             fSize: 15,
                           ),
                         ),

@@ -15,9 +15,9 @@ class OrdersDisplay extends StatelessWidget {
   final CartViewModel cartController;
 
   OrdersDisplay(
-      {@required this.specOrders,
-      @required this.cartController,
-      @required this.ifNullState});
+      {required this.specOrders,
+      required this.cartController,
+      required this.ifNullState});
   @override
   Widget build(BuildContext context) {
     Future<bool> callme() async {
@@ -73,7 +73,7 @@ class OrdersDisplay extends StatelessWidget {
                                             txt: DateFormat(
                                                     'yyyy-MM-dd, hh:mm a')
                                                 .format(specOrders[i]
-                                                    .orderTrack[0]['createdAt']
+                                                    .orderTrack![0]['createdAt']
                                                     .toDate())
                                                 .toString(),
                                           ),
@@ -81,21 +81,21 @@ class OrdersDisplay extends StatelessWidget {
                                       ),
                                       Container(
                                         height: 50,
-                                        width: specOrders[i].items.length >= 3
+                                        width: specOrders[i].items!.length >= 3
                                             ? 120
-                                            : (specOrders[i].items.length * 40)
+                                            : (specOrders[i].items!.length * 40)
                                                 .toDouble(),
                                         child: GridView.builder(
-                                          itemCount: specOrders[i].items.length,
+                                          itemCount: specOrders[i].items!.length,
                                           gridDelegate:
                                               SliverGridDelegateWithFixedCrossAxisCount(
                                                   crossAxisCount: specOrders[i]
-                                                              .items
+                                                              .items!
                                                               .length >=
                                                           3
                                                       ? 3
                                                       : specOrders[i]
-                                                          .items
+                                                          .items!
                                                           .length),
                                           itemBuilder: (context, x) =>
                                               CachedNetworkImage(
@@ -106,7 +106,7 @@ class OrdersDisplay extends StatelessWidget {
                                               height: 35,
                                               width: 35,
                                             ),
-                                            imageUrl: specOrders[i].items[x]
+                                            imageUrl: specOrders[i].items![x]
                                                 ['imgUrl'],
                                             errorWidget: (context, error,
                                                     stackTrace) =>

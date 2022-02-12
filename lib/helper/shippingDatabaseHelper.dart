@@ -5,8 +5,8 @@ import 'package:sqflite/sqflite.dart';
 class ShippingDatabaseHelper {
   ShippingDatabaseHelper._();
   static final ShippingDatabaseHelper db = ShippingDatabaseHelper._();
-  Database _database;
-  Future<Database> get database async {
+  Database? _database;
+  Future<Database?> get database async {
     if (_database != null) {
       return _database;
     }
@@ -16,9 +16,10 @@ class ShippingDatabaseHelper {
 
   initDb() async {
     var path = join(await getDatabasesPath(), 'Shipping.db');
-    return await openDatabase(path,
-        version: 1,
-        onCreate: (Database db, int version) async => await db.execute('''
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database db, int version) async => await db.execute('''
             CREATE TABLE shippingAddress(
               id INTEGER PRIMARY KEY,
               fullName TEXT NOT NULL,
@@ -27,36 +28,46 @@ class ShippingDatabaseHelper {
               city TEXT NOT NULL,
               street TEXT NOT NULL,
               isSelected INTEGER NOT NULL)
-            '''));
+            '''),
+    );
   }
 
   Future<void> insert(ShippingAddressModel shipping) async {
     var dbClient = await database;
-    await dbClient.update('shippingAddress', {'isSelected': 0}).then(
-        (_) async => await dbClient.insert(
-              'shippingAddress',
-              shipping.toJson(),
-              conflictAlgorithm: ConflictAlgorithm.replace,
-            ));
+    await dbClient!.update('shippingAddress', {'isSelected': 0}).then(
+      (_) async => await dbClient.insert(
+        'shippingAddress',
+        shipping.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      ),
+    );
   }
 
   Future<List<ShippingAddressModel>> getAllShipping() async {
     var dbClient = await database;
-    List<Map> queryList = await dbClient.query('shippingAddress');
-    return queryList == null
+    List<Map> queryList = await dbClient!.query('shippingAddress');
+    return queryList.isEmpty
         ? []
-        : queryList.map((e) => ShippingAddressModel.fromJson(e)).toList();
+        : queryList
+            .map(
+                (e) => ShippingAddressModel.fromJson(e as Map<String, dynamic>))
+            .toList();
   }
 
   Future<void> deleteOneShipping(id) async {
     var dbClient = await database;
-    await dbClient.delete('shippingAddress', where: 'id=?', whereArgs: [id]);
+    await dbClient!.delete('shippingAddress', where: 'id=?', whereArgs: [id]);
   }
 
   Future<void> updateSelected(id) async {
     var dbClient = await database;
-    await dbClient.update('shippingAddress', {'isSelected': 0}).then(
-        (_) async => await dbClient.update('shippingAddress', {'isSelected': 1},
-            where: 'id=?', whereArgs: [id]));
+    await dbClient!.update('shippingAddress', {'isSelected': 0}).then(
+      (_) async => await dbClient.update(
+        'shippingAddress',
+        {'isSelected': 1},
+        where: 'id=?',
+        whereArgs: [id],
+      ),
+    );
   }
 }

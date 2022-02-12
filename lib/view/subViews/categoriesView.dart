@@ -18,7 +18,7 @@ class CategoriesView extends StatelessWidget {
         builder: (controller) {
           List<CategoryModel> categories = controller.categories;
           Map<String, dynamic> subCategories =
-              categories[controller.currentCategory].subCat;
+              categories[controller.currentCategory].subCat!;
           List<Widget> children = <Widget>[];
           for (var i = 0; i < subCategories['s'].length; i++) {
             children.add(
@@ -59,7 +59,7 @@ class CategoriesView extends StatelessWidget {
                 builder: (context, deviceInfo) => Row(
                   children: [
                     Container(
-                      width: deviceInfo.screenWidth*0.25,
+                      width: deviceInfo.screenWidth!*0.25,
                       child: ListView.separated(
                         padding: EdgeInsets.all(0),
                         separatorBuilder: (_, i) => SizedBox(

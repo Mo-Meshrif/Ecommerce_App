@@ -6,11 +6,11 @@ import 'customText.dart';
 
 class CustomStackImgTbutton extends StatelessWidget {
   final bool fromlocal;
-  final String imgUrl;
-  final String txt;
+  final String? imgUrl;
+  final String? txt;
   final double imgH;
-  final double imgW;
-  final void Function() onTap;
+  final double? imgW;
+  final void Function()? onTap;
   CustomStackImgTbutton({
     this.imgUrl,
     this.txt,
@@ -26,7 +26,7 @@ class CustomStackImgTbutton extends StatelessWidget {
         children: [
           fromlocal
               ? Image.asset(
-                  imgUrl,
+                  imgUrl!,
                   height: imgH,
                   width: imgW ?? null,
                 )
@@ -37,7 +37,7 @@ class CustomStackImgTbutton extends StatelessWidget {
                     width: imgW ?? null,
                     fit: BoxFit.fill,
                   ),
-                  imageUrl: imgUrl,
+                  imageUrl: imgUrl!,
                   height: imgH,
                   width: imgW ?? null,
                   fit: BoxFit.fill,
@@ -48,7 +48,7 @@ class CustomStackImgTbutton extends StatelessWidget {
             top: 20,
             left: 35,
             child: Container(
-              width: deviceInfo.widgetScaleFactor * 150,
+              width: deviceInfo.widgetScaleFactor! * 150,
               child: CustomText(
                 txt: txt,
                 fSize: 18,
@@ -61,9 +61,9 @@ class CustomStackImgTbutton extends StatelessWidget {
             top: 100,
             left: 25,
             child: Container(
-              width: (deviceInfo.widgetScaleFactor > 1.5
+              width: (deviceInfo.widgetScaleFactor! > 1.5
                       ? 1.5
-                      : deviceInfo.widgetScaleFactor) *
+                      : deviceInfo.widgetScaleFactor)! *
                   150,
               child: GestureDetector(
                 onTap: onTap,

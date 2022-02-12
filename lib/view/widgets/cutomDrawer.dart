@@ -11,10 +11,10 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<FilterViewModel>(
       builder: (controller) {
-        List<String> avCategories = controller.avCategories.toSet().toList();
-        List<String> avConditions = controller.avConditions.toSet().toList();
-        List<String> avMaterials = controller.avMaterials.toSet().toList();
-        List<String> avBrands = controller.avBrands.toSet().toList();
+        List<String?> avCategories = controller.avCategories.toSet().toList();
+        List<String?> avConditions = controller.avConditions.toSet().toList();
+        List<String?> avMaterials = controller.avMaterials.toSet().toList();
+        List<String?> avBrands = controller.avBrands.toSet().toList();
         return Container(
           margin: EdgeInsets.only(top: controller.fromSearch ? 110 : 80),
           width: MediaQuery.of(context).size.width * 0.7,

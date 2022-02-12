@@ -16,7 +16,7 @@ class PendingShipmentsView extends StatelessWidget {
       ),
       body: GetBuilder<CartViewModel>(builder: (cartController) {
         List<OrderModel> specOrders = cartController.specOrders
-            .where((element) => element.orderTrack[4]['status'] == false)
+            .where((element) => element.orderTrack![4]['status'] == false)
             .toList();
         return OrdersDisplay(
             specOrders: specOrders,

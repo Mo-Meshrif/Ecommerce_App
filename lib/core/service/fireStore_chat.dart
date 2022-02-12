@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 
 class FireStoreChat {
   final collectionChat = FirebaseFirestore.instance.collection('Chats');
@@ -12,15 +11,14 @@ class FireStoreChat {
   }
 
   Future<void> addMessageToFireStore(
-      {@required Timestamp createdAt,
-      @required String vendorId,
-      @required String customerId,
-      @required String from,
-      @required String to,
-      @required String message,
-      @required String imgUrl,
-      @required int orderNumber}) async {
-    return await collectionChat.add({
+      {required Timestamp createdAt,
+      required String? vendorId,
+      required String? customerId,
+      required String? from,
+      required String? to,
+      required String? message,
+      required String? imgUrl,
+      required int? orderNumber}) async => await collectionChat.add({
       'createdAt': createdAt,
       'vendorId': vendorId,
       'customerId': customerId,
@@ -31,7 +29,6 @@ class FireStoreChat {
       'orderNumber': orderNumber,
       'isOpened': false
     });
-  }
 
   Future<String> uploadChatPic(File pic, String uid, Timestamp time) async {
     String url = '';

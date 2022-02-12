@@ -17,7 +17,6 @@ class CartView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: GetBuilder<CartViewModel>(
-          init: Get.find(),
           builder: (cartController) {
             List<CartProductModel> cartProds = cartController.cartProds;
             String totalPrice = cartController.totalPrice;

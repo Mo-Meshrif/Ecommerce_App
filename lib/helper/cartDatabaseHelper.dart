@@ -5,8 +5,8 @@ import 'package:sqflite/sqflite.dart';
 class CartDataBaseHelper {
   CartDataBaseHelper._();
   static final CartDataBaseHelper db = CartDataBaseHelper._();
-  Database _database;
-  Future<Database> get database async {
+  Database? _database;
+  Future<Database?> get database async {
     if (_database != null) {
       return _database;
     }
@@ -16,9 +16,11 @@ class CartDataBaseHelper {
 
   initDb() async {
     String path = join(await getDatabasesPath(), 'CartProduct.db');
-    return await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-      await db.execute('''
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database db, int version) async {
+        await db.execute('''
             CREATE TABLE cartProduct(
               id TEXT NOT NULL,
               customerId TEXT NOT NULL,            
@@ -29,12 +31,13 @@ class CartDataBaseHelper {
               price TEXT NOT NULL,
               quantity INTEGER NOT NULL)
             ''');
-    });
+      },
+    );
   }
 
   insert(CartProductModel cartProd) async {
     var dbClient = await database;
-    await dbClient.insert(
+    await dbClient!.insert(
       'cartProduct',
       cartProd.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -43,15 +46,15 @@ class CartDataBaseHelper {
 
   Future<List<CartProductModel>> getAllProducts() async {
     var dbClient = await database;
-    List<Map<String, Object>> maps = await dbClient.query('cartProduct');
-    return maps != null
+    List<Map<String, Object?>> maps = await dbClient!.query('cartProduct');
+    return maps.isNotEmpty
         ? maps.map((e) => CartProductModel.fromJson(e)).toList()
         : [];
   }
 
   updateProduct(CartProductModel cartProduct) async {
     var dbClient = await database;
-    await dbClient.update(
+    await dbClient!.update(
       'cartProduct',
       cartProduct.toJson(),
       where: 'id=?',
@@ -61,7 +64,7 @@ class CartDataBaseHelper {
 
   deleteProduct(CartProductModel cartProduct) async {
     var dbClient = await database;
-    await dbClient.delete(
+    await dbClient!.delete(
       'cartProduct',
       where: 'id=?',
       whereArgs: [cartProduct.id],
@@ -70,6 +73,6 @@ class CartDataBaseHelper {
 
   deleteAll() async {
     var dbClient = await database;
-    await dbClient.delete('cartProduct');
+    await dbClient!.delete('cartProduct');
   }
 }

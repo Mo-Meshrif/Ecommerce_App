@@ -37,7 +37,7 @@ class HomeViewModel extends GetxController {
   List<LastestCollectionModel> get lastestCollections => _lastestCollections;
   ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
-  Map<String, String> dynamicUrls = {};
+  Map<String?, String> dynamicUrls = {};
   onInit() {
     getCategories();
     getProducts();
@@ -59,7 +59,7 @@ class HomeViewModel extends GetxController {
         for (int i = 0; i < value.length; i++) {
           _categories.add(CategoryModel.fromJson(
             value[i].id,
-            value[i].data(),
+            value[i].data() as Map<String, dynamic>,
           ));
           _loading.value = false;
         }
@@ -75,7 +75,7 @@ class HomeViewModel extends GetxController {
       _loading.value = true;
       HomeService().getProductsFromFireStore().then((value) {
         for (int i = 0; i < value.length; i++) {
-          Map<String, dynamic> data = value[i].data();
+          Map<String, dynamic> data = value[i].data() as Map<String, dynamic>;
           _products.add(ProductModel(
             id: value[i].id,
             customerId: data['customerId'],
@@ -108,7 +108,7 @@ class HomeViewModel extends GetxController {
       HomeService().getLastestCollectionsFromFireStore().then((value) {
         for (int i = 0; i < value.length; i++) {
           _lastestCollections
-              .add(LastestCollectionModel.fromJson(value[i].data()));
+              .add(LastestCollectionModel.fromJson(value[i].data() as Map<String, dynamic>));
           _loading.value = false;
         }
         update();
@@ -121,7 +121,7 @@ class HomeViewModel extends GetxController {
 //productDetailsView logic
 
   int selectedColorIndex = 0;
-  String selectedColor;
+  String? selectedColor;
   void changeSelectedColor(index, color) {
     selectedColorIndex = index;
     selectedColor = color;
@@ -129,7 +129,7 @@ class HomeViewModel extends GetxController {
   }
 
   int selectedSizeIndex = 0;
-  String selectedSize;
+  String? selectedSize;
   void changeSelectedSize(index, size) {
     selectedSizeIndex = index;
     selectedSize = size;
@@ -145,7 +145,7 @@ class HomeViewModel extends GetxController {
 
 //review logic
   double rateValue = 0;
-  String reviewText;
+  String? reviewText;
   ValueNotifier<bool> _reviewLoading = ValueNotifier(false);
   ValueNotifier<bool> get reviewloading => _reviewLoading;
   List<ReviewModel> reviews = [];
@@ -162,14 +162,14 @@ class HomeViewModel extends GetxController {
                 reviewTxt: reviewText,
                 createdAt: Timestamp.now(),
                 rateValue: rateValue),
-            user.id)
+            user.id!)
         .then((_) => getAllReviews());
   }
 
   getAllReviews() async {
     await FireStoreReview().getAllReviewsFromFireStore().then((value) {
       for (int i = 0; i < value.length; i++) {
-        reviews.add(ReviewModel.fromJson(value[i].data()));
+        reviews.add(ReviewModel.fromJson(value[i].data() as Map<String, dynamic>));
       }
       _reviewLoading.value = false;
       update();
@@ -177,7 +177,7 @@ class HomeViewModel extends GetxController {
   }
 
   //DynamicLink logic
-  createDynamicLink(String id) {
+  createDynamicLink(String? id) {
     try {
       if (Get.find<NetworkManager>().isConnected) {
         if (!dynamicUrls.containsKey(id)) {
@@ -199,7 +199,7 @@ class HomeViewModel extends GetxController {
     }
   }
 
-  String getspecDynamicUrl(String id) {
+  String? getspecDynamicUrl(String? id) {
     return dynamicUrls.containsKey(id) ? dynamicUrls[id] : null;
   }
 

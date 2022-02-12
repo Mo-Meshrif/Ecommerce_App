@@ -7,7 +7,7 @@ class FireStoreReview {
 
   Future<void> addReviewToFireStore(ReviewModel review, String userId) async {
     return await collectionIndividualRef
-        .doc(review.prodId + userId)
+        .doc(review.prodId! + userId)
         .set(review.toJson());
   }
 

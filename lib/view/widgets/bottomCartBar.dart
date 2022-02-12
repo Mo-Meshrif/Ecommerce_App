@@ -5,9 +5,9 @@ import 'customText.dart';
 
 class BottomCartBar extends StatelessWidget {
   BottomCartBar({
-    @required this.totalPrice,
-    @required this.buttonTxt,
-    @required this.onPress,
+    required this.totalPrice,
+    required this.buttonTxt,
+    required this.onPress,
   });
 
   final String totalPrice,buttonTxt;

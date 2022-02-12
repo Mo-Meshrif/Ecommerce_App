@@ -36,7 +36,7 @@ class ForgetPassView extends StatelessWidget {
                     hintTxt: 'janedoe123@email.com',
                     controller: TextEditingController(text: controller.email),
                     valid: (val) {
-                      if (val.isEmpty) {
+                      if (val=='') {
                         return 'The Feild is empty';
                       }
                       return null;
@@ -57,8 +57,8 @@ class ForgetPassView extends StatelessWidget {
                         imgUrl: 'assets/auth/right_arrow.png',
                         txt: 'SEND EMAIL',
                         onPress: () {
-                          _key.currentState.save();
-                          if (_key.currentState.validate()) {
+                          _key.currentState!.save();
+                          if (_key.currentState!.validate()) {
                             controller.forgetPassword();
                           }
                         },
