@@ -42,7 +42,6 @@ class HomeViewModel extends GetxController {
     getCategories();
     getProducts();
     getLastestCollections();
-    getAllReviews();
     retrieveDynamicLink();
     super.onInit();
   }
@@ -107,8 +106,8 @@ class HomeViewModel extends GetxController {
       _loading.value = true;
       HomeService().getLastestCollectionsFromFireStore().then((value) {
         for (int i = 0; i < value.length; i++) {
-          _lastestCollections
-              .add(LastestCollectionModel.fromJson(value[i].data() as Map<String, dynamic>));
+          _lastestCollections.add(LastestCollectionModel.fromJson(
+              value[i].data() as Map<String, dynamic>));
           _loading.value = false;
         }
         update();
@@ -148,32 +147,47 @@ class HomeViewModel extends GetxController {
   String? reviewText;
   ValueNotifier<bool> _reviewLoading = ValueNotifier(false);
   ValueNotifier<bool> get reviewloading => _reviewLoading;
-  List<ReviewModel> reviews = [];
 
-  addReview(id, imgurl, UserModel user) async {
-    _reviewLoading.value = true;
-    reviews = [];
-    update();
-    await FireStoreReview()
-        .addReviewToFireStore(
-            ReviewModel(
-                prodId: id,
-                userName: user.userName,
-                reviewTxt: reviewText,
-                createdAt: Timestamp.now(),
-                rateValue: rateValue),
-            user.id!)
-        .then((_) => getAllReviews());
+  addReview(id, imgurl, UserModel user) {
+    if (Get.find<NetworkManager>().isConnected) {
+      _reviewLoading.value = true;
+      update();
+      FireStoreReview()
+          .addReviewToFireStore(
+              ReviewModel(
+                  prodId: id,
+                  userId: user.id,
+                  reviewTxt: reviewText,
+                  createdAt: Timestamp.now(),
+                  rateValue: rateValue),
+              user.id!)
+          .then((_) {
+        reviewText = null;
+        rateValue = 0;
+        _reviewLoading.value = false;
+        update();
+      });
+    } else {
+      Get.snackbar(
+        'Network Error',
+        'There is no internet connection !',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 2),
+      );
+    }
   }
 
-  getAllReviews() async {
-    await FireStoreReview().getAllReviewsFromFireStore().then((value) {
-      for (int i = 0; i < value.length; i++) {
-        reviews.add(ReviewModel.fromJson(value[i].data() as Map<String, dynamic>));
-      }
-      _reviewLoading.value = false;
-      update();
-    });
+  deleteReview(String revId) {
+    if (Get.find<NetworkManager>().isConnected) {
+      FireStoreReview().deleteReview(revId);
+    } else {
+      Get.snackbar(
+        'Network Error',
+        'There is no internet connection !',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 2),
+      );
+    }
   }
 
   //DynamicLink logic

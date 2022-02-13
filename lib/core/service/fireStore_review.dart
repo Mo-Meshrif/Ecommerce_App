@@ -5,16 +5,10 @@ class FireStoreReview {
   final collectionIndividualRef =
       FirebaseFirestore.instance.collection('Reviews');
 
-  Future<void> addReviewToFireStore(ReviewModel review, String userId) async {
-    return await collectionIndividualRef
-        .doc(review.prodId! + userId)
-        .set(review.toJson());
-  }
+  Future<void> addReviewToFireStore(ReviewModel review, String userId) async =>
+      await collectionIndividualRef.add(review.toJson());
 
-  Future<List<QueryDocumentSnapshot>> getAllReviewsFromFireStore() async {
-    var val = await collectionIndividualRef
-        .orderBy('createdAt', descending: true)
-        .get();
-    return val.docs;
+  Future<void> deleteReview(String revId) async {
+    await collectionIndividualRef.doc(revId).delete();
   }
 }

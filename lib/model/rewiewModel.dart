@@ -1,22 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReviewModel {
-  String? prodId, userName, reviewTxt;
+  String? reviewId, prodId, userId, reviewTxt;
   Timestamp? createdAt;
   double? rateValue;
   ReviewModel({
     this.prodId,
-    this.userName,
+    this.userId,
     this.reviewTxt,
     this.createdAt,
     this.rateValue,
   });
-  ReviewModel.fromJson(Map<String, dynamic> map) {
+  ReviewModel.fromJson(String revId, Map<String, dynamic> map) {
     if (map.isEmpty) {
       return;
     }
+    reviewId = revId;
     prodId = map['prodId'];
-    userName = map['userName'];
+    userId = map['userId'];
     reviewTxt = map['reviewTxt'];
     createdAt = map['createdAt'];
     rateValue = map['rateValue'];
@@ -25,7 +26,7 @@ class ReviewModel {
   toJson() {
     return {
       'prodId': prodId,
-      'userName': userName,
+      'userId': userId,
       'reviewTxt': reviewTxt,
       'createdAt': createdAt,
       'rateValue': rateValue
