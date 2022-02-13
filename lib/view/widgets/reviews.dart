@@ -37,7 +37,7 @@ class Reviews extends StatelessWidget {
                 children: [
                   Container(
                     width: 100,
-                    height: 30,
+                    height: 35,
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.horizontal,

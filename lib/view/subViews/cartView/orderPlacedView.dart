@@ -1,10 +1,8 @@
 import '../../../helper/goTransittedPage.dart';
-import '../../../core/viewModel/cartViewModel.dart';
 import '../../../view/subViews/moreView/orderView/allOrdersView.dart';
 import '../../../view/widgets/customElevatedButton.dart';
 import '../../../view/widgets/customText.dart';
 import '../../../core/viewModel/homeViewModel.dart';
-import '../../../view/controlView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../const.dart';
@@ -13,8 +11,7 @@ class OrderPlacedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GetBuilder<CartViewModel>(
-      builder: (cartController) => Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
         child: Column(
           children: [
@@ -26,7 +23,7 @@ class OrderPlacedView extends StatelessWidget {
                   icon: Icon(Icons.close),
                   onPressed: () {
                     homeController.changeIndex(0);
-                    Get.offAll(() => ControlView());
+                    Get.back();
                   },
                   color: priColor,
                 ),
@@ -84,6 +81,6 @@ class OrderPlacedView extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }

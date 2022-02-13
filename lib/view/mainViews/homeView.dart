@@ -1,7 +1,6 @@
 import '../../helper/goTransittedPage.dart';
 import '/responsive.dart';
 import '/core/viewModel/moreViewModel.dart';
-import '/model/userModel.dart';
 import '../../core/viewModel/chatViewModel.dart';
 import '../../model/lastestCollectionModel.dart';
 import '../../view/subViews/lastestCollectionView.dart';
@@ -30,11 +29,14 @@ class HomeView extends StatelessWidget {
         List<ProductModel> products = controller.products;
         List<LastestCollectionModel> lastestCollections =
             controller.lastestCollections;
-        UserModel? customer = Get.find<MoreViewModel>().savedUser;
+        MoreViewModel moreController=Get.find<MoreViewModel>();
+        if(moreController.savedUser==null){
+          moreController.getUserData();
+        }
         //initialize searchViewModel,chatViewModel
         Get.put(SearchViewModel());
         Get.put(ChatViewModel());
-        return categories.length < 3 && customer == null
+        return categories.length < 3 
             ? Center(
                 child: CustomText(
                   txt: 'HomeView',

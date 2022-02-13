@@ -41,7 +41,10 @@ class ChatView extends StatelessWidget {
                 lastchats.isEmpty
                     ? Expanded(
                         child: Center(
-                          child: Text('No Message !'),
+                          child: CustomText(
+                            txt: 'No Message !',
+                            fSize: 20,
+                          ),
                         ),
                       )
                     : Expanded(
@@ -88,11 +91,12 @@ class ChatView extends StatelessWidget {
                                             customerId == lastchats[i].to!.id
                                                 ? lastchats[i].from!
                                                 : lastchats[i].to!;
-                                        bool notSeen = (!lastchats[i].isOpened! &&
-                                                customerId ==
-                                                    lastchats[i].to!.id)
-                                            ? true
-                                            : false;
+                                        bool notSeen =
+                                            (!lastchats[i].isOpened! &&
+                                                    customerId ==
+                                                        lastchats[i].to!.id)
+                                                ? true
+                                                : false;
                                         return GestureDetector(
                                           onTap: () {
                                             chatController

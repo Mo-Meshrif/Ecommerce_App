@@ -5,7 +5,7 @@ class FireStoreReview {
   final collectionIndividualRef =
       FirebaseFirestore.instance.collection('Reviews');
 
-  Future<void> addReviewToFireStore(ReviewModel review, String userId) async =>
+  Future<void> addReviewToFireStore(ReviewModel review) async =>
       await collectionIndividualRef.add(review.toJson());
 
   Future<void> deleteReview(String revId) async {

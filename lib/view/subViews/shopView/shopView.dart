@@ -1,3 +1,4 @@
+import '/view/widgets/customText.dart';
 import '../../../helper/goTransittedPage.dart';
 import '../../../model/productModel.dart';
 import '../../../view/subViews/searchView/searchResultsView.dart';
@@ -28,7 +29,10 @@ class ShopView extends StatelessWidget {
                 .toList();
             return category.shop!['banner'] == ''
                 ? Center(
-                    child: Text('Commming Soooooooooooooon !'),
+                    child: CustomText(
+                      txt: 'Commming Soooooooooooooon !',
+                      fSize: 20,
+                    ),
                   )
                 : Column(
                     children: [

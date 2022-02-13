@@ -11,7 +11,6 @@ class ShippingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MoreViewModel>(
-      init: Get.find(),
       builder: (moreController) {
         List<ShippingAddressModel> shippingList =
             moreController.shippingList!.reversed.toList();

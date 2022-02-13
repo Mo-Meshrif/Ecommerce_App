@@ -75,6 +75,7 @@ class ProductsView extends StatelessWidget {
                             child: Center(
                               child: CustomText(
                                 txt: 'Comming Sooooooooon !',
+                                fSize: 20,
                               ),
                             ),
                           )

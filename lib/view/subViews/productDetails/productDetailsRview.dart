@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '/core/viewModel/authViewModel.dart';
 import '/model/userModel.dart';
-import '../../../core/viewModel/moreViewModel.dart';
 import '../../../model/rewiewModel.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../core/viewModel/homeViewModel.dart';
@@ -20,10 +19,12 @@ class ProductDetailsRview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
-      builder: (homeController) => Column(
-        children: [
-          Expanded(
-            child: StreamBuilder(
+      builder: (homeController) {
+        String uid = FirebaseAuth.instance.currentUser!.uid;
+        return Column(
+          children: [
+            Expanded(
+              child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('Reviews')
                     .orderBy('createdAt', descending: true)
@@ -45,8 +46,7 @@ class ProductDetailsRview extends StatelessWidget {
                           .users
                           .firstWhere(
                               (user) => user.id == filteredReviews[i].userId);
-                      return filteredReviews[i].userId ==
-                              FirebaseAuth.instance.currentUser!.uid
+                      return filteredReviews[i].userId == uid
                           ? Dismissible(
                               key: Key(filteredReviews[i].reviewId.toString()),
                               direction: DismissDirection.endToStart,
@@ -68,7 +68,7 @@ class ProductDetailsRview extends StatelessWidget {
                               ),
                               child: Reviews(
                                 name: user.userName,
-                                date: DateFormat('yyyy-MM-dd hh:mm')
+                                date: DateFormat('d MMMM')
                                     .format(
                                         filteredReviews[i].createdAt!.toDate())
                                     .toString(),
@@ -78,7 +78,7 @@ class ProductDetailsRview extends StatelessWidget {
                             )
                           : Reviews(
                               name: user.userName,
-                              date: DateFormat('yyyy-MM-dd hh:mm')
+                              date: DateFormat('d MMMM')
                                   .format(
                                       filteredReviews[i].createdAt!.toDate())
                                   .toString(),
@@ -90,126 +90,128 @@ class ProductDetailsRview extends StatelessWidget {
                       height: 10,
                     ),
                   );
-                }),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: () => Get.bottomSheet(
-                homeController.reviewloading.value
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 15),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: () => Get.back(),
-                                  child: CustomText(
-                                    txt: 'Cancel',
-                                    fSize: 20,
-                                    txtColor: priColor,
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () => Get.bottomSheet(
+                  homeController.reviewloading.value
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 15),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => Get.back(),
+                                    child: CustomText(
+                                      txt: 'Cancel',
+                                      fSize: 20,
+                                      txtColor: priColor,
+                                    ),
                                   ),
-                                ),
-                                CustomText(
-                                  txt: 'Write a Review',
-                                  fSize: 20,
-                                ),
-                                GetBuilder<MoreViewModel>(
-                                  builder: (moreController) => GestureDetector(
-                                    onTap: homeController.reviewText != null
-                                        ? () {
-                                            homeController.addReview(
-                                              prod.id,
-                                              prod.imgUrl,
-                                              moreController.savedUser!,
-                                            );
-                                            Get.back();
-                                          }
-                                        : () => Get.snackbar(
-                                              'Error',
-                                              'Your review is Empty !',
-                                              snackPosition: SnackPosition.BOTTOM,
-                                              duration: Duration(seconds: 2),
-                                            ),
+                                  CustomText(
+                                    txt: 'Write a Review',
+                                    fSize: 20,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (homeController.reviewText != null) {
+                                        homeController.addReview(
+                                          prod.id,
+                                          uid,
+                                        );
+                                        Get.back();
+                                      } else {
+                                        Get.snackbar(
+                                          'Error',
+                                          'Your review is Empty !',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          duration: Duration(seconds: 2),
+                                        );
+                                      }
+                                    },
                                     child: CustomText(
                                       txt: 'Send',
                                       fSize: 20,
                                       txtColor: priColor,
                                     ),
                                   ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Divider(),
+                              RatingBar.builder(
+                                initialRating: 0,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                itemCount: 5,
+                                itemSize: 35,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: priColor,
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(),
-                            RatingBar.builder(
-                              initialRating: 0,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              itemCount: 5,
-                              itemSize: 35,
-                              itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: priColor,
+                                onRatingUpdate: (rating) =>
+                                    homeController.rateValue = rating,
                               ),
-                              onRatingUpdate: (rating) =>
-                                  homeController.rateValue = rating,
-                            ),
-                            CustomText(
-                              txt: 'Tap a Star to Rate',
-                            ),
-                            Divider(),
-                            Expanded(
-                              child: TextFormField(
-                                expands: true,
-                                minLines: null,
-                                maxLines: null,
-                                onChanged: (val) =>
-                                    homeController.reviewText = val,
-                                validator: (val) => null,
-                                decoration: InputDecoration(
-                                    hintText: 'Review',
-                                    focusedBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none),
+                              CustomText(
+                                txt: 'Tap a Star to Rate',
                               ),
-                            )
-                          ],
+                              Divider(),
+                              Expanded(
+                                child: TextFormField(
+                                  expands: true,
+                                  minLines: null,
+                                  maxLines: null,
+                                  onChanged: (val) =>
+                                      homeController.reviewText = val,
+                                  validator: (val) => null,
+                                  decoration: InputDecoration(
+                                      hintText: 'Review',
+                                      focusedBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20)))),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Icon(Icons.message),
-                SizedBox(
-                  width: 10,
-                ),
-                CustomText(
-                  txt: 'Write Review',
-                ),
-              ],
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)))),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(Icons.message),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomText(
+                    txt: 'Write Review',
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }

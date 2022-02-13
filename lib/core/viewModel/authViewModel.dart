@@ -64,17 +64,19 @@ class AuthViewModel extends GetxController {
       await _auth
           .createUserWithEmailAndPassword(email: email!, password: password!)
           .then((user) async {
-        _loading.value = false;
-        UserModel userModel = UserModel(
-            id: user.user!.uid,
-            userName: userName,
-            email: email,
-            role: 'Customer',
-            isOnline: true);
-        await FireStoreUser().addUserToFireStore(userModel);
-        setUser(userModel);
-        Get.to(() => ControlView());
-        update();
+        if (user.user!.uid.isNotEmpty) {
+          _loading.value = false;
+          UserModel userModel = UserModel(
+              id: user.user!.uid,
+              userName: userName,
+              email: email,
+              role: 'Customer',
+              isOnline: true);
+          await FireStoreUser().addUserToFireStore(userModel);
+          setUser(userModel);
+          Get.to(() => ControlView());
+          update();
+        }
       });
     } catch (e) {
       _loading.value = false;
@@ -91,13 +93,15 @@ class AuthViewModel extends GetxController {
         await _auth
             .signInWithEmailAndPassword(email: email!, password: password!)
             .then((user) async {
-          _loading.value = false;
-          FireStoreUser().updateOnlineState(user.user!.uid, true);
-          UserModel userData =
-              _users.firstWhere((element) => element.id == user.user!.uid);
-          setUser(userData);
-          Get.to(() => ControlView());
-          update();
+          if (user.user!.uid.isNotEmpty) {
+            _loading.value = false;
+            FireStoreUser().updateOnlineState(user.user!.uid, true);
+            UserModel userData =
+                _users.firstWhere((element) => element.id == user.user!.uid);
+            setUser(userData);
+            Get.to(() => ControlView());
+            update();
+          }
         });
       } catch (e) {
         _loading.value = false;

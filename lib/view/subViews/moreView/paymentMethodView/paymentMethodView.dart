@@ -11,7 +11,6 @@ class PaymentMethodView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MoreViewModel>(
-      init: Get.find(),
       builder: (moreController) {
         List<PaymentMehodModel> cardList =
             moreController.paymentsList!.reversed.toList();

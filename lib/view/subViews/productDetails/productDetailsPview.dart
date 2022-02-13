@@ -1,4 +1,4 @@
-import 'package:ecommerce/core/viewModel/homeViewModel.dart';
+import '/core/viewModel/homeViewModel.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../../../const.dart';
@@ -49,16 +49,15 @@ class ProductDetailsPview extends StatelessWidget {
                         ),
                       )),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomText(
-              txt: 'SELECT SIZE (US)',
-              txtColor: swatchColor,
-            ),
-            SizedBox(
-              height: 15,
-            ),
+            prod!.size!.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: CustomText(
+                      txt: 'SELECT SIZE (US)',
+                      txtColor: swatchColor,
+                    ),
+                  )
+                : Padding(padding: EdgeInsets.zero),
             Container(
               height: 60,
               child: ListView.separated(

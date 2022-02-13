@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:252636741400:android:8394b156479ef1b4a6286d",
+        "mobilesdk_app_id": "1:252636741400:android:bfaac3c272271874a6286d",
         "android_client_info": {
-          "package_name": "com.example.ecommerce"
+          "package_name": "com.ecommerce.megaStore"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "252636741400-nvv8njpnin6qb2a6tb6oc7l5kq4pveb3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "252636741400-tc9e9tdrl93qjq154l1ks8lahnbm81ir.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecommerce"
+              }
             }
           ]
         }

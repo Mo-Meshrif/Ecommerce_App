@@ -22,8 +22,8 @@ class OrderModel {
     this.rate,
     this.totalPrice,
   });
-  OrderModel.fromJson(Map<String, dynamic> map) {
-    orderId = map['orderId'];
+  OrderModel.fromJson(String id,Map<String, dynamic> map) {
+    orderId = id;
     customerId = map['customerId'];
     status = map['status'];
     promoCode = map['promoCode'];

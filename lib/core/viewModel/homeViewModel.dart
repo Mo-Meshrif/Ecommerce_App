@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '/helper/networkManager.dart';
 import '/helper/dynamicLinkHelper.dart';
 import '../../model/lastestCollectionModel.dart';
-import '../../model/userModel.dart';
 import '../../core/service/fireStore_review.dart';
 import '../../model/rewiewModel.dart';
 import '../../core/service/home_service.dart';
@@ -148,25 +147,25 @@ class HomeViewModel extends GetxController {
   ValueNotifier<bool> _reviewLoading = ValueNotifier(false);
   ValueNotifier<bool> get reviewloading => _reviewLoading;
 
-  addReview(id, imgurl, UserModel user) {
+  addReview(pId,uid) {
     if (Get.find<NetworkManager>().isConnected) {
-      _reviewLoading.value = true;
-      update();
-      FireStoreReview()
-          .addReviewToFireStore(
-              ReviewModel(
-                  prodId: id,
-                  userId: user.id,
-                  reviewTxt: reviewText,
-                  createdAt: Timestamp.now(),
-                  rateValue: rateValue),
-              user.id!)
-          .then((_) {
-        reviewText = null;
-        rateValue = 0;
-        _reviewLoading.value = false;
+       _reviewLoading.value = true;
         update();
-      });
+        FireStoreReview()
+            .addReviewToFireStore(
+          ReviewModel(
+              prodId: pId,
+              userId: uid,
+              reviewTxt: reviewText,
+              createdAt: Timestamp.now(),
+              rateValue: rateValue),
+        )
+            .then((_) {
+          reviewText = null;
+          rateValue = 0;
+          _reviewLoading.value = false;
+          update();
+        });
     } else {
       Get.snackbar(
         'Network Error',

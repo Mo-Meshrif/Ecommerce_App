@@ -59,7 +59,7 @@ class CategoriesView extends StatelessWidget {
                 builder: (context, deviceInfo) => Row(
                   children: [
                     Container(
-                      width: deviceInfo.screenWidth!*0.25,
+                      width: deviceInfo.screenWidth! * 0.25,
                       child: ListView.separated(
                         padding: EdgeInsets.all(0),
                         separatorBuilder: (_, i) => SizedBox(
@@ -83,14 +83,17 @@ class CategoriesView extends StatelessWidget {
                     subCategories['s'][0].isEmpty
                         ? Expanded(
                             child: Center(
-                            child: CustomText(
-                              txt: 'Comming Soon !',
+                              child: CustomText(
+                                txt: 'Comming Soon !',
+                                fSize: 20,
+                              ),
                             ),
-                          ))
+                          )
                         : Expanded(
                             child: Column(
-                            children: children,
-                          )),
+                              children: children,
+                            ),
+                          ),
                   ],
                 ),
               ))

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import '/responsive.dart';
 import '/view/widgets/quantityChanger.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class CustomCartItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    child: Image.network(
-                      cartProd.imgUrl!,
+                    child: CachedNetworkImage(
+                      imageUrl: cartProd.imgUrl!,
                       height: 50,
                       width: 50,
                     ),
@@ -127,8 +128,8 @@ class CustomCartItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
-                      child: Image.network(
-                        cartProd.imgUrl!,
+                      child: CachedNetworkImage(
+                        imageUrl: cartProd.imgUrl!,
                         height: 70,
                         width: 70,
                       ),

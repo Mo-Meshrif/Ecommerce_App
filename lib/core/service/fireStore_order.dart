@@ -7,7 +7,7 @@ class FireStoreOrder {
 
   Future<List<QueryDocumentSnapshot>> getOrdersFromFireStore() async {
     var val =
-        await collectionOrder.orderBy('createdAt', descending: true).get();
+        await collectionOrder.orderBy('createdAt').get();
     return val.docs;
   }
 

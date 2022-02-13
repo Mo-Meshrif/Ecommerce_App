@@ -37,9 +37,11 @@ class ProductDetailsDview extends StatelessWidget {
           ),
           CustomRow2CTxtTxt(
             txt1: 'CATEGORY',
-            content1: prod!.classification!['category'],
-            txt2: 'FITTING',
-            content2: 'True To Size',
+            content1: prod!.classification!['category'] == 'All'
+                ? prod!.classification!['sub-cat']
+                : prod!.classification!['category'],
+            txt2: prod!.size!.isNotEmpty ? 'FITTING' : '',
+            content2: prod!.size!.isNotEmpty ? 'True To Size' : '',
           )
         ],
       ),

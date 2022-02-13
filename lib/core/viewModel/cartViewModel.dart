@@ -1,12 +1,12 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
 import '/helper/networkManager.dart';
 import '../../model/userModel.dart';
 import '../../core/service/fireStore_order.dart';
 import '../../view/subViews/cartView/orderPlacedView.dart';
 import '../../model/orderModel.dart';
-import 'moreViewModel.dart';
 import '../../helper/cartDatabaseHelper.dart';
 import '../../model/cartProductModel.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,7 +23,6 @@ class CartViewModel extends GetxController {
   }
 
   var db = CartDataBaseHelper.db;
-  final MoreViewModel _moreViewModel = Get.find();
   final NotificationViewModel _notificationViewModel = Get.find();
   List<CartProductModel> cartProds = [];
   double _totalPrice = 0;
@@ -60,14 +59,15 @@ class CartViewModel extends GetxController {
     _totalPrice = 0;
     update();
     for (var i = 0; i < cartProds.length; i++) {
-      _totalPrice += (double.parse(cartProds[i].price!) * cartProds[i].quantity!);
+      _totalPrice +=
+          (double.parse(cartProds[i].price!) * cartProds[i].quantity!);
     }
     update();
   }
 
   increaseQuantity(index) async {
     if (cartProds[index].quantity! >= 1) {
-      cartProds[index].quantity= cartProds[index].quantity!+1;
+      cartProds[index].quantity = cartProds[index].quantity! + 1;
       _totalPrice += double.parse(cartProds[index].price!);
       await db.updateProduct(cartProds[index]);
     }
@@ -76,7 +76,7 @@ class CartViewModel extends GetxController {
 
   decreaseQuantity(index, fromProdDetails) async {
     if (cartProds[index].quantity! > 1) {
-      cartProds[index].quantity=cartProds[index].quantity!-1;
+      cartProds[index].quantity = cartProds[index].quantity! - 1;
       _totalPrice -= double.parse(cartProds[index].price!);
       await db.updateProduct(cartProds[index]);
     } else if (cartProds[index].quantity == 1 && fromProdDetails == true) {
@@ -108,9 +108,6 @@ class CartViewModel extends GetxController {
   ValueNotifier<bool> get orderloading => _orderLoading;
   List<OrderModel> _orders = [];
   List<OrderModel> get allOrders => _orders;
-  List<OrderModel> get specOrders => _orders
-      .where((order) => order.customerId == _moreViewModel.savedUser!.id)
-      .toList();
 
   changePay(val) {
     pay = val;
@@ -128,15 +125,23 @@ class CartViewModel extends GetxController {
     if (Get.find<NetworkManager>().isConnected) {
       _orderLoading.value = true;
       update();
-      await FireStoreOrder()
-          .addOrderToFireStore(order)
-          .then((_) async => await getOrders().then((_) {
-                _orderLoading.value = false;
-                update();
-                Get.offAll(() => OrderPlacedView());
-                deleteAll();
-                _notificationViewModel.sendNotification([], 'New order ');
-              }));
+      await FireStoreOrder().addOrderToFireStore(order).then((_) async {
+        _orderLoading.value = false;
+        update();
+        Get.offUntil(
+          GetPageRoute(
+            page: () => OrderPlacedView(),
+            curve: Curves.linear,
+            transition:
+                Platform.isIOS ? Transition.rightToLeft : Transition.size,
+            transitionDuration:
+                Duration(milliseconds: Platform.isIOS ? 500 : 700),
+          ),
+          (route) => route.isFirst,
+        );
+        deleteAll();
+        _notificationViewModel.sendNotification([], 'New order ');
+      });
     } else {
       Get.snackbar(
         'Network Error',
@@ -170,9 +175,7 @@ class CartViewModel extends GetxController {
   }
 
   getOrderRate(orderId, rateVal) async {
-    await FireStoreOrder()
-        .changeOrderRateVal(orderId, rateVal)
-        .then((_) async => await getOrders());
+    await FireStoreOrder().changeOrderRateVal(orderId, rateVal);
   }
 
   deleteAll() async {
