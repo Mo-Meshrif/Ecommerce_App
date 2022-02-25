@@ -28,7 +28,7 @@ class AllOrdersView extends StatelessWidget {
                   .map((e) => OrderModel.fromJson(
                       e.id, e.data() as Map<String, dynamic>))
                   .where((order) =>
-                      order.customerId == moreController.savedUser!.id)
+                      order.customerId == moreController.savedUser?.id)
                   .toList();
               return snapshot.connectionState == ConnectionState.waiting
                   ? Center(

@@ -28,7 +28,7 @@ class PaymentMethodView extends StatelessWidget {
                         (e) => Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Container(
-                              height: 175,
+                              height: 165,
                               child: Dismissible(
                                 key: Key(e.id.toString()),
                                 direction: DismissDirection.endToStart,
@@ -95,11 +95,6 @@ class PaymentMethodView extends StatelessWidget {
                                           fSize: 15,
                                         ),
                                         SizedBox(height: 5),
-                                        CustomText(
-                                          txt: e.cvv,
-                                          fSize: 15,
-                                        ),
-                                        SizedBox(height: 10),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,

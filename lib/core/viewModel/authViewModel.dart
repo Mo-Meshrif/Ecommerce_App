@@ -64,24 +64,25 @@ class AuthViewModel extends GetxController {
       await _auth
           .createUserWithEmailAndPassword(email: email!, password: password!)
           .then((user) async {
-        if (user.user!.uid.isNotEmpty) {
+        if (user.user?.uid != '') {
           _loading.value = false;
           UserModel userModel = UserModel(
-              id: user.user!.uid,
-              userName: userName,
-              email: email,
-              role: 'Customer',
-              isOnline: true);
+            id: user.user!.uid,
+            userName: userName,
+            email: email,
+            role: 'Customer',
+            isOnline: true,
+          );
           await FireStoreUser().addUserToFireStore(userModel);
           setUser(userModel);
           Get.to(() => ControlView());
           update();
         }
       });
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       _loading.value = false;
       update();
-      handleAuthErrors(e.toString());
+      handleAuthErrors(e.code);
     }
   }
 
@@ -93,7 +94,7 @@ class AuthViewModel extends GetxController {
         await _auth
             .signInWithEmailAndPassword(email: email!, password: password!)
             .then((user) async {
-          if (user.user!.uid.isNotEmpty) {
+          if (user.user?.uid != '') {
             _loading.value = false;
             FireStoreUser().updateOnlineState(user.user!.uid, true);
             UserModel userData =
@@ -103,10 +104,10 @@ class AuthViewModel extends GetxController {
             update();
           }
         });
-      } catch (e) {
+      } on FirebaseAuthException catch (e) {
         _loading.value = false;
         update();
-        handleAuthErrors(e.toString());
+        handleAuthErrors(e.code);
       }
     } else {
       _loading.value = false;
@@ -130,10 +131,10 @@ class AuthViewModel extends GetxController {
         );
         clearAuthData();
       });
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       _loading.value = false;
       update();
-      handleAuthErrors(e.toString());
+      handleAuthErrors(e.code);
     }
   }
 
@@ -143,9 +144,36 @@ class AuthViewModel extends GetxController {
   }
 
   handleAuthErrors(String error) {
+    late String errorMessage;
+    switch (error) {
+      case "email-already-in-use":
+        errorMessage = "Email already used. Go to login page.";
+        break;
+      case "wrong-password":
+        errorMessage = "Wrong email/password combination.";
+        break;
+      case "user-not-found":
+        errorMessage = "No user found with this email.";
+        break;
+      case "user-disabled":
+        errorMessage = "User disabled.";
+        break;
+      case "operation-not-allowed":
+        errorMessage = "Too many requests to log into this account.";
+        break;
+      case "invalid-email":
+        errorMessage = "Email address is invalid.";
+        break;
+      case "Only customers are allowed to enter !":
+        errorMessage = "Only customers are allowed to enter !";
+        break;
+      default:
+        errorMessage = "Login failed. Please try again.";
+        break;
+    }
     Get.snackbar(
       'AuthError',
-      error,
+      errorMessage,
       snackPosition: SnackPosition.BOTTOM,
       duration: Duration(seconds: 5),
     );

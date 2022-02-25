@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
-  String? orderId, customerId, status, promoCode,totalPrice;
+  String? orderId, customerId, status,totalPrice;
   Timestamp? createdAt;
   List? orderTrack;
   int? orderNumber;
@@ -12,7 +12,6 @@ class OrderModel {
     this.orderId,
     this.customerId,
     this.status,
-    this.promoCode,
     this.createdAt,
     this.orderTrack,
     this.orderNumber,
@@ -26,7 +25,6 @@ class OrderModel {
     orderId = id;
     customerId = map['customerId'];
     status = map['status'];
-    promoCode = map['promoCode'];
     createdAt = map['createdAt'];
     orderTrack = map['orderTrack'];
     orderNumber = map['orderNumber'];
@@ -40,7 +38,6 @@ class OrderModel {
     return {
       'customerId': customerId,
       'status': status,
-      'promoCode': promoCode,
       'createdAt': createdAt,
       'orderTrack': orderTrack,
       'orderNumber': orderNumber,

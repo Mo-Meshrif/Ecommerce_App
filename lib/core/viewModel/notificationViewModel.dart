@@ -5,7 +5,6 @@ import '/view/subViews/chatView/chatView.dart';
 import '/view/subViews/moreView/orderView/allOrdersView.dart';
 import '/core/viewModel/authViewModel.dart';
 import '/model/userModel.dart';
-import '/view/widgets/onMessageNotify.dart';
 import '/model/notificationModel.dart';
 import 'package:http/http.dart' as http;
 import '/core/service/fireStore_notification.dart';
@@ -22,7 +21,6 @@ class NotificationViewModel extends GetxController {
   List<NotificationModel> tempNotifications = [];
   onInit() {
     getDevicesToken();
-    FirebaseMessaging.onMessage.listen((event) => onMessage(event));
     FirebaseMessaging.onMessageOpenedApp
         .listen((event) => handleNotifications(event.notification!.body!));
     fbMessaging.getInitialMessage().then((event) {
@@ -108,36 +106,6 @@ class NotificationViewModel extends GetxController {
           seen: false,
         ),
       );
-    }
-  }
-
-  onMessage(RemoteMessage message) {
-    String currentRoute = Get.currentRoute;
-    RemoteNotification? remoteNotification = message.notification;
-    if (currentRoute != '/() => NotificationsView') {
-      if (remoteNotification!.body!.contains('message')) {
-        if (currentRoute != '/() => ChatView') {
-          if (currentRoute == '/() => MessageView') {
-            Get.snackbar(
-              'Alert',
-              remoteNotification.body!,
-            );
-          } else {
-            Get.dialog(OnMessageNotify(notification: remoteNotification));
-          }
-        }
-      } else {
-        if (currentRoute != '/() => AllOrdersView') {
-          if (currentRoute == '/() => TrackOrderView') {
-            Get.snackbar(
-              'Alert',
-              remoteNotification.body!,
-            );
-          } else {
-            Get.dialog(OnMessageNotify(notification: remoteNotification));
-          }
-        }
-      }
     }
   }
 

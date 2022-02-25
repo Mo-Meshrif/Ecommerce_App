@@ -156,15 +156,18 @@ class CustomCartItem extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            CustomText(
-                              txt: cartProd.size! + ' ,',
-                              fSize: 15,
-                              txtColor: HexColor('#515C6F'),
-                              fWeight: FontWeight.normal,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
+                            cartProd.size == 'Not defined'
+                                ? Padding(padding: EdgeInsets.zero)
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    child: CustomText(
+                                      txt: cartProd.size! + ' ,',
+                                      fSize: 15,
+                                      txtColor: HexColor('#515C6F'),
+                                      fWeight: FontWeight.normal,
+                                    ),
+                                  ),
                             Container(
                               height: 20,
                               width: 20,

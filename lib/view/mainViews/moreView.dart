@@ -43,8 +43,9 @@ class MoreView extends StatelessWidget {
                           radius: 60,
                           backgroundColor: Colors.grey,
                           backgroundImage: (pic == null
-                              ? AssetImage('assets/more/place_holder.jpg')
-                              : CachedNetworkImageProvider(pic)) as ImageProvider<Object>?,
+                                  ? AssetImage('assets/more/place_holder.jpg')
+                                  : CachedNetworkImageProvider(pic))
+                              as ImageProvider<Object>?,
                         ),
                       ),
                       Positioned(
@@ -52,13 +53,14 @@ class MoreView extends StatelessWidget {
                         right: 0,
                         child: GestureDetector(
                           onTap: () => moreController
-                                .getUserImage(
-                                    user: UserModel(
+                              .getUserImage(
+                                user: UserModel(
                                   id: uid,
                                   userName: userName,
                                   email: email,
-                                ))
-                                .then((_) => moreController.getUserData()),
+                                ),
+                              )
+                              .then((_) => moreController.getUserData()),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.grey,
@@ -80,25 +82,29 @@ class MoreView extends StatelessWidget {
                   SizedBox(
                     width: 20,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        txt: userName ?? '',
-                        fSize: 30,
-                        fWeight: FontWeight.bold,
-                        txtColor: HexColor('#515C6F'),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomText(
-                        txt: email ?? '',
-                        fSize: 18,
-                        fWeight: FontWeight.w500,
-                        txtColor: HexColor('#515C6F'),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          txt: userName ?? '',
+                          fSize: 30,
+                          maxLine: 3,
+                          fWeight: FontWeight.bold,
+                          txtColor: HexColor('#515C6F'),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomText(
+                          txt: email ?? '',
+                          fSize: 18,
+                          maxLine: 3,
+                          fWeight: FontWeight.w500,
+                          txtColor: HexColor('#515C6F'),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               );
@@ -129,7 +135,7 @@ class MoreView extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     FireStoreUser().updateOnlineState(
-                      Get.find<MoreViewModel>().savedUser!.id,
+                      Get.find<MoreViewModel>().savedUser?.id,
                       false,
                     );
                     controller.logout();

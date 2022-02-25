@@ -27,7 +27,8 @@ class CartViewModel extends GetxController {
   List<CartProductModel> cartProds = [];
   double _totalPrice = 0;
   String get totalPrice => _totalPrice.toStringAsFixed(2);
-  String promoCode = '';
+
+
   addProduct({
     required CartProductModel cartProd,
   }) {
@@ -59,7 +60,7 @@ class CartViewModel extends GetxController {
     _totalPrice = 0;
     update();
     for (var i = 0; i < cartProds.length; i++) {
-      _totalPrice +=
+      _totalPrice = _totalPrice +
           (double.parse(cartProds[i].price!) * cartProds[i].quantity!);
     }
     update();
@@ -68,7 +69,7 @@ class CartViewModel extends GetxController {
   increaseQuantity(index) async {
     if (cartProds[index].quantity! >= 1) {
       cartProds[index].quantity = cartProds[index].quantity! + 1;
-      _totalPrice += double.parse(cartProds[index].price!);
+      _totalPrice = _totalPrice + double.parse(cartProds[index].price!);
       await db.updateProduct(cartProds[index]);
     }
     update();
@@ -77,9 +78,9 @@ class CartViewModel extends GetxController {
   decreaseQuantity(index, fromProdDetails) async {
     if (cartProds[index].quantity! > 1) {
       cartProds[index].quantity = cartProds[index].quantity! - 1;
-      _totalPrice -= double.parse(cartProds[index].price!);
+      _totalPrice = _totalPrice - double.parse(cartProds[index].price!);
       await db.updateProduct(cartProds[index]);
-    } else if (cartProds[index].quantity == 1 && fromProdDetails == true) {
+    } else if (cartProds[index].quantity == 1) {
       deleteProduct(index);
     }
     update();
@@ -94,11 +95,6 @@ class CartViewModel extends GetxController {
 
   int getCartProdIndex(id) {
     return cartProds.indexWhere((cartProd) => cartProd.id == id);
-  }
-
-  addPromoCode(val) {
-    promoCode = val;
-    update();
   }
 
   //order
@@ -137,7 +133,7 @@ class CartViewModel extends GetxController {
             transitionDuration:
                 Duration(milliseconds: Platform.isIOS ? 500 : 700),
           ),
-          (route) => route.isFirst,
+          (route) => (route as GetPageRoute).routeName=='/ControlView',
         );
         deleteAll();
         _notificationViewModel.sendNotification([], 'New order ');
@@ -161,7 +157,6 @@ class CartViewModel extends GetxController {
           orderId: value[i].id,
           customerId: data['customerId'],
           status: data['status'],
-          promoCode: data['promoCode'],
           orderTrack: data['orderTrack'],
           orderNumber: data['orderNumber'],
           shippingAdress: data['shippingAdress'],
@@ -183,7 +178,6 @@ class CartViewModel extends GetxController {
     deleteSavedOrderNumber();
     cartProds = [];
     _totalPrice = 0;
-    promoCode = '';
     update();
   }
 

@@ -28,8 +28,7 @@ class FinishedOrdersView extends StatelessWidget {
                   .map((e) => OrderModel.fromJson(
                       e.id, e.data() as Map<String, dynamic>))
                   .where((order) =>
-                      order.customerId == moreController.savedUser!.id &&
-                      order.orderTrack![4]['status'] == true)
+                      order.customerId == moreController.savedUser?.id)
                   .toList();
               return snapshot.connectionState == ConnectionState.waiting
                   ? Center(

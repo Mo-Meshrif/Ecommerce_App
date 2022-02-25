@@ -1,4 +1,4 @@
-import '../model/paymentMethodModel.dart';
+import '../../model/paymentMethodModel.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

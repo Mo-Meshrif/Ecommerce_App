@@ -166,8 +166,10 @@ class ProductDetails extends StatelessWidget {
                                       customerId: moreController.savedUser!.id,
                                       name: prod.prodName,
                                       imgUrl: prod.imgUrl,
-                                      size: homeController.selectedSize ??
-                                          prod.size![0],
+                                      size: prod.size!.isEmpty
+                                          ? 'Not defined'
+                                          : homeController.selectedSize ??
+                                              prod.size?[0],
                                       color: homeController.selectedColor ??
                                           prod.color![0],
                                       price: prod.price,

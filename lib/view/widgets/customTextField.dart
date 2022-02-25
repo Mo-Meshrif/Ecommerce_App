@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class CustomTextField extends StatelessWidget {
   final String? lableTxt;
   final String? hintTxt;
@@ -29,6 +28,7 @@ class CustomTextField extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: controller,
                 obscureText: isScure,
                 onSaved: onSave,
